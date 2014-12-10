@@ -1,0 +1,50 @@
+/**
+ * Accessories Methods
+ */
+
+/**
+ * Arrows
+ */
+
+.-arrow-head(@-direction, @-width, @-height, @-color) {
+	display: block;
+	.-dimension(0, 0);
+	padding: 0;
+	border-style: solid;
+}
+.-arrow-head(@-direction, @-width, @-height, @-color)
+		when(@-direction = top) {
+	.-h-border-width(@-width / 2);
+	.-v-border-width(0, @-height);
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-bottom-color: @-color;
+	border-left-color: transparent;
+}
+.-arrow-head(@-direction, @-width, @-height, @-color)
+		when(@-direction = right) {
+	.-h-border-width(@-width, 0);
+	.-v-border-width(@-height / 2);
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: @-color;
+}
+.-arrow-head(@-direction, @-width, @-height, @-color)
+		when(@-direction = bottom) {
+	.-h-border-width(@-width / 2);
+	.-v-border-width(@-height, 0);
+	border-top-color: @-color;
+	border-right-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+}
+.-arrow-head(@-direction, @-width, @-height, @-color)
+		when(@-direction = left) {
+	.-h-border-width(0, @-width);
+	.-v-border-width(@-height / 2);
+	border-top-color: transparent;
+	border-right-color: @-color;
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+}

@@ -1,0 +1,36 @@
+@import "variables.less";
+
+/**
+ * CSS 2.1 Wrapper :: Blessing
+ * @author Satoshi Soma <post@amekusa.com>
+ * @update 2013-02-26 by S.Soma
+ */
+
+#css2 { // Namespace
+
+.display(table) {
+	display: table;
+	behavior: url("@{scripts-url}/display-table.htc/display-table.min.htc");
+}
+
+.display(table-cell) {
+	display: table-cell;
+	behavior: url("@{scripts-url}/display-table.htc/display-table.min.htc");
+	-dt-display: table-cell;
+}
+
+.display(inline-block, @-compatibility: @compatibility) {
+	display: inline-block;
+}
+
+.display(inline-block, @-compatibility: @compatibility)
+		when (@-compatibility >= @compatibility-ie7) {
+	display: inline;
+	zoom: 1;
+}
+
+} // /Namespace
+
+/*
+ * CSS 2.1 Wrapper :: Blessing
+ **/

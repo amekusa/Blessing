@@ -1,0 +1,175 @@
+@import "typefaces.less";
+@import "methods.less";
+
+/**
+ * Defaults :: Blessing
+ * @author amekusa <post@amekusa.com>
+ * 
+ * @modified 2013-02-22 by amekusa
+ */
+
+* {
+	.-naked;
+}
+
+/***
+ * HTML5 elements
+ */
+
+section, nav, article, aside, hgroup,
+header, footer, figure, figcaption, details {
+	display: block;
+}
+
+video, audio, canvas {
+	#css2 > .display(inline-block);
+}
+
+audio:not([controls]) {
+	display: none;
+}
+
+[hidden] {
+	display: none;
+}
+
+/***
+ * HTML4 elements
+ */
+
+:root, html, body, div, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6,
+dl, dt, dd, ul, ol, li,
+table, th, td,
+form, fieldset, input, textarea, select, option,
+embed, object {
+	vertical-align: baseline;
+}
+
+:root, html, body {
+	.-naked;
+	.-dimension(100%, 100%);
+}
+
+body {
+	font-size: @base-font-size;
+	line-height: @base-line-height;
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+}
+
+/***
+ * Heads
+ */
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: @x-large-font-size;
+}
+
+section h1,
+h2 {
+	font-size: @large-font-size;
+}
+
+section section h1,
+section h2,
+h3, h4, h5, h6 {
+	font-size: @medium-font-size;
+}
+
+/***
+ * Texts, Phrases
+ */
+
+p, q {
+	font-size: @medium-font-size;
+}
+
+small {
+	font-size: @small-font-size;
+}
+
+small > small {
+	font-size: @x-small-font-size;
+}
+
+small > small small {
+	font-size: 1em;
+}
+
+/***
+ * Table
+ */
+
+table {
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+
+thead, th {
+	font-weight: bold;
+}
+
+/***
+ * Lists
+ */
+
+ol, ul {
+	list-style-type: none;
+}
+
+dt {
+	font-weight: bold;
+}
+
+/***
+ * Others
+ */
+
+img, a img {
+	vertical-align: bottom;
+	border: none;
+	background: transparent;
+}
+
+object {
+	vertical-align: top;
+}
+
+fieldset {
+	border: none;
+}
+
+code, samp, pre, kbd {
+	font-family: @font-for-console;
+}
+
+a {
+	text-decoration: none;
+	
+	&:focus,
+	&:active {
+		outline: none;
+	}
+}
+
+q {
+	quotes: "\201C" "\201D" "\2018" "\2019";
+	
+	&:before {
+		content: open-quote;
+	}
+	
+	&:after {
+		content: close-quote;
+	}
+}
+
+/*
+ * Defaults :: Blessing
+ **/
