@@ -1,0 +1,2 @@
+# Detects text files and normalises line breaks
+* text=auto eol=lf

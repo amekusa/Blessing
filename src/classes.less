@@ -69,12 +69,16 @@
 .table {
 	display: table;
 	
-	.row {
-		display: table-row;
+	.col {
+		display: table-cell;
 	}
 	
-	.cell {
-		display: table-cell;
+	.row {
+		display: table-row;
+		
+		> * {
+			.col;
+		}
 	}
 	
 	> .head {

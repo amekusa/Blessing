@@ -1,0 +1,43 @@
+/**
+ * Blessing / Methods / Typography
+ * @author amekusa <post@amekusa.com>
+ * @see http://archiva.jp/web/html-css/web-typography.html
+ */
+
+.define-font(
+		@name;
+		@src;
+		@style: normal;
+		@weight: normal;
+		@stretch: normal;
+		@unicode-range: "U+0-10FFFF") {
+	
+	@font-face {
+		font-family: "@{name}";
+		src:
+				url("@{src}.eot?#iefix") format("embedded-opentype"),
+				url("@{src}.woff") format("woff"),
+				url("@{src}.ttf") format("truetype"),
+				url("@{src}.svg#88zen") format("svg");
+		
+		font-style: @style;
+		font-weight: @weight;
+		font-stretch: @stretch;
+		unicode-range: @unicode-range;
+	}
+}
+
+.amp { // For Amdpersands
+	font-family: Baskerville, Palatino, "Palatino Linotype", "Book Antiqua", serif;
+	font-style: italic;
+}
+
+.caps { // For Smallcaps
+	font-family: Baskerville, Palatino, "Palatino Linotype", "Times New Roman", serif;
+	font-variant: small-caps;
+}
+
+.ascii-art { // For ASCII arts
+	font-family: @font-for-ascii-art, monospace;
+	line-height: 1.125;
+}
