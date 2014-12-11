@@ -1,11 +1,27 @@
 /**
- * Methods :: Blessing
+ * Blessing / Methods
  * @author amekusa <post@amekusa.com>
- * @update 2014-05-23 by amekusa
  */
 
 @import "variables.less";
-@import "methods.wrappers.less";
+@import "methods.wrapper.less";
+
+.pos(@v; @h; @from) when (@from = top-right) {
+	top: @v;
+	right: @h
+}
+.pos(@v; @h; @from) when (@from = bottom-left) {
+	bottom: @v;
+	left: @h
+}
+.pos(@v; @h; @from) when (@from = bottom-right) {
+	bottom: @v;
+	right: @h
+}
+.pos(@v; @h; @from) when (default()) {
+	top: @v;
+	left: @h
+}
 
 .-position(@-v-amount, @-h-amount, @-from: top-left) when (@-from = top-left) {
 	top: @-v-amount;
@@ -351,13 +367,11 @@ p.short {
 	white-space: nowrap;
 }
 
-
 @import "methods.division.less";
 @import "methods.gui.less";
 @import "methods.sfx.less";
-@import "methods.accessories.less";
+@import "methods.component.less";
 @import "methods.development.less";
 
-/*
- * Methods :: Blessing
+/* END Blessing / Methods
  **/
