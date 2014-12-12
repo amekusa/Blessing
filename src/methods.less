@@ -6,215 +6,212 @@
 @import "variables.less";
 @import "methods.wrapper.less";
 
-.pos(@v; @h; @from) when (@from = top-right) {
-	top: @v;
-	right: @h
-}
-.pos(@v; @h; @from) when (@from = bottom-left) {
-	bottom: @v;
-	left: @h
-}
-.pos(@v; @h; @from) when (@from = bottom-right) {
-	bottom: @v;
-	right: @h
-}
-.pos(@v; @h; @from) when (default()) {
-	top: @v;
-	left: @h
+.originated() {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }
 
-.-position(@-v-amount, @-h-amount, @-from: top-left) when (@-from = top-left) {
-	top: @-v-amount;
-	left: @-h-amount;
+.offset(@H; @V; left-top) {
+	left: @H;
+	top: @V;
 }
-.-position(@-v-amount, @-h-amount, @-from: top-left) when (@-from = top-right) {
-	top: @-v-amount;
-	right: @-h-amount;
+.offset(@H; @V; right-top) {
+	right: @H;
+	top: @V;
 }
-.-position(@-v-amount, @-h-amount, @-from: top-left) when (@-from = bottom-left) {
-	bottom: @-v-amount;
-	left: @-h-amount;
+.offset(@H; @V; left-bottom) {
+	left: @H;
+	bottom: @V;
 }
-.-position(@-v-amount, @-h-amount, @-from: top-left) when (@-from = bottom-right) {
-	bottom: @-v-amount;
-	right: @-h-amount;
-}
-
-.-originate() { // #DEPRECATED
-	.-position(0, 0, top-left);
-}
-.-originated() {
-	.-position(0, 0, top-left);
+.offset(@H; @V; right-bottom) {
+	right: @H;
+	bottom: @V;
 }
 
-.-dimension(@-width, @-height) {
-	width: @-width;
-	height: @-height;
+.dim(@W; @H) {
+	width: @W;
+	height: @H;
 }
-.-dimension(@-width-and-height) {
-	width: @-width-and-height;
-	height: @-width-and-height;
-}
-
-.-v-margin(@-margin-top; @-margin-bottom) {
-	margin-top: @-margin-top;
-	margin-bottom: @-margin-bottom;
-}
-.-v-margin(@-margin-top-and-bottom) {
-	.-v-margin(@-margin-top-and-bottom, @-margin-top-and-bottom);
+.dim(@WH) {
+	width: @WH;
+	height: @WH;
 }
 
-.-h-margin(@-margin-left, @-margin-right) {
-	margin-left: @-margin-left;
-	margin-right: @-margin-right;
-}
-.-h-margin(@-margin-left-and-right) {
-	.-h-margin(@-margin-left-and-right, @-margin-left-and-right);
+.dimension() {
+	.dim(@arguments);
 }
 
-.-c-aligned() {
-	.-h-margin(auto);
+.v-margin(@Top; @Bottom) {
+	margin-top: @Top;
+	margin-bottom: @Bottom;
+}
+.v-margin(@V) {
+	.v-margin(@V; @V);
 }
 
-.-l-aligned(@-offset: 0) {
-	.-h-margin(@-offset, auto);
+.h-margin(@Left; @Right) {
+	margin-left: @Left;
+	margin-right: @Right;
+}
+.h-margin(@H) {
+	.h-margin(@H; @H);
 }
 
-.-r-aligned(@-offset: 0) {
-	.-h-margin(auto, @-offset);
+.aligned(center) {
+	.h-margin(auto);
+}
+.aligned(left; @Offset: 0) {
+	.h-margin(@Offset; auto);
+}
+.aligned(right; @Offset: 0) {
+	.h-margin(auto; @Offset);
 }
 
-.-v-padding(@-padding-top, @-padding-bottom) {
+.c-aligned() {
+	.h-margin(auto);
+}
+
+.l-aligned(@-offset: 0) {
+	.h-margin(@-offset, auto);
+}
+
+.r-aligned(@-offset: 0) {
+	.h-margin(auto, @-offset);
+}
+
+.v-padding(@-padding-top, @-padding-bottom) {
 	padding-top: @-padding-top;
 	padding-bottom: @-padding-bottom;
 }
-.-v-padding(@-padding-top-and-bottom) {
-	.-v-padding(@-padding-top-and-bottom, @-padding-top-and-bottom);
+.v-padding(@-padding-top-and-bottom) {
+	.v-padding(@-padding-top-and-bottom, @-padding-top-and-bottom);
 }
 
-.-h-padding(@-padding-left, @-padding-right) {
+.h-padding(@-padding-left, @-padding-right) {
 	padding-left: @-padding-left;
 	padding-right: @-padding-right;
 }
-.-h-padding(@-padding-left-and-right) {
-	.-h-padding(@-padding-left-and-right, @-padding-left-and-right);
+.h-padding(@-padding-left-and-right) {
+	.h-padding(@-padding-left-and-right, @-padding-left-and-right);
 }
 
-.-v-border(@-border-top, @-border-bottom) {
+.v-border(@-border-top, @-border-bottom) {
 	border-top: @-border-top;
 	border-bottom: @-border-bottom;
 }
-.-v-border(@-border-top-and-bottom) {
-	.-v-border(@-border-top-and-bottom, @-border-top-and-bottom);
+.v-border(@-border-top-and-bottom) {
+	.v-border(@-border-top-and-bottom, @-border-top-and-bottom);
 }
 
-.-h-border(@-border-left, @-border-right) {
+.h-border(@-border-left, @-border-right) {
 	border-left: @-border-left;
 	border-right: @-border-right;
 }
-.-h-border(@-border-left-and-right) {
-	.-h-border(@-border-left-and-right, @-border-left-and-right);
+.h-border(@-border-left-and-right) {
+	.h-border(@-border-left-and-right, @-border-left-and-right);
 }
 
-.-v-border-width(@-border-top-width, @-border-bottom-width) {
+.v-border-width(@-border-top-width, @-border-bottom-width) {
 	border-top-width: @-border-top-width;
 	border-bottom-width: @-border-bottom-width;
 }
-.-v-border-width(@-border-top-and-bottom-width) {
-	.-v-border-width(@-border-top-and-bottom-width, @-border-top-and-bottom-width);
+.v-border-width(@-border-top-and-bottom-width) {
+	.v-border-width(@-border-top-and-bottom-width, @-border-top-and-bottom-width);
 }
 
-.-h-border-width(@-border-left-width, @-border-right-width) {
+.h-border-width(@-border-left-width, @-border-right-width) {
 	border-left-width: @-border-left-width;
 	border-right-width: @-border-right-width;
 }
-.-h-border-width(@-border-left-and-right-width) {
-	.-h-border-width(@-border-left-and-right-width, @-border-left-and-right-width);
+.h-border-width(@-border-left-and-right-width) {
+	.h-border-width(@-border-left-and-right-width, @-border-left-and-right-width);
 }
 
-.-naked() {
+.naked() {
 	margin: 0;
 	padding: 0;
 	border-width: 0;
 }
 
-.-v-naked() {
-	.-v-margin(0);
-	.-v-padding(0);
-	.-v-border-width(0);
+.v-naked() {
+	.v-margin(0);
+	.v-padding(0);
+	.v-border-width(0);
 }
 
-.-h-naked() {
-	.-h-margin(0);
-	.-h-padding(0);
-	.-h-border-width(0);
+.h-naked() {
+	.h-margin(0);
+	.h-padding(0);
+	.h-border-width(0);
 }
 
-.-c-aligner {
+.c-aligner {
 	text-align: center;
 	
 	> * {
-		.-c-aligned;
+		.c-aligned;
 	}
 }
 
-.-l-aligner {
+.l-aligner {
 	text-align: left;
 	
 	> * {
-		.-l-aligned;
+		.l-aligned;
 	}
 }
 
-.-r-aligner {
+.r-aligner {
 	text-align: right;
 	
 	> * {
-		.-r-aligned;
+		.r-aligned;
 	}
 }
 
 //// Complex layout methods
 
-.-vertical-centered-block(@-height) {
+.vertical-centered-block(@-height) {
 	display: block;
 	position: absolute;
 	height: @-height;
 }
-.-vertical-centered-block(@-height) when (ispercentage(@-height)) { // For flexible height
+.vertical-centered-block(@-height) when (ispercentage(@-height)) { // For flexible height
 	top: (100 - @-height) / 2;
 }
-.-vertical-centered-block(@-height) when not (ispercentage(@-height)) { // For fixed height
+.vertical-centered-block(@-height) when not (ispercentage(@-height)) { // For fixed height
 	top: 50%;
 	margin-top: -(@-height / 2);
 }
 
 //// Other utilities
 
-.-layer(@-z-index: auto) {
+.layer(@-z-index: auto) {
 	display: block;
 	position: absolute;
 	z-index: @-z-index;
-	.-originated;
-	.-dimension(100%);
-	.-naked;
+	.originated;
+	.dimension(100%);
+	.naked;
 	#css3 > .box-sizing(border-box);
 }
 
-.-clipper() {
+.clipper() {
 	display: block;
 	overflow: hidden;
 	white-space: nowrap;
 }
 
-.-layouter() {
+.layouter() {
 	position: relative;
 	
 	> * {
 		position: absolute;
 	}
 }
-.layouter {.-layouter}
+.layouter {.layouter}
 
 .l-aligner {
 	text-align: left;
@@ -288,7 +285,7 @@ img.inline {
 .showcase {
 	> .content {
 		display: block;
-		.-c-aligned;
+		.c-aligned;
 	}
 	
 	> p.caption {
@@ -326,21 +323,21 @@ p.short {
 	}
 	
 	> noscript.alt {
-		.-layer(auto);
+		.layer(auto);
 	}
 }
 
 
-.-indent(@-amount: 4em) {
+.indent(@-amount: 4em) {
 
 }
 
 .indent {
-	.-indent;
+	.indent;
 }
 
 
-.-foreground-color(@-color; @-rollover-color: red) {
+.foreground-color(@-color; @-rollover-color: red) {
 	color: @-color;
 	
 	&:hover,
@@ -362,7 +359,7 @@ p.short {
 }
 
 
-.-no-wrap() {
+.no-wrap() {
 	overflow: visible;
 	white-space: nowrap;
 }
