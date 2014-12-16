@@ -2,7 +2,10 @@
  * Blessing / Methods / Typography
  * @author amekusa <post@amekusa.com>
  * @see http://archiva.jp/web/html-css/web-typography.html
+ * @see http://css-tricks.com/snippets/css/using-font-face/
  */
+
+@import "variables.font.less";
 
 .define-font(
 		@name;
@@ -14,11 +17,13 @@
 	
 	@font-face {
 		font-family: "@{name}";
+		src: url("@{src}.eot"); // For IE 9 (compatible mode)
 		src:
-				url("@{src}.eot?#iefix") format("embedded-opentype"),
-				url("@{src}.woff") format("woff"),
-				url("@{src}.ttf") format("truetype"),
-				url("@{src}.svg#88zen") format("svg");
+				url("@{src}.eot?#iefix") format("embedded-opentype"), // For old IEs
+				url("@{src}.woff2") format("woff2"), // For super modern browsers
+				url("@{src}.woff") format("woff"), // For modern browsers
+				url("@{src}.ttf") format("truetype"), // For Safari, Android, iOS
+				url("@{src}.svg#@{name}") format("svg"); // For legacy iOSes
 		
 		font-style: @style;
 		font-weight: @weight;
@@ -37,8 +42,8 @@
 	font-variant: small-caps;
 }
 
-.ascii-art { // For ASCII arts
-	font-family: @font-for-ascii-art, monospace;
+.aa-2ch { // For 2channel ASCII art
+	font-family: @font-for-2ch, monospace;
 	line-height: 1.125;
 }
 
