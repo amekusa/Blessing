@@ -1,29 +1,44 @@
 module.exports = function(grunt) {
-  require('jit-grunt')(grunt);
+	require("jit-grunt")(grunt); // Load modules Just-in-Time
 
-  grunt.initConfig({
-    less: {
-      development: {
-        options: {
-          compress: true,
-          yuicompress: true,
-          optimization: 2
-        },
-        files: {
-          "dist/main.css": "src/main.less" // destination file and source file
-        }
-      }
-    },
-    watch: {
-      styles: {
-        files: ['src/**/*.less'], // which files to watch
-        tasks: ['less'],
-        options: {
-          nospawn: true
-        }
-      }
-    }
-  });
+	grunt.initConfig({ // Define tasks
 
-  grunt.registerTask('default', ['less', 'watch']);
+		less: { // Compile LESS files to CSS
+
+			dev: {
+				options: {
+					compress: false,
+					yuicompress: false,
+					optimization: 2
+				},
+				files: {
+					"dist/blessing.css": "src/main.less" // Destination file and source file
+				}
+			},
+
+			dist: {
+				options: {
+					compress: true,
+					yuicompress: true,
+					optimization: 2
+				},
+				files: {
+					"dist/blessing.css": "src/main.less" // Destination file and source file
+				}
+			}
+		},
+
+		watch: { // Run predefined tasks whenever watched files change
+			styles: {
+				files: ["src/**/*.less"], // Files to watch
+				tasks: ["less"], // Tasks run immediately on watched files changed
+				options: {
+					nospawn: true
+				}
+			}
+		}
+	});
+
+	grunt.registerTask("default", ["less", "watch"]);
+	grunt.registerTask("dist", ["less:dist", "watch"]);
 };
