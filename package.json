@@ -2,27 +2,34 @@
 	"name": "Blessing",
 	"version": "0.1.0",
 	"description": "A CSS framework",
-	"main": "Gruntfile.js",
+	"keywords": ["css", "less"],
+	"author": "amekusa <post@amekusa.com> (http://amekusa.com)",
+	"license": "GPL",
+	"homepage": "https://bitbucket.org/amekusa/blessing/",
+	"repository": {
+		"type": "git",
+		"url": "https://amekusa@bitbucket.org/amekusa/blessing.git"
+	},
+	"main": "gulpfile.js",
 	"directories": {
 		"test": "test"
 	},
 	"scripts": {
 		"test": "testcommand"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://amekusa@bitbucket.org/amekusa/blessing.git"
+	"dependencies": {
+		"less": "^2.0.0"
 	},
-	"keywords": [
-		"css"
-	],
-	"author": "amekusa",
-	"license": "GPL",
 	"devDependencies": {
 		"gulp": "*",
+		"gulp-load-plugins": "*",
+		"gulp-notify": "*",
+		"gulp-rename": "*",
+		"gulp-bundle-assets": "*",
+		"gulp-less": "*"
 		"gulp-autoprefixer": "*",
 		"gulp-cssimport": "*",
 		"gulp-minify-css": "*",
-		"gulp-rename": "*"
+		"borwser-sync": "*"
 	}
 }
