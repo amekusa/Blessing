@@ -3,8 +3,9 @@ var project = require('package.json').name.toLowerCase();
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins")();
 
-gulp.task("build", ["compile", "compress"], function() {
-});
+gulp.task("default", ["build", "watch"]);
+
+gulp.task("build", ["compile", "compress"]);
 
 gulp.task("compile", ["bundle"], function() {
 	return gulp.src("src/" + project + ".less")
