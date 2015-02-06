@@ -1,34 +1,28 @@
 @import "variables.less";
 
-/**
- * Division Methods :: Blessing
- * @author amekusa <post@amekusa.com>
- */
-
-// # Division methods
-
-// ## Clearfix
-.-clearfix () {
+.clearfix() {
+	
 	&:after {
-		content: @whitespace-char;
+		content: @char-whitespace;
 		clear: both;
 		visibility: hidden;
 		display: block;
 		height: 0;
 		overflow: hidden;
 	}
+	
+	& when (@compatibility >= @compatibility-ie7) {
+		zoom: 1;
+	}
 }
-.-clearfix () when (@compatibility >= @compatibility-ie7) {
-	zoom: 1;
-}
-.-clearfix-alt () {
+
+.clearfix-alt () {
 	overflow: hidden;
 	width: 100%;
 }
 
-// ## Columns
 .-cols (@-arrangement: ltr) {
-	.-clearfix;
+	.clearfix;
 	
 	> * {
 		display: block;
@@ -122,7 +116,7 @@
 		@-cols-arrangement: ltr) {
 	
 	display: block;
-	.-clearfix;
+	.clearfix;
 	
 	> * {
 		display: block;
@@ -413,7 +407,7 @@
 // ## Horizontal array
 .-h-array(@-num-items, @-item-margin: 0) {
 	display: block;
-	.-clearfix;
+	.clearfix;
 	
 	> * {
 		display: block;
