@@ -16,31 +16,33 @@
 	}
 }
 
-.clearfix-alt () {
+.clearfix-alt() {
 	overflow: hidden;
 	width: 100%;
 }
 
-.-cols (@-arrangement: ltr) {
+.cols(@n-cols: uncertain; @arrange: ltr) {
 	.clearfix;
 	
 	> * {
 		display: block;
 		min-height: 1px;
+		
+		& when (@arrange = ltr), (@arrange = left-to-right) {
+			float: left;
+		}
+		
+		& when (@arrange = rtl), (@arrange = right-to-left) {
+			float: right;
+		}
 	}
-}
-.-cols (@-arrangement: ltr)
-		when (@-arrangement = ltr) {
 	
-	> * {
-		float: left;
-	}
-}
-.-cols (@-arrangement: ltr)
-		when (@-arrangement = rtl) {
-	
-	> * {
-		float: right;
+	& when (isnumber(@n-cols)) {
+		
+		> * {
+			position: relative;
+			width: 100% / @n-cols;
+		}
 	}
 }
 
@@ -50,7 +52,7 @@
 		@-cols-spacing: @base-margin,
 		@-cols-arrangement: ltr) {
 	
-	.-cols (@-cols-arrangement);
+	.cols (@-cols-arrangement);
 	
 	> * {
 		
@@ -109,7 +111,7 @@
 }
 
 /*
-.-cols(
+.cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
 		@-cols-spacing: @base-margin,
@@ -131,7 +133,7 @@
 	}
 }
 // ## 2 columns
-.-cols(
+.cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
 		@-cols-spacing: @base-margin,
@@ -175,7 +177,7 @@
 	}
 }
 // ## 3 columns
-.-cols(
+.cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
 		@-cols-spacing: @base-margin,
@@ -217,7 +219,7 @@
 	}	
 }
 // ## Equal-height columns
-.-cols(
+.cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
 		@-cols-spacing: @base-margin,
@@ -233,7 +235,7 @@
 	}
 }
 // ## Arrange columns as left to right
-.-cols(@-num-cols: auto, @-cols-height-equation: auto, @-cols-spacing: @base-margin,
+.cols(@-num-cols: auto, @-cols-height-equation: auto, @-cols-spacing: @base-margin,
 		@-cols-arrangement: ltr) when (@-cols-arrangement = ltr) {
 	
 	> * {
@@ -241,7 +243,7 @@
 	}
 }
 // ## Arrange columns as right to left
-.-cols(@-num-cols: auto, @-cols-height-equation: auto, @-cols-spacing: @base-margin,
+.cols(@-num-cols: auto, @-cols-height-equation: auto, @-cols-spacing: @base-margin,
 		@-cols-arrangement: ltr) when (@-cols-arrangement = rtl) {
 	
 	> * {
@@ -249,7 +251,7 @@
 	}
 }
 // Compatible with lte IE 7 & gt IE 6
-.-cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compatibility) when (@-compatibility >= @compatibility-ie7), (@-compatibility < @compatibility-ie6) {
+.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compatibility) when (@-compatibility >= @compatibility-ie7), (@-compatibility < @compatibility-ie6) {
 	
 	&.dyad > * {
 		
@@ -274,7 +276,7 @@
 	}
 }
 // Compatible with lte IE 6
-.-cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compatibility) when (@-compatibility >= @compatibility-ie6) {
+.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compatibility) when (@-compatibility >= @compatibility-ie6) {
 	
 	.col {
 		display: block;
