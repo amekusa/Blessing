@@ -3,40 +3,40 @@
 	.dim(0);
 	padding: 0;
 	border-style: solid;
-}
-.triangle(@direction; @w; @h; @color)
-		when(@direction = top) {
-	.bdr-x-width(@w / 2);
-	.bdr-y-width(0; @h);
-	border-top-color: transparent;
-	border-right-color: transparent;
-	border-bottom-color: @color;
-	border-left-color: transparent;
-}
-.triangle(@direction; @w; @h; @color)
-		when(@direction = right) {
-	.bdr-x-width(@w; 0);
-	.bdr-y-width(@h / 2);
-	border-top-color: transparent;
-	border-right-color: transparent;
-	border-bottom-color: transparent;
-	border-left-color: @color;
-}
-.triangle(@direction; @w; @h; @color)
-		when(@direction = bottom) {
-	.bdr-x-width(@w / 2);
-	.bdr-y-width(@h; 0);
-	border-top-color: @color;
-	border-right-color: transparent;
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-}
-.triangle(@direction; @w; @h; @color)
-		when(@direction = left) {
-	.bdr-x-width(0; @w);
-	.bdr-y-width(@h / 2);
-	border-top-color: transparent;
-	border-right-color: @color;
-	border-bottom-color: transparent;
-	border-left-color: transparent;
+	
+	& when (@direction = l), (@direction = left) {
+		.bdr-x-width(0; @w);
+		.bdr-y-width(@h / 2);
+		border-top-color: transparent;
+		border-right-color: @color;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+	}
+	
+	& when (@direction = r), (@direction = right) {
+		.bdr-x-width(@w; 0);
+		.bdr-y-width(@h / 2);
+		border-top-color: transparent;
+		border-right-color: transparent;
+		border-bottom-color: transparent;
+		border-left-color: @color;
+	}
+	
+	& when (@direction = t), (@direction = top) {
+		.bdr-x-width(@w / 2);
+		.bdr-y-width(0; @h);
+		border-top-color: transparent;
+		border-right-color: transparent;
+		border-bottom-color: @color;
+		border-left-color: transparent;
+	}
+	
+	& when (@direction = b), (@direction = bottom) {
+		.bdr-x-width(@w / 2);
+		.bdr-y-width(@h; 0);
+		border-top-color: @color;
+		border-right-color: transparent;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+	}
 }
