@@ -1,50 +1,42 @@
-/**
- * Blessing / Methods / Component
- * @author amekusa <post@amekusa.com>
- */
-
-.-arrow-head(@-direction, @-width, @-height, @-color) {
+.triangle(@direction; @w; @h; @color) {
 	display: block;
-	.-dimension(0, 0);
+	.dim(0);
 	padding: 0;
 	border-style: solid;
+	
+	& when (@direction = l), (@direction = left) {
+		.bdr-x-width(0; @w);
+		.bdr-y-width(@h / 2);
+		border-top-color: transparent;
+		border-right-color: @color;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+	}
+	
+	& when (@direction = r), (@direction = right) {
+		.bdr-x-width(@w; 0);
+		.bdr-y-width(@h / 2);
+		border-top-color: transparent;
+		border-right-color: transparent;
+		border-bottom-color: transparent;
+		border-left-color: @color;
+	}
+	
+	& when (@direction = t), (@direction = top) {
+		.bdr-x-width(@w / 2);
+		.bdr-y-width(0; @h);
+		border-top-color: transparent;
+		border-right-color: transparent;
+		border-bottom-color: @color;
+		border-left-color: transparent;
+	}
+	
+	& when (@direction = b), (@direction = bottom) {
+		.bdr-x-width(@w / 2);
+		.bdr-y-width(@h; 0);
+		border-top-color: @color;
+		border-right-color: transparent;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+	}
 }
-.-arrow-head(@-direction, @-width, @-height, @-color)
-		when(@-direction = top) {
-	.-h-border-width(@-width / 2);
-	.-v-border-width(0, @-height);
-	border-top-color: transparent;
-	border-right-color: transparent;
-	border-bottom-color: @-color;
-	border-left-color: transparent;
-}
-.-arrow-head(@-direction, @-width, @-height, @-color)
-		when(@-direction = right) {
-	.-h-border-width(@-width, 0);
-	.-v-border-width(@-height / 2);
-	border-top-color: transparent;
-	border-right-color: transparent;
-	border-bottom-color: transparent;
-	border-left-color: @-color;
-}
-.-arrow-head(@-direction, @-width, @-height, @-color)
-		when(@-direction = bottom) {
-	.-h-border-width(@-width / 2);
-	.-v-border-width(@-height, 0);
-	border-top-color: @-color;
-	border-right-color: transparent;
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-}
-.-arrow-head(@-direction, @-width, @-height, @-color)
-		when(@-direction = left) {
-	.-h-border-width(0, @-width);
-	.-v-border-width(@-height / 2);
-	border-top-color: transparent;
-	border-right-color: @-color;
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-}
-
-/* END Blessing / Methods / Component
- **/
