@@ -1,11 +1,10 @@
 /**
  * Blessing / Methods / Typography
- * @author amekusa <post@amekusa.com>
  * @see http://archiva.jp/web/html-css/web-typography.html
  * @see http://css-tricks.com/snippets/css/using-font-face/
  */
 
-@import "variables.font.less";
+@import (reference) "variables.font.less";
 
 .define-font(
 		@name;
@@ -32,20 +31,17 @@
 	}
 }
 
-.amp { // For Amdpersands
+.amp() { // For Amdpersands
 	font-family: Baskerville, Palatino, "Palatino Linotype", "Book Antiqua", serif;
 	font-style: italic;
 }
 
-.caps { // For Smallcaps
+.caps() { // For Smallcaps
 	font-family: Baskerville, Palatino, "Palatino Linotype", "Times New Roman", serif;
 	font-variant: small-caps;
 }
 
-.aa-2ch { // For 2channel ASCII art
+.mimic-2ch() { // For mimicking 2ch.net
 	font-family: @font-for-2ch, monospace;
 	line-height: 1.125;
 }
-
-/* END Blessing / Methods / Typography
- **/

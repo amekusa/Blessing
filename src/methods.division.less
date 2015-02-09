@@ -1,4 +1,8 @@
-@import "variables.less";
+/**
+ * Blessing / Methods / Division
+ */
+
+@import (reference) "variables.less";
 
 .clearfix() {
 	
@@ -24,6 +28,14 @@
 .cols(@n-cols: uncertain; @arrange: ltr) {
 	.clearfix;
 	
+	& when (isnumber(@n-cols)) {
+		
+		> * {
+			position: relative;
+			width: 100% / @n-cols;
+		}
+	}
+	
 	> * {
 		display: block;
 		min-height: 1px;
@@ -34,14 +46,6 @@
 		
 		& when (@arrange = rtl), (@arrange = right-to-left) {
 			float: right;
-		}
-	}
-	
-	& when (isnumber(@n-cols)) {
-		
-		> * {
-			position: relative;
-			width: 100% / @n-cols;
 		}
 	}
 }
@@ -337,7 +341,7 @@
 		}
 	}
 }
-*/
+
 .-rows(@-cols-spacing: @base-margin) {
 	display: block;
 	
@@ -424,7 +428,4 @@
 }
 
 // ## Table 
-
-
-/*
- **/
+*/

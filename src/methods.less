@@ -1,6 +1,5 @@
 /**
  * Blessing / Methods
- * @author amekusa <post@amekusa.com>
  */
 
 @import "variables.less";
@@ -69,7 +68,7 @@
 	.mgn-y(@tb; @tb);
 }
 
-.stick(@to; @offset: 0) {
+.align(@to; @offset: 0) {
 	
 	& when (@to = l), (@to = left) {
 		.mgn-x(@offset; auto);
@@ -79,35 +78,9 @@
 		.mgn-x(auto; @offset);
 	}
 	
-	& when (@to = t), (@to = top) {
-		// @TODO Implement
+	& when (@to = c), (@to = center) {
+		.mgn-x(auto);
 	}
-	
-	& when (@to = b), (@to = bottom) {
-		// @TODO Implement
-	}
-}
-
-.aligned(center) {
-	.mgn-x(auto);
-}
-.aligned(left; @Offset: 0) {
-	.mgn-x(@Offset; auto);
-}
-.aligned(right; @Offset: 0) {
-	.mgn-x(auto; @Offset);
-}
-
-.c-aligned() {
-	.mgn-x(auto);
-}
-
-.l-aligned(@-offset: 0) {
-	.mgn-x(@-offset, auto);
-}
-
-.r-aligned(@-offset: 0) {
-	.mgn-x(auto, @-offset);
 }
 
 .pad-x(@l, @r) {
@@ -158,6 +131,38 @@
 	.bdr-y-width(@tb, @tb);
 }
 
+.bdr-x-style(@l, @r) {
+	border-left-style: @l;
+	border-right-style: @r;
+}
+.bdr-x-style(@lr) {
+	.bdr-x-style(@lr, @lr);
+}
+
+.bdr-y-style(@t, @b) {
+	border-top-style: @t;
+	border-bottom-style: @b;
+}
+.bdr-y-style(@tb) {
+	.bdr-y-style(@tb, @tb);
+}
+
+.bdr-x-color(@l, @r) {
+	border-left-color: @l;
+	border-right-color: @r;
+}
+.bdr-x-color(@lr) {
+	.bdr-x-color(@lr, @lr);
+}
+
+.bdr-y-color(@t, @b) {
+	border-top-color: @t;
+	border-bottom-color: @b;
+}
+.bdr-y-color(@tb) {
+	.bdr-y-color(@tb, @tb);
+}
+
 .nake() {
 	margin: 0;
 	padding: 0;
@@ -174,30 +179,6 @@
 	.mgn-y(0);
 	.pad-y(0);
 	.bdr-y-width(0);
-}
-
-.c-aligner {
-	text-align: center;
-	
-	> * {
-		.c-aligned;
-	}
-}
-
-.l-aligner {
-	text-align: left;
-	
-	> * {
-		.l-aligned;
-	}
-}
-
-.r-aligner {
-	text-align: right;
-	
-	> * {
-		.r-aligned;
-	}
 }
 
 //// Complex layout methods
@@ -314,7 +295,7 @@ img.inline {
 .showcase {
 	> .content {
 		display: block;
-		.c-aligned;
+		.align(c);
 	}
 	
 	> p.caption {
@@ -364,29 +345,6 @@ p.short {
 .indent {
 	.indent;
 }
-
-
-.foreground-color(@-color; @-rollover-color: red) {
-	color: @-color;
-	
-	&:hover,
-	&:focus {
-		color: @-rollover-color;
-	}
-	
-	* {
-		color: @-color;
-	}
-	
-	a {
-		
-		&:hover,
-		&:focus {
-			color: @-rollover-color;
-		}
-	}
-}
-
 
 .no-wrap() {
 	overflow: visible;
