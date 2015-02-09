@@ -1,4 +1,9 @@
-@import "methods.less";
+.cols-n(@max-ncols: 12) when (@max-ncols > 1) {
+	.cols-n(@max-ncols - 1);
+	.cols-@{max-ncols} {
+		.cols(@max-ncols);
+	}
+}
 
 /*
 .cols {
