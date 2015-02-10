@@ -2,17 +2,17 @@
 	opacity: @-opacity;
 }
 .-translucent(@-opacity)
-		when(@compatibility >= @compatibility-css3-transitional) {
+		when(@compat >= @compat-css3-transitional) {
 	-moz-opacity: @-opacity;
 	-webkit-opacity: @-opacity;
 	-o-opacity: @-opacity;
 	-ms-opacity: @-opacity;
 }
 .-translucent(@-opacity)
-		when(@compatibility >= @compatibility-ie8) { // For IE 8
+		when(@compat >= @compat-ie8) { // For IE 8
 	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=" @-opacity * 100 ~")";
 }
 .-translucent(@-opacity)
-		when(@compatibility >= @compatibility-ie7) { // For IE 5 - 7
+		when(@compat >= @compat-ie7) { // For IE 5 - 7
 	filter: ~"alpha(" @-opacity * 100 ~")";
 }

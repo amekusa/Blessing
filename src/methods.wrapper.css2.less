@@ -19,12 +19,12 @@
 	-dt-display: table-cell;
 }
 
-.display(inline-block, @-compatibility: @compatibility) {
+.display(inline-block, @-compatibility: @compat) {
 	display: inline-block;
 }
 
-.display(inline-block, @-compatibility: @compatibility)
-		when (@-compatibility >= @compatibility-ie7) {
+.display(inline-block, @-compatibility: @compat)
+		when (@-compatibility >= @compat-ie7) {
 	display: inline;
 	zoom: 1;
 }

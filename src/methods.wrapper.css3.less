@@ -174,12 +174,12 @@
 	opacity: @arg;
 }
 .opacity(@arg)
-		when(@compatibility >= @compatibility-ie8) {
+		when(@compat >= @compat-ie8) {
 	@x: @arg * 100;
 	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{x})";
 }
 .opacity(@arg)
-		when(@compatibility >= @compatibility-ie7) { // For IE 5 - 7
+		when(@compat >= @compat-ie7) { // For IE 5 - 7
 	filter: ~"alpha(" @arg * 100 ~")";
 }
 

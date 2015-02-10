@@ -15,7 +15,7 @@
 		overflow: hidden;
 	}
 	
-	& when (@compatibility >= @compatibility-ie7) {
+	& when (@compat > @compat-ie8) {
 		zoom: 1;
 	}
 }
@@ -32,7 +32,14 @@
 		
 		> * {
 			position: relative;
-			width: 100% / @n-cols;
+			
+			& when (@compat < @compat-ie7) {
+				width: 100% / @n-cols;
+			}
+			
+			& when (@compat > @compat-ie8) {
+				width: 99.9999% / @n-cols; // Avoid columns dropping
+			}
 		}
 	}
 	
@@ -255,7 +262,7 @@
 	}
 }
 // Compatible with lte IE 7 & gt IE 6
-.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compatibility) when (@-compatibility >= @compatibility-ie7), (@-compatibility < @compatibility-ie6) {
+.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compat) when (@-compatibility >= @compat-ie7), (@-compatibility < @compat-ie6) {
 	
 	&.dyad > * {
 		
@@ -280,7 +287,7 @@
 	}
 }
 // Compatible with lte IE 6
-.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compatibility) when (@-compatibility >= @compatibility-ie6) {
+.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compat) when (@-compatibility >= @compat-ie6) {
 	
 	.col {
 		display: block;
