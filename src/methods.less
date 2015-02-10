@@ -5,6 +5,9 @@
 @import "variables.less";
 @import "methods.wrapper.less";
 
+/**
+ * Originate
+ */
 .origin() {
 	left: 0;
 	right: 0;
@@ -12,6 +15,32 @@
 	bottom: 0;
 }
 
+/**
+ * Positioning
+ *
+ * @param x			Horizontal offset
+ * @param y			Vertical offset
+ * @param from		(default:lt) lt | rt | lb | rb
+ * @param method	(default:@empty)
+ * @param z			(default:@empty)
+ *
+ * # Example(s)
+ * .pos(1px; 2px); // Positioning from left-top
+ * ---------------
+ * left: 1px;
+ * right: 2px;
+ *
+ * .pos(1px; 2px; rb); // Positioning from right-bottom
+ * -------------------
+ * right: 1px;
+ * bottom: 2px;
+ *
+ * .pos(1px; 2px; rb; absolute); // Absolute positioning from right-bottom
+ * -----------------------------
+ * right: 1px;
+ * bottom: 2px;
+ * position: absolute;
+ */
 .pos(@x; @y; @from: lt; @method: @empty; @z: @empty) {
 	
 	& when (@from = lt), (@from = left-top), (@from = l), (@from = left), (@from = t), (@from = top) {
@@ -34,51 +63,107 @@
 		bottom: @y;
 	}
 	
-	& when not (@method = @empty) {
+	& when not(@method = @empty) {
 		position: @method;
 	}
 	
-	& when not (@z = @empty) {
+	& when not(@z = @empty) {
 		z-index: @z;
 	}
 }
 
+/**
+ * Dimension
+ *
+ * @param w		Width
+ * @param h		Height
+ *
+ * # Example(s)
+ * .dim(480px; 320px);
+ * -------------------
+ * width: 480px;
+ * height: 320px;
+ */
 .dim(@w; @h) {
 	width: @w;
 	height: @h;
 }
+
+/**
+ * Dimension (square)
+ *
+ * @param wh	Width & height
+ *
+ * # Example(s)
+ * .dim(16px);
+ * -----------
+ * width: 16px;
+ * height: 16px;
+ */
 .dim(@wh) {
-	width: @wh;
-	height: @wh;
+	.dim(@wh; @wh);
 }
 
+/**
+ * Horizontal Margin
+ */
 .mgn-x(@l; @r) {
 	margin-left: @l;
 	margin-right: @r;
 }
+
+/**
+ * Horizontal Margin (same on both sides)
+ */
 .mgn-x(@lr) {
 	.mgn-x(@lr; @lr);
 }
 
+/**
+ * Vertical Margin
+ */
 .mgn-y(@t; @b) {
 	margin-top: @t;
 	margin-bottom: @b;
 }
+
+/**
+ * Vertical Margin (same on both sides)
+ */
 .mgn-y(@tb) {
 	.mgn-y(@tb; @tb);
 }
 
-.align(@to; @offset: 0) {
+/**
+ * Alignment
+ *
+ * # Example(s)
+ * .align(l); // Left-align
+ * ----------
+ * margin-left: 0;
+ * margin-right: auto;
+ *
+ * .align(r; 12px); // Right-align with an offset
+ * ----------------
+ * margin-left: auto;
+ * margin-right: 12px;
+ *
+ * .align(c); // Center-align
+ * ----------
+ * margin-left: auto;
+ * margin-right: auto;
+ */
+.align(@with; @offset: 0) {
 	
-	& when (@to = l), (@to = left) {
+	& when (@with = l), (@with = left) {
 		.mgn-x(@offset; auto);
 	}
 	
-	& when (@to = r), (@to = right) {
+	& when (@with = r), (@with = right) {
 		.mgn-x(auto; @offset);
 	}
 	
-	& when (@to = c), (@to = center) {
+	& when (@with = c), (@with = center) {
 		.mgn-x(auto);
 	}
 }
@@ -163,48 +248,73 @@
 	.bdr-y-color(@tb, @tb);
 }
 
-.nake() {
-	margin: 0;
-	padding: 0;
-	border-width: 0;
+.strip(@dir: all) {
+	
+	& when (@dir = all) {
+		margin: 0;
+		padding: 0;
+		border-width: 0;
+	}
+	
+	& when (@dir = l), (@dir = left) {
+		margin-left: 0;
+		padding-left: 0;
+		border-left-width: 0;
+	}
+	
+	& when (@dir = r), (@dir = right) {
+		margin-right: 0;
+		padding-right: 0;
+		border-right-width: 0;
+	}
+	
+	& when (@dir = t), (@dir = top) {
+		margin-top: 0;
+		padding-top: 0;
+		border-top-width: 0;
+	}
+	
+	& when (@dir = b), (@dir = bottom) {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom-width: 0;
+	}
 }
 
-.nake-x() {
-	.mgn-x(0);
-	.pad-x(0);
-	.bdr-x-width(0);
+.strip-x() {
+	.strip(l);
+	.strip(r);
 }
 
-.nake-y() {
-	.mgn-y(0);
-	.pad-y(0);
-	.bdr-y-width(0);
+.strip-y() {
+	.strip(t);
+	.strip(b);
 }
 
 //// Complex layout methods
 
-.vertical-centered-block(@-height) {
+.vertical-centered-block(@height) {
 	display: block;
 	position: absolute;
-	height: @-height;
+	height: @height;
 }
-.vertical-centered-block(@-height) when (ispercentage(@-height)) { // For flexible height
-	top: (100 - @-height) / 2;
+.vertical-centered-block(@height) when (ispercentage(@height)) { // For flexible height
+	top: (100 - @height) / 2;
 }
-.vertical-centered-block(@-height) when not (ispercentage(@-height)) { // For fixed height
+.vertical-centered-block(@height) when not (ispercentage(@height)) { // For fixed height
 	top: 50%;
-	margin-top: -(@-height / 2);
+	margin-top: -(@height / 2);
 }
 
 //// Other utilities
 
-.layer(@-z-index: auto) {
+.layer(@z-index: auto) {
 	display: block;
 	position: absolute;
-	z-index: @-z-index;
+	z-index: @z-index;
 	.origin;
 	.dim(100%);
-	.nake;
+	.strip;
 	#css3 > .box-sizing(border-box);
 }
 
@@ -286,67 +396,7 @@
 	height: 100%;
 }
 
-img.inline {
-	display: inline;
-	vertical-align: middle;
-}
-
-
-.showcase {
-	> .content {
-		display: block;
-		.align(c);
-	}
-	
-	> p.caption {
-		text-align: center;
-	}
-}
-
-
-ul.menu, ol.menu { // Simple menu
-	
-	> li { // Menu item
-	}
-}
-
-dl.menu {
-	
-	> dt {
-	}
-	
-	> dd {
-	}
-}
-
-
-p.short {
-	white-space: nowrap;
-}
-
-
-.script-required {
-	position: relative;
-	
-	&.unavailable {
-		visibility: hidden;
-	}
-	
-	> noscript.alt {
-		//.layer(auto);
-	}
-}
-
-
-.indent(@-amount: 4em) {
-
-}
-
-.indent {
-	.indent;
-}
-
-.no-wrap() {
+.nowrap() {
 	overflow: visible;
 	white-space: nowrap;
 }
@@ -356,6 +406,3 @@ p.short {
 @import "methods.sfx.less";
 @import "methods.component.less";
 @import "methods.development.less";
-
-/* END Blessing / Methods
- **/
