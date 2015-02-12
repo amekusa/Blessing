@@ -2,11 +2,12 @@
  * Blessing / Methods
  */
 
-@import "variables.less";
-@import "methods.wrapper.less";
+@import (reference) "variables.less";
+@import (reference) "methods.wrapper.less";
 
 /**
  * Originate
+ * Resets positioning properties.
  */
 .origin() {
 	left: 0;
@@ -168,18 +169,32 @@
 	}
 }
 
+/**
+ * Horizontal Padding
+ */
 .pad-x(@l, @r) {
 	padding-left: @l;
 	padding-right: @r;
 }
+
+/**
+ * Horizontal Padding (same on both sides)
+ */
 .pad-x(@lr) {
 	.pad-x(@lr, @lr);
 }
 
+/**
+ * Vertical Padding
+ */
 .pad-y(@t, @b) {
 	padding-top: @t;
 	padding-bottom: @b;
 }
+
+/**
+ * Vertical Padding (same on both sides)
+ */
 .pad-y(@tb) {
 	.pad-y(@tb, @tb);
 }
@@ -248,6 +263,12 @@
 	.bdr-y-color(@tb, @tb);
 }
 
+/**
+ * Strip
+ * Strip off margins, paddings and borders.
+ *
+ * @param dir		(default:all) all | l | r | t | b
+ */
 .strip(@dir: all) {
 	
 	& when (@dir = all) {
@@ -281,32 +302,42 @@
 	}
 }
 
+/**
+ * Horizontal Strip
+ * Strip off horizontal margins, paddings and borders.
+ */
 .strip-x() {
 	.strip(l);
 	.strip(r);
 }
 
+/**
+ * Vertical Strip
+ * Strip off vertical margins, paddings and borders.
+ */
 .strip-y() {
 	.strip(t);
 	.strip(b);
 }
 
-//// Complex layout methods
-
-.vertical-centered-block(@height) {
-	display: block;
+/**
+ * Vertical Centering
+ *
+ * @param h		Height of the box be centered
+ */
+.center-y(@h) {
 	position: absolute;
-	height: @height;
+	height: @h;
+	
+	& when (ispercentage(@h)) { // For flexible height
+		top: (100 - @h) * .5;
+	}
+	
+	& when not(ispercentage(@h)) { // For fixed height
+		top: 50%;
+		margin-top: -@h * .5;
+	}
 }
-.vertical-centered-block(@height) when (ispercentage(@height)) { // For flexible height
-	top: (100 - @height) / 2;
-}
-.vertical-centered-block(@height) when not (ispercentage(@height)) { // For fixed height
-	top: 50%;
-	margin-top: -(@height / 2);
-}
-
-//// Other utilities
 
 .layer(@z-index: auto) {
 	display: block;
@@ -318,87 +349,46 @@
 	#css3 > .box-sizing(border-box);
 }
 
-.clipper() {
-	display: block;
-	overflow: hidden;
-	white-space: nowrap;
-}
-
-.layouter() {
-	position: relative;
-	
-	> * {
-		position: absolute;
-	}
-}
-.layouter {.layouter}
-
-.l-aligner {
-	text-align: left;
-	
-	* {
-		
-	}
-}
-
-.r-aligner {
-	text-align: right;
-}
-
-.c-aligner {
-	text-align: center;
-}
-
-.block,
-.l-aligned-block,
-.r-aligned-block,
-.c-aligned-block {
-	display: block;
-}
-
-.l-aligner *,
-.l-aligned-block {
-	margin-left: 0;
-	margin-right: auto;
-}
-
-.r-aligner *,
-.r-aligned-block {
-	margin-left: auto;
-	margin-right: 0;
-}
-
-.c-aligner *,
-.c-aligned-block {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.stretcher *,
-.h-stretcher *,
-.v-stretcher * {
-	display: block;
-	padding: 0;
-}
-
-.stretcher * {
-	width: 100%;
-	height: 100%;
-}
-
-.h-stretcher * {
+.maximise-x(@proportional: true) {
 	width: 100%;
 	max-height: 100%;
+	
+	& when (@proportional) {
+		height: auto;
+	}
 }
 
-.v-stretcher * {
-	max-width: 100%;
+.maximise-y(@proportional: true) {
 	height: 100%;
+	max-width: 100%;
+	
+	& when (@proportional) {
+		width: auto;
+	}
 }
 
 .nowrap() {
 	overflow: visible;
 	white-space: nowrap;
+}
+
+/**
+ * Prefixise
+ * Add vendor-prefixes to a property.
+ *
+ * @param prop		Property
+ * @param value		Value
+ */
+.prefix(@prop; @value) {
+	
+	& when (@uses-vendor-prefixes) {
+		-moz-@{prop}: @value;
+		-webkit-@{prop}: @value;
+		-o-@{prop}: @value;
+		-ms-@{prop}: @value;
+	}
+	
+	@{prop}: @value;
 }
 
 @import "methods.division.less";
