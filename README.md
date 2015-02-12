@@ -17,6 +17,9 @@ Alternatively, you can also use `@import` from your CSS file.
 @import "path/to/blessing.css";
 ```
 
+#### Customise
+To get a customised CSS, edit variables defined in `src/variables.config.less` and compile `src/main.less` with your favorite [Less compiler](http://lesscss.org/usage/#online-less-compilers).
+
 ### 2. As [Less](http://lesscss.org/) library (advanced use)
 
 ```less
@@ -30,3 +33,18 @@ If you don't want classes but mixins only, add `(reference)` as import option.
 ```
 
 ## Installation
+```js
+"dependencies": {
+	"blessing": "https://amekusa@bitbucket.org/amekusa/blessing.git#dev"
+}
+```
+
+## Need contribution!
+Blessing is still a work in progress.  
+So think free to fork and pull-request!  
+Ideas, opinions, or donations are also welcomed.  
+
+Additionally, I'm not a native english speaker.
+So correcting english in this README or comments on `.less` source files is greatly appreciated!
+
+Thanks.
