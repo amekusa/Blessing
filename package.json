@@ -1,7 +1,7 @@
 {
-	"name": "Blessing",
+	"name": "blessing",
 	"version": "0.1.0",
-	"description": "A CSS framework",
+	"description": "A CSS library integrated with Less",
 	"keywords": ["css", "less"],
 	"author": "amekusa <post@amekusa.com> (http://amekusa.com)",
 	"license": "GPL",
@@ -10,7 +10,7 @@
 		"type": "git",
 		"url": "https://amekusa@bitbucket.org/amekusa/blessing.git"
 	},
-	"main": "gulpfile.js",
+	"main": "./src/main.less",
 	"directories": {
 		"test": "test"
 	},
@@ -23,13 +23,11 @@
 	"devDependencies": {
 		"gulp": "*",
 		"gulp-load-plugins": "*",
-		"gulp-notify": "*",
 		"gulp-rename": "*",
 		"gulp-bundle-assets": "*",
 		"gulp-less": "*",
 		"gulp-autoprefixer": "*",
-		"gulp-cssimport": "*",
 		"gulp-minify-css": "*",
-		"borwser-sync": "*"
+		"browser-sync": "*"
 	}
 }
