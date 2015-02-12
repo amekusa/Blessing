@@ -2,7 +2,10 @@
 	"name": "blessing",
 	"version": "0.1.0",
 	"description": "A CSS library integrated with Less",
-	"keywords": ["css", "less"],
+	"keywords": [
+		"css",
+		"less"
+	],
 	"author": "amekusa <post@amekusa.com> (http://amekusa.com)",
 	"license": "GPL",
 	"homepage": "https://bitbucket.org/amekusa/blessing/",
@@ -28,6 +31,7 @@
 		"gulp-less": "*",
 		"gulp-autoprefixer": "*",
 		"gulp-minify-css": "*",
+		"gulp-css-purge": "*",
 		"browser-sync": "*"
 	}
 }

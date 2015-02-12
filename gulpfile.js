@@ -2,6 +2,7 @@ var project = require('./package.json').name.toLowerCase();
 
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins")();
+var purge = require('gulp-css-purge'); // gulp-load-plugins cannot load this :(
 
 gulp.task("default", ["build", "watch"]);
 
@@ -13,6 +14,7 @@ gulp.task("compile", function() {
 			.pipe(plugins.less({
 				
 			}))
+			.pipe(purge())
 			.pipe(plugins.autoprefixer("last 2 versions"))
 			.pipe(plugins.rename(project + ".css"))
 			.pipe(gulp.dest("dist"));
