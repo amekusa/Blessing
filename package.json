@@ -29,6 +29,7 @@
 		"gulp-rename": "*",
 		"gulp-bundle-assets": "*",
 		"gulp-less": "*",
+		"gulp-sourcemaps": "*",
 		"gulp-autoprefixer": "*",
 		"gulp-minify-css": "*",
 		"gulp-css-purge": "*",
