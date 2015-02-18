@@ -19,22 +19,21 @@
 /**
  * Positioning
  *
- * @param x			Horizontal offset
- * @param y			Vertical offset
- * @param from		(default:lt) lt | rt | lb | rb
- * @param method	(default:@empty)
- * @param z			(default:@empty)
+ * @param x      <length> Horizontal offset
+ * @param y      <length> Vertical offset
+ * @param from   <direction> (default:lt) Offset origin
+ * @param method <position> (default:@empty) Positioning method
  *
  * # Example(s)
  * .pos(1px; 2px); // Positioning from left-top
  * ---------------
  * left: 1px;
- * right: 2px;
+ * top: 2px;
  *
- * .pos(1px; 2px; rb); // Positioning from right-bottom
+ * .pos(1px; 2px; r); // Positioning from right-top
  * -------------------
  * right: 1px;
- * bottom: 2px;
+ * top: 2px;
  *
  * .pos(1px; 2px; rb; absolute); // Absolute positioning from right-bottom
  * -----------------------------
@@ -42,24 +41,24 @@
  * bottom: 2px;
  * position: absolute;
  */
-.pos(@x; @y; @from: lt; @method: @empty; @z: @empty) {
+.pos(@x; @y; @from: lt; @method: @empty) {
 	
-	& when (@from = lt), (@from = left-top), (@from = l), (@from = left), (@from = t), (@from = top) {
+	& when (@from = lt), (@from = l), (@from = t) {
 		left: @x;
 		top: @y;
 	}
 	
-	& when (@from = rt), (@from = right-top), (@from = r), (@from = right) {
+	& when (@from = rt), (@from = r) {
 		right: @x;
 		top: @y;
 	}
 	
-	& when (@from = lb), (@from = left-bottom), (@from = b), (@from = bottom) {
+	& when (@from = lb), (@from = b) {
 		left: @x;
 		bottom: @y;
 	}
 	
-	& when (@from = rb), (@from = right-bottom) {
+	& when (@from = rb) {
 		right: @x;
 		bottom: @y;
 	}
@@ -67,17 +66,13 @@
 	& when not(@method = @empty) {
 		position: @method;
 	}
-	
-	& when not(@z = @empty) {
-		z-index: @z;
-	}
 }
 
 /**
  * Dimension
  *
- * @param w		Width
- * @param h		Height
+ * @param w <length> Width
+ * @param h <length> Height
  *
  * # Example(s)
  * .dim(480px; 320px);
@@ -93,7 +88,7 @@
 /**
  * Dimension (square)
  *
- * @param wh	Width & height
+ * @param wh <length> Width & height
  *
  * # Example(s)
  * .dim(16px);
@@ -264,38 +259,38 @@
 }
 
 /**
- * Strip
+ * Bare
  * Strip off margins, paddings and borders.
  *
- * @param dir		(default:all) all | l | r | t | b
+ * @param side <side> (default:all) The side to be stripped off
  */
-.strip(@dir: all) {
+.bare(@side: all) {
 	
-	& when (@dir = all) {
+	& when (@side = all) {
 		margin: 0;
 		padding: 0;
 		border-width: 0;
 	}
 	
-	& when (@dir = l), (@dir = left) {
+	& when (@side = l) {
 		margin-left: 0;
 		padding-left: 0;
 		border-left-width: 0;
 	}
 	
-	& when (@dir = r), (@dir = right) {
+	& when (@side = r) {
 		margin-right: 0;
 		padding-right: 0;
 		border-right-width: 0;
 	}
 	
-	& when (@dir = t), (@dir = top) {
+	& when (@side = t) {
 		margin-top: 0;
 		padding-top: 0;
 		border-top-width: 0;
 	}
 	
-	& when (@dir = b), (@dir = bottom) {
+	& when (@side = b) {
 		margin-bottom: 0;
 		padding-bottom: 0;
 		border-bottom-width: 0;
@@ -303,27 +298,27 @@
 }
 
 /**
- * Horizontal Strip
+ * Horizontal Bare
  * Strip off horizontal margins, paddings and borders.
  */
-.strip-x() {
-	.strip(l);
-	.strip(r);
+.bare-x() {
+	.bare(l);
+	.bare(r);
 }
 
 /**
- * Vertical Strip
+ * Vertical Bare
  * Strip off vertical margins, paddings and borders.
  */
-.strip-y() {
-	.strip(t);
-	.strip(b);
+.bare-y() {
+	.bare(t);
+	.bare(b);
 }
 
 /**
  * Vertical Centering
  *
- * @param h		Height of the box be centered
+ * @param h <length> Height
  */
 .center-y(@h) {
 	position: absolute;
@@ -345,7 +340,7 @@
 	z-index: @z-index;
 	.origin;
 	.dim(100%);
-	.strip;
+	.bare;
 	#css3 > .box-sizing(border-box);
 }
 
@@ -376,8 +371,8 @@
  * Prefixise
  * Add vendor-prefixes to a property.
  *
- * @param prop		Property
- * @param value		Value
+ * @param prop  <any> The property to be prefixised
+ * @param value <any> Value of the property
  */
 .prefix(@prop; @value) {
 	
