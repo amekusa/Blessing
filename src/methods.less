@@ -258,7 +258,28 @@
 	.bdr-y-color(@tb, @tb);
 }
 
-.bdr-top-radius
+.bdr-radius(@dir; @radius) {
+	
+	& when (@dir = t) {
+		border-top-left-radius: @radius;
+		border-top-right-radius: @radius;
+	}
+	
+	& when (@dir = r) {
+		border-top-right-radius: @radius;
+		border-bottom-right-radius: @radius;
+	}
+	
+	& when (@dir = b) {
+		border-bottom-left-radius: @radius;
+		border-bottom-right-radius: @radius;
+	}
+	
+	& when (@dir = l) {
+		border-top-left-radius: @radius;
+		border-bottom-left-radius: @radius;
+	}
+}
 
 /**
  * Bare
