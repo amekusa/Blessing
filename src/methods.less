@@ -21,44 +21,44 @@
  *
  * @param x      <length> Horizontal offset
  * @param y      <length> Vertical offset
- * @param from   <direction> (default:lt) Offset origin
+ * @param from   <direction> (default:tl) Offset origin
  * @param method <position> (default:@empty) Positioning method
  *
  * # Example(s)
- * .pos(1px; 2px); // Positioning from left-top
+ * .pos(1px; 2px); // Positioning from top-left
  * ---------------
  * left: 1px;
  * top: 2px;
  *
- * .pos(1px; 2px; r); // Positioning from right-top
+ * .pos(1px; 2px; r); // Positioning from top-right
  * -------------------
  * right: 1px;
  * top: 2px;
  *
- * .pos(1px; 2px; rb; absolute); // Absolute positioning from right-bottom
+ * .pos(1px; 2px; br; absolute); // Absolute positioning from bottom-right
  * -----------------------------
  * right: 1px;
  * bottom: 2px;
  * position: absolute;
  */
-.pos(@x; @y; @from: lt; @method: @empty) {
+.pos(@x; @y; @from: tl; @method: @empty) {
 	
-	& when (@from = lt), (@from = l), (@from = t) {
+	& when (@from = tl), (@from = t), (@from = l) {
 		left: @x;
 		top: @y;
 	}
 	
-	& when (@from = rt), (@from = r) {
+	& when (@from = tr), (@from = r) {
 		right: @x;
 		top: @y;
 	}
 	
-	& when (@from = lb), (@from = b) {
+	& when (@from = bl), (@from = b) {
 		left: @x;
 		bottom: @y;
 	}
 	
-	& when (@from = rb) {
+	& when (@from = br) {
 		right: @x;
 		bottom: @y;
 	}
@@ -257,6 +257,8 @@
 .bdr-y-color(@tb) {
 	.bdr-y-color(@tb, @tb);
 }
+
+.bdr-top-radius
 
 /**
  * Bare
