@@ -25,25 +25,41 @@
 	width: 100%;
 }
 
-.cols(@n-cols: uncertain; @arrange: ltr) {
+.cols(@ncols: uncertain; @arrange: ltr) {
 	.clearfix;
 	
-	& when (isnumber(@n-cols)) {
+	& when (isnumber(@ncols)) {
 		
 		> * {
-			position: relative;
 			
 			& when (@compat < @compat-ie7) {
-				width: 100% / @n-cols;
+				width: 100% / @ncols;
 			}
 			
-			& when (@compat > @compat-ie8) {
-				width: 99.9999% / @n-cols; // Avoid columns dropping
+			& when not(@compat < @compat-ie7) {
+				width: 99.9999% / @ncols; // Avoid columns dropping
+			}
+		}
+		
+		.span-n(@ncols);
+		.span-n(@span) when (@span > 0) {
+			.span-n(@span - 1);
+			
+			> .span-@{span} {
+				
+				& when (@compat < @compat-ie7) {
+					width: (100% / @ncols) * @span;
+				}
+				
+				& when not(@compat < @compat-ie7) {
+					width: (99.9999% / @ncols) * @span;
+				}
 			}
 		}
 	}
 	
 	> * {
+		position: relative;
 		display: block;
 		min-height: 1px;
 		
@@ -54,6 +70,21 @@
 		& when (@arrange = rtl), (@arrange = right-to-left) {
 			float: right;
 		}
+	}
+	
+	> li {
+		list-style: none;
+	}
+}
+
+/**
+ * Generates classes: cols-2, cols-3, ... cols-{max-ncols}
+ */
+.cols-n(@max-ncols: 12) when (@max-ncols > 1) {
+	.cols-n(@max-ncols - 1);
+	
+	.cols-@{max-ncols} {
+		.cols(@max-ncols);
 	}
 }
 

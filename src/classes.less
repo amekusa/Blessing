@@ -1,9 +1,4 @@
-.cols-n(@max-ncols: 12) when (@max-ncols > 1) {
-	.cols-n(@max-ncols - 1);
-	.cols-@{max-ncols} {
-		.cols(@max-ncols);
-	}
-}
+.cols-n(12); // Generate .cols-2 - .cols-12
 
 /*
 .cols {
