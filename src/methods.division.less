@@ -41,8 +41,9 @@
 			}
 		}
 		
-		.span-n(@ncols);
-		.span-n(@span) when (@span > 0) {
+		.span-n(@ncols - 1);
+		
+		.span-n(@span) when (@span > 1) {
 			.span-n(@span - 1);
 			
 			> .span-@{span} {
