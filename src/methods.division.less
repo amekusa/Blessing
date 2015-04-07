@@ -71,6 +71,32 @@
 		}
 	}
 	
+	& when not(isnumber(@ncols)) { // Uncertain of a number of columns
+		
+		> * {
+			.col(12);
+			
+			.col(@max-ncols: 12) when (@max-ncols > 1) {
+				.col(@max-ncols - 1);
+				
+				&:first-child {
+					
+					&:nth-last-child(@{max-ncols}),
+					&:nth-last-child(@{max-ncols}) ~ * {
+						
+						& when (@compat < @compat-ie7) {
+							width: 100% / @max-ncols;
+						}
+						
+						& when not(@compat < @compat-ie7) {
+							width: 99.9999% / @max-ncols;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	> * {
 		position: relative;
 		display: block;
