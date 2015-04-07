@@ -39,6 +39,18 @@
 			& when not(@compat < @compat-ie7) {
 				width: 99.9999% / @ncols; // Avoid columns dropping
 			}
+			
+			@x: @ncols + 1;
+			&:nth-child(@{ncols}n+@{x}) {
+				
+				& when (@arrange = ltr) {
+					clear: left;
+				}
+				
+				& when (@arrange = rtl) {
+					clear: right;
+				}
+			}
 		}
 		
 		.span-n(@ncols - 1);
@@ -89,36 +101,31 @@
 	}
 }
 
-.-2-cols (
-		@-1st-col-width: auto,
-		@-2nd-col-width: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr) {
-	
-	.cols (@-cols-arrangement);
+.cols-dyad(@w1: auto; @w2: auto; @gutter: @base-margin; @arrange: ltr) {
+	.cols (@arrange: @arrange);
 	
 	> * {
 		
 		&:first-child,
 		&:nth-child(odd) {
-			width: @-1st-col-width;
+			width: @w1;
 		}
 		
 		&:last-child,
 		&:nth-child(even) {
-			width: @-2nd-col-width;
+			width: @w2;
 		}
 	}
 }
 .-2-cols (
-		@-1st-col-width: auto,
-		@-2nd-col-width: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr)
-		when (@-cols-arrangement = ltr) {
+		@w1: auto,
+		@w2: auto,
+		@gutter: @base-margin,
+		@arrange: ltr)
+		when (@arrange = ltr) {
 	
 	> * {
-		@x: @-cols-spacing / 2;
+		@x: @gutter / 2;
 		
 		&:first-child,
 		&:nth-child(odd) {
@@ -132,14 +139,14 @@
 	}
 }
 .-2-cols (
-		@-1st-col-width: auto,
-		@-2nd-col-width: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr)
-		when (@-cols-arrangement = rtl) {
+		@w1: auto,
+		@w2: auto,
+		@gutter: @base-margin,
+		@arrange: ltr)
+		when (@arrange = rtl) {
 	
 	> * {
-		@x: @-cols-spacing / 2;
+		@x: @gutter / 2;
 		
 		&:first-child,
 		&:nth-child(odd) {
@@ -157,8 +164,8 @@
 .cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr) {
+		@gutter: @base-margin,
+		@arrange: ltr) {
 	
 	display: block;
 	.clearfix;
@@ -171,7 +178,7 @@
 		> .content {
 			display: block;
 			margin: 0;
-			.-h-padding(@-cols-spacing / 2);
+			.-h-padding(@gutter / 2);
 		}
 	}
 }
@@ -179,8 +186,8 @@
 .cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr)
+		@gutter: @base-margin,
+		@arrange: ltr)
 		when(@-num-cols = 2) {
 	
 	> * {
@@ -190,11 +197,11 @@
 		&:nth-child(odd) {
 			
 			> * {
-				margin-right: @-cols-spacing / 2;
+				margin-right: @gutter / 2;
 			}
 			
 			> .content {
-				.-h-padding(0, @-cols-spacing / 2);
+				.-h-padding(0, @gutter / 2);
 			}
 		}
 		
@@ -202,11 +209,11 @@
 		&:nth-child(even) {
 			
 			> * {
-				margin-left: @-cols-spacing / 2;
+				margin-left: @gutter / 2;
 			}
 			
 			> .content {
-				.-h-padding(@-cols-spacing / 2, 0);
+				.-h-padding(@gutter / 2, 0);
 			}
 		}
 		
@@ -223,28 +230,28 @@
 .cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr)
+		@gutter: @base-margin,
+		@arrange: ltr)
 		when(@-num-cols = 3) {
 	
 	> * {
 		width: 100% / 3;
 		
 		> .content {
-			.-h-padding(@-cols-spacing / 3);
+			.-h-padding(@gutter / 3);
 		}
 		
 		&:first-child,
 		&:nth-child(3n-1) {
 			> .content {
-				.-h-padding(0, @-cols-spacing * 2 / 3);
+				.-h-padding(0, @gutter * 2 / 3);
 			}
 		}
 		
 		&:last-child,
 		&:nth-child(3n+1) {
 			> .content {
-				.-h-padding(@-cols-spacing * 2 / 3, 0);
+				.-h-padding(@gutter * 2 / 3, 0);
 			}
 		}
 		
@@ -265,8 +272,8 @@
 .cols(
 		@-num-cols: auto,
 		@-cols-height-equation: auto,
-		@-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr)
+		@gutter: @base-margin,
+		@arrange: ltr)
 		when(@-cols-height-equation = equal) {
 	
 	> * {
@@ -278,48 +285,48 @@
 	}
 }
 // ## Arrange columns as left to right
-.cols(@-num-cols: auto, @-cols-height-equation: auto, @-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr) when (@-cols-arrangement = ltr) {
+.cols(@-num-cols: auto, @-cols-height-equation: auto, @gutter: @base-margin,
+		@arrange: ltr) when (@arrange = ltr) {
 	
 	> * {
 		float: left;
 	}
 }
 // ## Arrange columns as right to left
-.cols(@-num-cols: auto, @-cols-height-equation: auto, @-cols-spacing: @base-margin,
-		@-cols-arrangement: ltr) when (@-cols-arrangement = rtl) {
+.cols(@-num-cols: auto, @-cols-height-equation: auto, @gutter: @base-margin,
+		@arrange: ltr) when (@arrange = rtl) {
 	
 	> * {
 		float: right;
 	}
 }
 // Compatible with lte IE 7 & gt IE 6
-.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compat) when (@-compatibility >= @compat-ie7), (@-compatibility < @compat-ie6) {
+.cols(@gutter: @base-margin, @-direction: left, @-compatibility: @compat) when (@-compatibility >= @compat-ie7), (@-compatibility < @compat-ie6) {
 	
 	&.dyad > * {
 		
 		&.first-child > .content {
-			.-h-padding(0, @-cols-spacing / 2);
+			.-h-padding(0, @gutter / 2);
 		}
 		
 		&.last-child > .content {
-			.-h-padding(@-cols-spacing / 2, 0);
+			.-h-padding(@gutter / 2, 0);
 		}
 	}
 	
 	&.triad > * {
 		
 		&.first-child > .content {
-			.-h-padding(0, @-cols-spacing * 2 / 3);
+			.-h-padding(0, @gutter * 2 / 3);
 		}
 		
 		&.last-child > .content {
-			.-h-padding(@-cols-spacing * 2 / 3, 0);
+			.-h-padding(@gutter * 2 / 3, 0);
 		}
 	}
 }
 // Compatible with lte IE 6
-.cols(@-cols-spacing: @base-margin, @-direction: left, @-compatibility: @compat) when (@-compatibility >= @compat-ie6) {
+.cols(@gutter: @base-margin, @-direction: left, @-compatibility: @compat) when (@-compatibility >= @compat-ie6) {
 	
 	.col {
 		display: block;
@@ -328,7 +335,7 @@
 		
 		.content {
 			display: block;
-			.-h-padding(@-cols-spacing / 2);
+			.-h-padding(@gutter / 2);
 		}
 	}
 	
@@ -336,11 +343,11 @@
 		width: 100% / 2;
 		
 		&.first-child .content {
-			.-h-padding(0, @-cols-spacing / 2);
+			.-h-padding(0, @gutter / 2);
 		}
 		
 		&.last-child .content {
-			.-h-padding(@-cols-spacing / 2, 0);
+			.-h-padding(@gutter / 2, 0);
 		}
 		
 		&.primary {
@@ -356,15 +363,15 @@
 		width: 100% / 3;
 		
 		.content {
-			.-h-padding(@-cols-spacing / 3);
+			.-h-padding(@gutter / 3);
 		}
 		
 		&.first-child .content {
-			.-h-padding(0, @-cols-spacing * 2 / 3);
+			.-h-padding(0, @gutter * 2 / 3);
 		}
 		
 		&.last-child .content {
-			.-h-padding(@-cols-spacing * 2 / 3, 0);
+			.-h-padding(@gutter * 2 / 3, 0);
 		}
 		
 		&.primary {
@@ -381,7 +388,7 @@
 	}
 }
 
-.-rows(@-cols-spacing: @base-margin) {
+.-rows(@gutter: @base-margin) {
 	display: block;
 	
 	> .cell,
@@ -394,7 +401,7 @@
 			position: absolute;
 			top: 0;
 			bottom: 0;
-			.-v-padding(@-cols-spacing / 2);
+			.-v-padding(@gutter / 2);
 		}
 	}
 	
@@ -403,11 +410,11 @@
 		width: 100% / 2;
 		
 		&:first-child > .content {
-			.-v-padding(0, @-cols-spacing / 2);
+			.-v-padding(0, @gutter / 2);
 		}
 		
 		&:last-child > .content {
-			.-v-padding(@-cols-spacing / 2, 0);
+			.-v-padding(@gutter / 2, 0);
 		}
 		
 		&.primary {
@@ -424,15 +431,15 @@
 		width: 100% / 3;
 		
 		> .content {
-			.-v-padding(@-cols-spacing / 3);
+			.-v-padding(@gutter / 3);
 		}
 		
 		&:first-child > .content {
-			.-v-padding(0, @-cols-spacing * 2 / 3);
+			.-v-padding(0, @gutter * 2 / 3);
 		}
 		
 		&:last-child > .content {
-			.-v-padding(@-cols-spacing * 2 / 3, 0);
+			.-v-padding(@gutter * 2 / 3, 0);
 		}
 		
 		&.primary {
