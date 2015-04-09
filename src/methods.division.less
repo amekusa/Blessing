@@ -508,11 +508,13 @@
 */
 
 /**
- * Makes a cell layout
+ * Table
  */
-.cells(@gutter: @base-margin; @arrange: ltr) {
+.table(@gutter: @base-margin; @inset: 0; @arrange: ltr; @layout: fixed) {
 	display: table;
 	direction: @arrange;
+	table-layout: @layout;
+	margin: -1 * (@gutter - @inset);
 	
 	& when (@gutter = 0) {
 		border-collapse: collapse;
@@ -521,11 +523,33 @@
 	& when not(@gutter = 0) {
 		border-collapse: separate;
 		border-spacing: @gutter;
-		margin: -@gutter;
 	}
+}
+
+/**
+ * Horizontal Cells
+ */
+.h-cells(@gutter: @base-margin; @inset: 0; @arrange: ltr; @layout: fixed) {
+	.table(@gutter: @gutter; @inset: @inset; @arrange: @arrange; @layout: @layout);
 	
-	> * {
+	> * { // Cell
 		display: table-cell;
 		direction: initial;
+	}
+}
+
+/**
+ * Cell Table
+ */
+.cell-table(@gutter: @base-margin; @inset: 0; @arrange: ltr; @layout: fixed) {
+	.table(@gutter: @gutter; @inset: @inset; @arrange: @arrange; @layout: @layout);
+	
+	> * { // Row
+		display: table-row;
+		
+		> * { // Cell
+			display: table-cell;
+			direction: initial;
+		}
 	}
 }
