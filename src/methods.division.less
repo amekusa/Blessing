@@ -25,7 +25,14 @@
 	width: 100%;
 }
 
-.cols(@ncols: uncertain; @arrange: ltr) {
+/**
+ * Makes multi-column layout
+ *
+ * @param ncols A number of columns
+ * @param gutter XXX No impl.
+ * @param arrange ltr|rtl Columns arrangement direction
+ */
+.cols(@ncols: uncertain; @gutter: @base-margin; @arrange: ltr) {
 	.clearfix;
 	
 	& when (isnumber(@ncols)) {
@@ -76,7 +83,7 @@
 		> * {
 			.col(12);
 			
-			.col(@max-ncols: 12) when (@max-ncols > 1) {
+			.col(@max-ncols) when (@max-ncols > 1) {
 				.col(@max-ncols - 1);
 				
 				&:first-child {
@@ -498,6 +505,27 @@
 		}
 	}
 }
-
-// ## Table 
 */
+
+/**
+ * Makes a cell layout
+ */
+.cells(@gutter: @base-margin; @arrange: ltr) {
+	display: table;
+	direction: @arrange;
+	
+	& when (@gutter = 0) {
+		border-collapse: collapse;
+	}
+	
+	& when not(@gutter = 0) {
+		border-collapse: separate;
+		border-spacing: @gutter;
+		margin: -@gutter;
+	}
+	
+	> * {
+		display: table-cell;
+		direction: initial;
+	}
+}
