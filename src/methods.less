@@ -340,21 +340,42 @@
 }
 
 /**
+ * Horizontal Centering
+ *
+ * @param w <length> The width of the element to be centered
+ * @param offset <length>
+ */
+.center-x(@w; @offset: 0) {
+	position: absolute;
+	width: @w;
+	
+	& when (ispercentage(@w)) { // For flexible height
+		left: (100% - @w) * .5;
+	}
+	
+	& when not(ispercentage(@w)) { // For fixed height
+		left: 50%;
+		margin-left: (-@w * .5) + @offset;
+	}
+}
+
+/**
  * Vertical Centering
  *
- * @param h <length> Height
+ * @param h <length> The height of the element to be centered
+ * @param offset <length>
  */
-.center-y(@h) {
+.center-y(@h; @offset: 0) {
 	position: absolute;
 	height: @h;
 	
 	& when (ispercentage(@h)) { // For flexible height
-		top: (100 - @h) * .5;
+		top: (100% - @h) * .5;
 	}
 	
 	& when not(ispercentage(@h)) { // For fixed height
 		top: 50%;
-		margin-top: -@h * .5;
+		margin-top: (-@h * .5) + @offset;
 	}
 }
 
