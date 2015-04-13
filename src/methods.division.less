@@ -514,15 +514,42 @@
 	display: table;
 	direction: @arrange;
 	table-layout: @layout;
-	margin: -1 * (@gutter - @inset);
 	
-	& when (@gutter = 0) {
-		border-collapse: collapse;
+	& when (length(@gutter) = 1) {
+		margin: -(@gutter - @inset);
+		
+		& when (unit(@gutter) = 0) {
+			border-collapse: collapse;
+		}
+		
+		& when not(unit(@gutter) = 0) {
+			border-collapse: separate;
+			border-spacing: @gutter;
+		}
 	}
 	
-	& when not(@gutter = 0) {
-		border-collapse: separate;
-		border-spacing: @gutter;
+	& when (length(@gutter) > 1) {
+		@gutter-x: extract(@gutter, 1);
+		@gutter-y: extract(@gutter, 2);
+		
+		& when (length(@inset) > 1) {
+			@inset-x: extract(@inset, 1);
+			@inset-y: extract(@inset, 2);
+			margin: -(@gutter-y - @inset-y) -(@gutter-x - @inset-x);
+		}
+		
+		& when (length(@inset) = 1) {
+			margin: -(@gutter-y - @inset) -(@gutter-x - @inset);
+		}
+		
+		& when (unit(@gutter-x) = 0) and (unit(@gutter-y) = 0) {
+			border-collapse: collapse;
+		}
+		
+		& when not(unit(@gutter-x) = 0) and not(unit(@gutter-y) = 0) {
+			border-collapse: separate;
+			border-spacing: @gutter-x @gutter-y;
+		}
 	}
 }
 

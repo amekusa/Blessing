@@ -407,9 +407,9 @@
 	}
 }
 
-.nowrap() {
-	overflow: visible;
+.nowrap(@overflow: visible; @ellipsis: ellipsis) {
 	white-space: nowrap;
+	overflow: @overflow;
 }
 
 /**
