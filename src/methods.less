@@ -437,6 +437,15 @@
  * Iterates a list of values.
  * You can refer each values of @list as the variable: @each inside the @ruleset.
  *
+ * # Example
+ * .for-each(top, right, bottom; {
+ *     margin-@{each}: 1em;
+ * });
+ * -------------------------------
+ * margin-top: 1em;
+ * margin-right: 1em;
+ * margin-bottom: 1em;
+ *
  * @param list    <any>[, <any>[, ...]] Comma or space separated values
  * @param ruleset <ruleset>             The ruleset to apply in the loop
  */
