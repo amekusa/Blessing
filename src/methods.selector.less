@@ -15,6 +15,12 @@
 
 .heading(@max-lv: 1; @min-lv: 6; @ruleset) {
 	
+	.iterate(@max-lv; @min-lv; {
+		
+		h@{i} {
+			@ruleset();
+		}
+	});
 }
 
 /**
