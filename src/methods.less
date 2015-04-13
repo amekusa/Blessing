@@ -20,9 +20,9 @@
 /**
  * Positioning
  *
- * @param x      <length> Horizontal offset
- * @param y      <length> Vertical offset
- * @param from   <direction> (default:tl) Offset origin
+ * @param x <length>                         Horizontal offset
+ * @param y <length>                         Vertical offset
+ * @param from <direction> (default:tl)      Offset origin
  * @param method <position> (default:@empty) Positioning method
  *
  * # Example(s)
@@ -342,7 +342,7 @@
 /**
  * Horizontal Centering
  *
- * @param w <length> The width of the element to be centered
+ * @param w <length>      The width of the element to be centered
  * @param offset <length>
  */
 .center-x(@w; @offset: 0) {
@@ -362,7 +362,7 @@
 /**
  * Vertical Centering
  *
- * @param h <length> The height of the element to be centered
+ * @param h <length>      The height of the element to be centered
  * @param offset <length>
  */
 .center-y(@h; @offset: 0) {
@@ -416,9 +416,9 @@
  * Prefixise
  * Add vendor-prefixes to a property.
  *
- * @param prop  <property> The property to be prefixised
- * @param value <any>      The value of the property
- * @param 
+ * @param prop <property> The property to be prefixised
+ * @param value <any>     The value of the property
+ * @param prefixes
  */
 .prefix(@prop; @value; @prefixes: moz, webkit, o, ms) {
 	
@@ -437,7 +437,7 @@
  * Iterates a list of values.
  * You can refer each values of @list as the variable: @each inside the @ruleset.
  *
- * # Example
+ * # Example(s)
  * .for-each(top, right, bottom; {
  *     margin-@{each}: 1em;
  * });
@@ -446,8 +446,8 @@
  * margin-right: 1em;
  * margin-bottom: 1em;
  *
- * @param list    <any>[, <any>[, ...]] Comma or space separated values
- * @param ruleset <ruleset>             The ruleset to apply in the loop
+ * @param list <any>[, <any>[, ...]] Comma or space separated values
+ * @param ruleset <ruleset>          The ruleset to apply in the loop
  */
 .for-each(@list; @ruleset) {
 	.each(1);
