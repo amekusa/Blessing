@@ -450,11 +450,27 @@
  * @param ruleset <ruleset>          The ruleset to apply in the loop
  */
 .for-each(@list; @ruleset) {
-	.each(1);
-	.each(@i) when (@i <= length(@list)) {
+	.loop(1);
+	.loop(@i) when (@i <= length(@list)) {
 		@each: extract(@list, @i);
 		@ruleset();
-		.each(@i + 1);
+		.loop(@i + 1);
+	}
+}
+
+/**
+ * Iteration Loop
+ *
+ * @param from <integer>
+ * @param to <integer>
+ * @param ruleset <ruleset>
+ * @param step <integer> [default: 1]
+ */
+.iterate(@from; @to; @ruleset; @step: 1) {
+	.loop(@from);
+	.loop(@i) when (@i <= @to) {
+		@ruleset();
+		.loop(@i + @step);
 	}
 }
 
