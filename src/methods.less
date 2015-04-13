@@ -416,19 +416,37 @@
  * Prefixise
  * Add vendor-prefixes to a property.
  *
- * @param prop  <any> The property to be prefixised
- * @param value <any> Value of the property
+ * @param prop  <property> The property to be prefixised
+ * @param value <any>      The value of the property
+ * @param 
  */
-.prefix(@prop; @value) {
+.prefix(@prop; @value; @prefixes: moz, webkit, o, ms) {
 	
 	& when (@uses-vendor-prefixes) {
-		-moz-@{prop}: @value;
-		-webkit-@{prop}: @value;
-		-o-@{prop}: @value;
-		-ms-@{prop}: @value;
+		
+		.for-each(@prefixes; {
+			-@{each}-@{prop}: @value;
+		});
 	}
 	
 	@{prop}: @value;
+}
+
+/**
+ * For-Each Loop
+ * Iterates a list of values.
+ * You can refer each values of @list as the variable: @each inside the @ruleset.
+ *
+ * @param list    <any>[, <any>[, ...]] Comma or space separated values
+ * @param ruleset <ruleset>             The ruleset to apply in the loop
+ */
+.for-each(@list; @ruleset) {
+	.each(1);
+	.each(@i) when (@i <= length(@list)) {
+		@each: extract(@list, @i);
+		@ruleset();
+		.each(@i + 1);
+	}
 }
 
 @import "methods.division.less";

@@ -28,12 +28,30 @@
 /**
  * Makes multi-column layout
  *
- * @param ncols A number of columns
- * @param gutter XXX No impl.
+ * @param ncols <integer> A number of columns
+ * @param gutter <length> XXX No impl.
  * @param arrange ltr|rtl Columns arrangement direction
  */
 .cols(@ncols: uncertain; @gutter: @base-margin; @arrange: ltr) {
 	.clearfix;
+	
+	> * {
+		position: relative;
+		display: block;
+		min-height: 1px;
+		
+		& when (@arrange = ltr) {
+			float: left;
+		}
+		
+		& when (@arrange = rtl) {
+			float: right;
+		}
+	}
+	
+	> li {
+		list-style: none;
+	}
 	
 	& when (isnumber(@ncols)) {
 		
@@ -104,22 +122,11 @@
 		}
 	}
 	
-	> * {
-		position: relative;
-		display: block;
-		min-height: 1px;
+	& when not(unit(@gutter) = 0) {
 		
-		& when (@arrange = ltr), (@arrange = left-to-right) {
-			float: left;
+		> * {
+			
 		}
-		
-		& when (@arrange = rtl), (@arrange = right-to-left) {
-			float: right;
-		}
-	}
-	
-	> li {
-		list-style: none;
 	}
 }
 
