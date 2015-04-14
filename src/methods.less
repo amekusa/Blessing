@@ -468,9 +468,24 @@
  */
 .iterate(@from; @to; @ruleset; @step: 1) {
 	.loop(@from);
-	.loop(@i) when (@i <= @to) {
+	.loop(@i) {
 		@ruleset();
-		.loop(@i + @step);
+		
+		& when (@from < @to) { // Incremental
+			@next: @i + abs(@step);
+			
+			& when (@next <= @to) {
+				.loop(@next);
+			}
+		}
+		
+		& when (@from > @to) { // Decremental
+			@next: @i - abs(@step);
+			
+			& when (@next >= @to) {
+				.loop(@next);
+			}
+		}
 	}
 }
 
