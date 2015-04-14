@@ -461,6 +461,23 @@
 /**
  * Iteration Loop
  *
+ * # Example(s)
+ * .iterate(2; 4; { // Iterate from 2 to 4
+ *     h@{i} { color: aquamarine; }
+ * });
+ * --------------------------------
+ * h2 { color: aquamarine; }
+ * h3 { color: aquamarine; }
+ * h4 { color: aquamarine; }
+ *
+ * .iterate(6; 4; { // Iterate from 6 to 4
+ *     h@{i} { font-weight: normal; }
+ * });
+ * ----------------------------------
+ * h6 { font-weight: normal; }
+ * h5 { font-weight: normal; }
+ * h4 { font-weight: normal; }
+ *
  * @param from <integer>
  * @param to <integer>
  * @param ruleset <ruleset>
