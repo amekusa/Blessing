@@ -40,3 +40,23 @@
 		border-left-color: transparent;
 	}
 }
+
+.circle(@w; @h; @color: asis) {
+	.dim(@w; @h);
+	border-radius: max(@w, @h);
+	
+	& when (iscolor(@color)) {
+		background-color: @color;
+	}
+}
+
+.ring(@w; @h; @weight: 1px; @color: asis) {
+	.circle(@w; @h);
+	background: none;
+	border-style: solid;
+	border-width: @weight;
+	
+	& when (iscolor(@color)) {
+		border-color: @color;
+	}
+}
