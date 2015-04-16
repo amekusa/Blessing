@@ -45,3 +45,15 @@
 	font-family: @font-for-2ch, monospace;
 	line-height: 1.125;
 }
+
+.bullet(@indent; @ruleset) {
+	list-style: none;
+	position: relative;
+	padding-left: @indent;
+	
+	.prepend({
+		position: absolute;
+		left: 0;
+		@ruleset();
+	});
+}

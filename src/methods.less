@@ -7,6 +7,116 @@
 @import "methods.development.less";
 
 /**
+ * For-Each Loop
+ * Iterates a list of values.
+ * You can refer each values of @list as the variable: @each inside the @ruleset.
+ *
+ * # Example(s)
+ * .for-each(top, right, bottom; {
+ *     margin-@{each}: 1em;
+ * });
+ * -------------------------------
+ * margin-top: 1em;
+ * margin-right: 1em;
+ * margin-bottom: 1em;
+ *
+ * @param list <any>[, <any>[, ...]] Comma or space separated values
+ * @param ruleset <ruleset>          The ruleset to apply in the loop
+ */
+.for-each(@list; @ruleset) {
+	.loop(1);
+	.loop(@i) when (@i <= length(@list)) {
+		@each: extract(@list, @i);
+		@ruleset();
+		.loop(@i + 1);
+	}
+}
+
+/**
+ * Iteration Loop
+ *
+ * # Example(s)
+ * .iterate(2; 4; { // Iterate from 2 to 4
+ *     h@{i} { color: aquamarine; }
+ * });
+ * --------------------------------
+ * h2 { color: aquamarine; }
+ * h3 { color: aquamarine; }
+ * h4 { color: aquamarine; }
+ *
+ * .iterate(6; 4; { // Iterate from 6 to 4
+ *     h@{i} { font-weight: normal; }
+ * });
+ * ----------------------------------
+ * h6 { font-weight: normal; }
+ * h5 { font-weight: normal; }
+ * h4 { font-weight: normal; }
+ *
+ * @param from <integer>
+ * @param to <integer>
+ * @param ruleset <ruleset>
+ * @param step <integer> [default: 1]
+ */
+.iterate(@from; @to; @ruleset; @step: 1) {
+	.loop(@from);
+	.loop(@i) {
+		@ruleset();
+		
+		& when (@from < @to) { // Incremental
+			@next: @i + abs(@step);
+			
+			& when (@next <= @to) {
+				.loop(@next);
+			}
+		}
+		
+		& when (@from > @to) { // Decremental
+			@next: @i - abs(@step);
+			
+			& when (@next >= @to) {
+				.loop(@next);
+			}
+		}
+	}
+}
+
+/**
+ * Prefixise
+ * Add vendor-prefixes to a property.
+ *
+ * @param prop <property> The property to be prefixised
+ * @param value <any>     The value of the property
+ * @param prefixes
+ */
+.prefix(@prop; @value; @prefixes: moz, webkit, o, ms) {
+	
+	& when (@uses-vendor-prefixes) {
+		
+		.for-each(@prefixes; {
+			-@{each}-@{prop}: @value;
+		});
+	}
+	
+	@{prop}: @value;
+}
+
+.prepend(@ruleset) {
+	
+	&:before {
+		content: @char-whitespace;
+		@ruleset();
+	}
+}
+
+.append(@ruleset) {
+	
+	&:after {
+		content: @char-whitespace;
+		@ruleset();
+	}
+}
+
+/**
  * Originate
  * Resets positioning properties.
  */
@@ -412,101 +522,8 @@
 	overflow: @overflow;
 }
 
-/**
- * Prefixise
- * Add vendor-prefixes to a property.
- *
- * @param prop <property> The property to be prefixised
- * @param value <any>     The value of the property
- * @param prefixes
- */
-.prefix(@prop; @value; @prefixes: moz, webkit, o, ms) {
-	
-	& when (@uses-vendor-prefixes) {
-		
-		.for-each(@prefixes; {
-			-@{each}-@{prop}: @value;
-		});
-	}
-	
-	@{prop}: @value;
-}
-
-/**
- * For-Each Loop
- * Iterates a list of values.
- * You can refer each values of @list as the variable: @each inside the @ruleset.
- *
- * # Example(s)
- * .for-each(top, right, bottom; {
- *     margin-@{each}: 1em;
- * });
- * -------------------------------
- * margin-top: 1em;
- * margin-right: 1em;
- * margin-bottom: 1em;
- *
- * @param list <any>[, <any>[, ...]] Comma or space separated values
- * @param ruleset <ruleset>          The ruleset to apply in the loop
- */
-.for-each(@list; @ruleset) {
-	.loop(1);
-	.loop(@i) when (@i <= length(@list)) {
-		@each: extract(@list, @i);
-		@ruleset();
-		.loop(@i + 1);
-	}
-}
-
-/**
- * Iteration Loop
- *
- * # Example(s)
- * .iterate(2; 4; { // Iterate from 2 to 4
- *     h@{i} { color: aquamarine; }
- * });
- * --------------------------------
- * h2 { color: aquamarine; }
- * h3 { color: aquamarine; }
- * h4 { color: aquamarine; }
- *
- * .iterate(6; 4; { // Iterate from 6 to 4
- *     h@{i} { font-weight: normal; }
- * });
- * ----------------------------------
- * h6 { font-weight: normal; }
- * h5 { font-weight: normal; }
- * h4 { font-weight: normal; }
- *
- * @param from <integer>
- * @param to <integer>
- * @param ruleset <ruleset>
- * @param step <integer> [default: 1]
- */
-.iterate(@from; @to; @ruleset; @step: 1) {
-	.loop(@from);
-	.loop(@i) {
-		@ruleset();
-		
-		& when (@from < @to) { // Incremental
-			@next: @i + abs(@step);
-			
-			& when (@next <= @to) {
-				.loop(@next);
-			}
-		}
-		
-		& when (@from > @to) { // Decremental
-			@next: @i - abs(@step);
-			
-			& when (@next >= @to) {
-				.loop(@next);
-			}
-		}
-	}
-}
-
 @import "methods.division.less";
 @import "methods.gui.less";
 @import "methods.component.less";
 @import "methods.animation.less";
+@import "methods.typography.less";
