@@ -1,0 +1,15 @@
+/**
+ * Blessing / Methods / Transformation
+ */
+
+.rotate(@angle; @origin: asis; @transition: asis) {
+	transform: rotate(@angle);
+	
+	& when not(@origin = asis) {
+		transform-origin: @origin;
+	}
+	
+	& when not(@transition = asis) {
+		transition: transform @transition;
+	}
+}
