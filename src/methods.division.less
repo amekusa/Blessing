@@ -34,11 +34,13 @@
  */
 .cols(@ncols: uncertain; @gutter: @base-margin; @arrange: ltr) {
 	.clearfix;
+	margin: -(@gutter * .5);
 	
 	> * {
 		position: relative;
 		display: block;
 		min-height: 1px;
+		padding: @gutter * .5;
 		
 		& when (@arrange = ltr) {
 			float: left;
