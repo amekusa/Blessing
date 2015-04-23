@@ -36,6 +36,17 @@
 	.clearfix;
 	margin: -(@gutter * .5);
 	
+	+ * {
+		
+		& when (@arrange = ltr) {
+			clear: left;
+		}
+		
+		& when (@arrange = rtl) {
+			clear: right;
+		}
+	}
+	
 	> * {
 		position: relative;
 		display: block;
