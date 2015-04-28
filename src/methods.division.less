@@ -33,9 +33,25 @@
  * @param inset <length>
  * @param arrange ltr|rtl Columns arrangement direction
  */
-.cols(@ncols: uncertain; @gutter: @base-margin; @arrange: ltr) {
+.cols(@ncols: uncertain; @gutter: @base-margin; @inset: auto; @arrange: ltr) {
 	.clearfix;
-	margin: -(@gutter * .5);
+	
+	& when (isnumber(@inset)) {
+		
+		& when (@inset < (@gutter * .5)) {
+			padding: 0;
+			margin: @inset - (@gutter * .5);
+		}
+		
+		& when (@inset > (@gutter * .5)) {
+			padding: @inset - (@gutter * .5);
+			margin: 0;
+		}
+	}
+	
+	& when not(isnumber(@inset)) {
+		padding: @gutter * .5;
+	}
 	
 	+ * {
 		
@@ -67,7 +83,20 @@
 			
 			.for(1; @x); .each(@i) {
 				&:nth-child(@{x}n+@{i}) {
-					width: extract(@ncols, @i);
+					@w: extract(@ncols, @i);
+					
+					& when (isnumber(@w)) {
+						
+						& when (ispercentage(@w)) {
+							width: @w;
+							box-sizing: border-box;
+						}
+						
+						& when not(ispercentage(@w)) {
+							width: @w;
+							box-sizing: content-box;
+						}
+					}
 				}
 			}
 		}
