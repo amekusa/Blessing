@@ -29,7 +29,8 @@
  * Makes multi-column layout
  *
  * @param ncols <integer> A number of columns
- * @param gutter <length> XXX No impl.
+ * @param gutter <length>
+ * @param inset <length>
  * @param arrange ltr|rtl Columns arrangement direction
  */
 .cols(@ncols: uncertain; @gutter: @base-margin; @arrange: ltr) {
@@ -60,74 +61,58 @@
 		& when (@arrange = rtl) {
 			float: right;
 		}
-	}
-	
-	> li {
-		list-style: none;
-	}
-	
-	& when (isnumber(@ncols)) {
 		
-		> * {
+		& when (length(@ncols) > 1) {
+			@x: length(@ncols);
 			
-			& when (@compat < @compat-ie7) {
-				width: 100% / @ncols;
-			}
-			
-			& when not(@compat < @compat-ie7) {
-				width: 99.9999% / @ncols; // Avoid columns dropping
-			}
-			
-			@x: @ncols + 1;
-			&:nth-child(@{ncols}n+@{x}) {
-				
-				& when (@arrange = ltr) {
-					clear: left;
-				}
-				
-				& when (@arrange = rtl) {
-					clear: right;
+			.for(1; @x); .each(@i) {
+				&:nth-child(@{x}n+@{i}) {
+					width: extract(@ncols, @i);
 				}
 			}
 		}
 		
-		.span-n(@ncols - 1);
-		
-		.span-n(@span) when (@span > 1) {
-			.span-n(@span - 1);
+		& when (length(@ncols) = 1) {
 			
-			> .span-@{span} {
+			& when (isnumber(@ncols)) {
 				
 				& when (@compat < @compat-ie7) {
-					width: (100% / @ncols) * @span;
+					width: 100% / @ncols;
 				}
 				
 				& when not(@compat < @compat-ie7) {
-					width: (99.9999% / @ncols) * @span;
+					width: 99.99% / @ncols; // Avoid columns dropping
+				}
+				
+				@x: @ncols + 1;
+				&:nth-child(@{ncols}n+@{x}) {
+					
+					& when (@arrange = ltr) {
+						clear: left;
+					}
+					
+					& when (@arrange = rtl) {
+						clear: right;
+					}
 				}
 			}
-		}
-	}
-	
-	& when not(isnumber(@ncols)) { // Uncertain of a number of columns
-		
-		> * {
-			.col(12);
 			
-			.col(@max-ncols) when (@max-ncols > 1) {
-				.col(@max-ncols - 1);
+			& when not(isnumber(@ncols)) { // Uncertain of a number of columns
 				
-				&:first-child {
+				.for(1; 12); .each(@i) { // 1 - 12 columns
 					
-					&:nth-last-child(@{max-ncols}),
-					&:nth-last-child(@{max-ncols}) ~ * {
+					&:first-child {
 						
-						& when (@compat < @compat-ie7) {
-							width: 100% / @max-ncols;
-						}
-						
-						& when not(@compat < @compat-ie7) {
-							width: 99.9999% / @max-ncols;
+						&:nth-last-child(@{i}),
+						&:nth-last-child(@{i}) ~ * {
+							
+							& when (@compat < @compat-ie7) {
+								width: 100% / @i;
+							}
+							
+							& when not(@compat < @compat-ie7) {
+								width: 99.99% / @i;
+							}
 						}
 					}
 				}

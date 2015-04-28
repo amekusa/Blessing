@@ -35,6 +35,8 @@
 /**
  * Iteration Loop
  *
+ * TODO: Resolve conflicts of iterator in nested loops
+ *
  * # Example(s)
  * .iterate(2; 4; { // Iterate from 2 to 4
  *     h@{i} { color: aquamarine; }
@@ -77,6 +79,18 @@
 				.loop(@next);
 			}
 		}
+	}
+}
+
+/**
+ * Loop (another method)
+ * @link https://github.com/seven-phases-max/less.curious/blob/master/src/for.less
+ */
+.for(@i; @n) {
+	.each(@i);
+	
+	& when not(@i = @n) {
+		.for((@i + (@n - @i) / abs(@n - @i)); @n);
 	}
 }
 
