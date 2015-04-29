@@ -1,10 +1,10 @@
-.triangle(@direction; @w; @h; @color) {
+.triangle(@dir; @w; @h; @color) {
 	display: block;
 	.dim(0);
 	padding: 0;
 	border-style: solid;
 	
-	& when (@direction = l), (@direction = left) {
+	& when (@dir = l), (@dir = left) {
 		.bdr-x-width(0; @w);
 		.bdr-y-width(@h / 2);
 		border-top-color: transparent;
@@ -13,7 +13,7 @@
 		border-left-color: transparent;
 	}
 	
-	& when (@direction = r), (@direction = right) {
+	& when (@dir = r), (@dir = right) {
 		.bdr-x-width(@w; 0);
 		.bdr-y-width(@h / 2);
 		border-top-color: transparent;
@@ -22,7 +22,7 @@
 		border-left-color: @color;
 	}
 	
-	& when (@direction = t), (@direction = top) {
+	& when (@dir = t), (@dir = top) {
 		.bdr-x-width(@w / 2);
 		.bdr-y-width(0; @h);
 		border-top-color: transparent;
@@ -31,7 +31,7 @@
 		border-left-color: transparent;
 	}
 	
-	& when (@direction = b), (@direction = bottom) {
+	& when (@dir = b), (@dir = bottom) {
 		.bdr-x-width(@w / 2);
 		.bdr-y-width(@h; 0);
 		border-top-color: @color;
