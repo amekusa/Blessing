@@ -503,6 +503,25 @@
 	}
 }
 
+/**
+ * @link https://css-tricks.com/centering-in-the-unknown/
+ */
+.block-align-y(@align; @offset: 0) {
+	
+	&:before {
+		content: @char-whitespace;
+		display: inline-block;
+		width: 0;
+		height: 100%;
+		vertical-align: @align;
+	}
+	
+	> * {
+		display: inline-block;
+		vertical-align: @align;
+	}
+}
+
 .layer(@z-index: auto) {
 	display: block;
 	position: absolute;
