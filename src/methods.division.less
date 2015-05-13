@@ -25,6 +25,25 @@
 	width: 100%;
 }
 
+.rows(@nrows: uncertain; @gutter: @base-margin) {
+	
+	> * {
+		display: block;
+		
+		&:first-child {
+			margin-top: 0;
+		}
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+		
+		+ * {
+			margin-top: @gutter;
+		}
+	}
+}
+
 /**
  * Makes multi-column layout
  *
