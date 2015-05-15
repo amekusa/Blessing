@@ -4,25 +4,17 @@
 
 @import (reference) "variables.less";
 
-.clearfix() {
+.clearfix(@dir: both) {
 	
 	&:after {
-		content: @char-whitespace;
-		clear: both;
-		visibility: hidden;
+		content: "";
+		clear: @dir;
 		display: block;
-		height: 0;
-		overflow: hidden;
 	}
 	
-	& when (@compat > @compat-ie8) {
+	& when not(@compat < @compat-ie7) {
 		zoom: 1;
 	}
-}
-
-.clearfix-alt() {
-	overflow: hidden;
-	width: 100%;
 }
 
 .rows(@nrows: uncertain; @gutter: @base-margin) {
