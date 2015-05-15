@@ -44,18 +44,39 @@
 	& when (isnumber(@inset)) {
 		
 		& when (@inset < (@gutter * .5)) {
-			padding: 0;
-			margin: @inset - (@gutter * .5);
+			//padding: 0;
+			//margin: @inset - (@gutter * .5);
+			.pad-x(0);
+			.mgn-x(@inset - (@gutter * .5));
 		}
 		
 		& when (@inset > (@gutter * .5)) {
-			padding: @inset - (@gutter * .5);
-			margin: 0;
+			//padding: @inset - (@gutter * .5);
+			//margin: 0;
+			.pad-x(@inset - (@gutter * .5));
+			.mgn-x(0);
+		}
+		
+		& when (@inset < @gutter) {
+			.pad-y(0);
+			margin-top: @inset - @gutter;
+		}
+		
+		& when (@inset > @gutter) {
+			padding-top: @inset - @gutter;
+			margin-top: 0;
+		}
+		
+		& when (@inset >= 0) {
+			padding-bottom: @inset;
 		}
 	}
 	
 	& when not(isnumber(@inset)) {
-		padding: @gutter * .5;
+		//padding: @gutter * .5;
+		.pad-x(@gutter * .5);
+		padding-top: 0;
+		padding-bottom: @gutter;
 	}
 	
 	+ * {
@@ -73,7 +94,10 @@
 		position: relative;
 		display: block;
 		min-height: 1px;
-		padding: @gutter * .5;
+		//padding: @gutter * .5;
+		.pad-x(@gutter * .5);
+		padding-top: @gutter;
+		padding-bottom: 0;
 		
 		& when (@arrange = ltr) {
 			float: left;
