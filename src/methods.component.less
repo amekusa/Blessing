@@ -62,11 +62,15 @@
 	}
 }
 
-.image(@url) {
-	@w: image-width(@url);
-	@h: image-height(@url);
+.image(@url; @scale: 1.0) {
+	@w: image-width(@url) * @scale;
+	@h: image-height(@url) * @scale;
 	width: @w;
 	height: @h;
 	background-image: url(@url);
 	background-repeat: no-repeat;
+	
+	& when not(@scale = 1.0) {
+		background-size: @w @h;
+	}
 }
