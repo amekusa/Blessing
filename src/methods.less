@@ -507,6 +507,7 @@
  * @link https://css-tricks.com/centering-in-the-unknown/
  */
 .block-align-y(@align; @offset: 0) {
+	font-size: 0; // Remove gaps between child elements
 	
 	&:before {
 		content: @char-whitespace;
