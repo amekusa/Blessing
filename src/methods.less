@@ -556,6 +556,14 @@
 	overflow: @overflow;
 }
 
+.nocollapse() {
+	
+	&:before {
+		content: "";
+		display: table;
+	}
+}
+
 @import "methods.division.less";
 @import "methods.gui.less";
 @import "methods.component.less";
