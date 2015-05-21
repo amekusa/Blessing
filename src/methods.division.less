@@ -6,10 +6,30 @@
 
 .clearfix(@dir: both) {
 	
+	&:before,
 	&:after {
 		content: "";
-		clear: @dir;
+	}
+	
+	&:before {
+		display: table; // Disable top-margin collapsing
+			// @link http://nicolasgallagher.com/micro-clearfix-hack/
+	}
+	
+	&:after {
 		display: block;
+		
+		& when (@dir = l), (@dir = left) {
+			clear: left;
+		}
+		
+		& when (@dir = r), (@dir = right) {
+			clear: right;
+		}
+		
+		& when (@dir = both), (@dir = lr) {
+			clear: both;
+		}
 	}
 	
 	& when not(@compat < @compat-ie7) {
@@ -39,7 +59,14 @@
  * @param arrange ltr|rtl Columns arrangement direction
  */
 .cols(@ncols: uncertain; @gutter: @base-margin; @inset: auto; @arrange: ltr) {
-	.clearfix;
+	
+	& when (@arrange = ltr) {
+		.clearfix(l);
+	}
+	
+	& when (@arrange = rtl) {
+		.clearfix(r);
+	}
 	
 	& when (isnumber(@inset)) { // Specific inset
 		
