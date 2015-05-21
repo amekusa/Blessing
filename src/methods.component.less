@@ -62,7 +62,15 @@
 	}
 }
 
+/**
+ * @DEPRECATED
+ * @see .sprite
+ */
 .image(@url; @scale: 1.0) {
+	.sprite(@url; @scale);
+}
+
+.sprite(@url; @scale: 1.0) {
 	@w: image-width(@url) * @scale;
 	@h: image-height(@url) * @scale;
 	width: @w;
