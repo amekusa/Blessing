@@ -41,42 +41,36 @@
 .cols(@ncols: uncertain; @gutter: @base-margin; @inset: auto; @arrange: ltr) {
 	.clearfix;
 	
-	& when (isnumber(@inset)) {
+	& when (isnumber(@inset)) { // Specific inset
 		
-		& when (@inset < (@gutter * .5)) {
-			//padding: 0;
-			//margin: @inset - (@gutter * .5);
+		// Horizontal
+		
+		& when (@inset < (@gutter * .5)) { // Inset < Gutter
 			.pad-x(0);
 			.mgn-x(@inset - (@gutter * .5));
 		}
 		
-		& when (@inset > (@gutter * .5)) {
-			//padding: @inset - (@gutter * .5);
-			//margin: 0;
+		& when (@inset > (@gutter * .5)) { // Inset > Gutter
 			.pad-x(@inset - (@gutter * .5));
 			.mgn-x(0);
 		}
 		
-		& when (@inset < @gutter) {
-			.pad-y(0);
-			margin-top: @inset - @gutter;
-		}
+		// Vertical
 		
-		& when (@inset > @gutter) {
-			padding-top: @inset - @gutter;
-			margin-top: 0;
+		& when (@inset < 0) {
+			.pad-y(0);
+			.mgn-y(@inset);
 		}
 		
 		& when (@inset >= 0) {
-			padding-bottom: @inset;
+			.pad-y(@inset);
+			.mgn-y(0);
 		}
 	}
 	
 	& when not(isnumber(@inset)) {
-		//padding: @gutter * .5;
 		.pad-x(@gutter * .5);
-		padding-top: 0;
-		padding-bottom: @gutter;
+		.pad-y(@gutter);
 	}
 	
 	+ * {
@@ -94,10 +88,8 @@
 		position: relative;
 		display: block;
 		min-height: 1px;
-		//padding: @gutter * .5;
 		.pad-x(@gutter * .5);
-		padding-top: @gutter;
-		padding-bottom: 0;
+		.pad-y(0);
 		
 		& when (@arrange = ltr) {
 			float: left;
@@ -108,10 +100,16 @@
 		}
 		
 		& when (length(@ncols) > 1) {
-			@x: length(@ncols);
+			@n: length(@ncols); // A number of columns
+			@m: @n + 1;
 			
-			.for(1; @x); .each(@i) {
-				&:nth-child(@{x}n+@{i}) {
+			&:nth-child(n+@{m}) { // Wrapped columns
+				padding-top: @gutter;
+			}
+			
+			.for(1; @n); .each(@i) {
+				
+				&:nth-child(@{n}n+@{i}) {
 					@w: extract(@ncols, @i);
 					
 					& when (isnumber(@w)) {
@@ -133,17 +131,13 @@
 		& when (length(@ncols) = 1) {
 			
 			& when (isnumber(@ncols)) {
+				@m: @ncols + 1;
 				
-				& when (@compat < @compat-ie7) {
-					width: 100% / @ncols;
+				&:nth-child(n+@{m}) { // Wrapped columns
+					padding-top: @gutter;
 				}
 				
-				& when not(@compat < @compat-ie7) {
-					width: 99.99% / @ncols; // Avoid columns dropping
-				}
-				
-				@x: @ncols + 1;
-				&:nth-child(@{ncols}n+@{x}) {
+				&:nth-child(@{ncols}n+@{m}) { // Wrapping points
 					
 					& when (@arrange = ltr) {
 						clear: left;
@@ -152,6 +146,14 @@
 					& when (@arrange = rtl) {
 						clear: right;
 					}
+				}
+				
+				& when (@compat < @compat-ie7) {
+					width: 100% / @ncols;
+				}
+				
+				& when not(@compat < @compat-ie7) {
+					width: 99.99% / @ncols; // Avoid columns dropping
 				}
 			}
 			
@@ -175,13 +177,6 @@
 					}
 				}
 			}
-		}
-	}
-	
-	& when not(unit(@gutter) = 0) {
-		
-		> * {
-			
 		}
 	}
 }
