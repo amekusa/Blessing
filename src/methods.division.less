@@ -136,7 +136,7 @@
 			
 			.for(1; @n); .each(@i) {
 				
-				&:nth-child(@{n}n+@{i}) {
+				&:nth-child(@{n}n+@{i}) { // Each column
 					@w: extract(@ncols, @i);
 					
 					& when (isnumber(@w)) {
