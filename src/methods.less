@@ -131,6 +131,20 @@
 }
 
 /**
+ * [DRAFT] Script evaluation
+ * 
+ * FIXME Nested call unsupported
+ */
+.eval(@script; @rules) {
+	@_rules: {
+		@_script: e(@script);
+		@return: e(`(function(){@{_script};})()`);
+		@rules();
+	};
+	@_rules();
+}
+
+/**
  * Originate
  * Resets positioning properties.
  */
