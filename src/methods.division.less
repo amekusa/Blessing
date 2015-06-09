@@ -201,6 +201,13 @@
 				&:nth-child(@{n}n+@{i}) {
 					.width(extract(@ncols, @i));
 				}
+				
+				& when (@compat >= @compat-ie8) {
+					
+					&.col-@{n}n@{i} { // Polyfill class
+						.width(extract(@ncols, @i));
+					}
+				}
 			}
 		}
 		
