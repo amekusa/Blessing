@@ -161,6 +161,32 @@
 			}
 		}
 		
+		.width(@w) {
+			
+			& when (isnumber(@w)) {
+				width: @w;
+				
+				& when (ispercentage(@w)) {
+					box-sizing: border-box;
+				}
+				
+				& when not(ispercentage(@w)) {
+					box-sizing: content-box;
+				}
+			}
+		}
+		
+		.equal-width(@n) {
+			
+			& when (@compat < @compat-ie7) {
+				.width(100% / @n);
+			}
+			
+			& when not(@compat < @compat-ie7) {
+				.width(99.99% / @n); // Avoids columns dropping
+			}
+		}
+		
 		// Specific number of columns & width
 		
 		& when (length(@ncols) > 1) {
@@ -173,20 +199,7 @@
 			.for(1; @n); .each(@i) {
 				
 				&:nth-child(@{n}n+@{i}) {
-					@w: extract(@ncols, @i);
-					
-					& when (isnumber(@w)) {
-						
-						& when (ispercentage(@w)) {
-							width: @w;
-							box-sizing: border-box;
-						}
-						
-						& when not(ispercentage(@w)) {
-							width: @w;
-							box-sizing: content-box;
-						}
-					}
+					.width(extract(@ncols, @i));
 				}
 			}
 		}
@@ -199,16 +212,7 @@
 			
 			& when (isnumber(@ncols)) {
 				.wrap(@ncols);
-				
-				// Column width
-				
-				& when (@compat < @compat-ie7) {
-					width: 100% / @ncols;
-				}
-				
-				& when not(@compat < @compat-ie7) {
-					width: 99.99% / @ncols; // Avoids columns dropping
-				}
+				.equal-width(@ncols);
 			}
 			
 			// Uncertain number of columns
@@ -221,14 +225,7 @@
 						
 						&:nth-last-child(@{i}),
 						&:nth-last-child(@{i}) ~ * {
-							
-							& when (@compat < @compat-ie7) {
-								width: 100% / @i;
-							}
-							
-							& when not(@compat < @compat-ie7) {
-								width: 99.99% / @i; // Avoids columns dropping
-							}
+							.equal-width(@i);
 						}
 					}
 				}
