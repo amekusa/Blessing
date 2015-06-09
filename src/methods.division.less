@@ -100,16 +100,7 @@
 		.pad-y(@gutter);
 	}
 	
-	+ * {
-		
-		& when (@arrange = ltr) {
-			clear: left;
-		}
-		
-		& when (@arrange = rtl) {
-			clear: right;
-		}
-	}
+	// Each column
 	
 	> * {
 		position: relative;
@@ -126,17 +117,62 @@
 			float: right;
 		}
 		
-		& when (length(@ncols) > 1) {
-			@n: length(@ncols); // A number of columns
+		.wrap(@n) {
 			@m: @n + 1;
 			
-			&:nth-child(n+@{m}) { // Wrapped columns
+			// Wrapped columns
+			
+			&:nth-child(n+@{m}) {
 				padding-top: @gutter;
 			}
 			
+			& when (@compat >= @compat-ie8) {
+				
+				&.col-last ~ * { // Polyfill class
+					padding-top: @gutter;
+				}
+			}
+			
+			// Wrapping points
+			
+			&:nth-child(@{n}n+@{m}) {
+				
+				& when (@arrange = ltr) {
+					clear: left;
+				}
+				
+				& when (@arrange = rtl) {
+					clear: right;
+				}
+			}
+			
+			& when (@compat >= @compat-ie8) {
+				
+				&.col-last + .col-first { // Polyfill class
+					
+					& when (@arrange = ltr) {
+						clear: left;
+					}
+					
+					& when (@arrange = rtl) {
+						clear: right;
+					}
+				}
+			}
+		}
+		
+		// Specific number of columns & width
+		
+		& when (length(@ncols) > 1) {
+			@n: length(@ncols); // A number of columns
+			
+			.wrap(@n);
+			
+			// Column width
+			
 			.for(1; @n); .each(@i) {
 				
-				&:nth-child(@{n}n+@{i}) { // Each column
+				&:nth-child(@{n}n+@{i}) {
 					@w: extract(@ncols, @i);
 					
 					& when (isnumber(@w)) {
@@ -155,36 +191,29 @@
 			}
 		}
 		
+		// Equal-width columns
+		
 		& when (length(@ncols) = 1) {
 			
+			// Specific number of columns
+			
 			& when (isnumber(@ncols)) {
-				@m: @ncols + 1;
+				.wrap(@ncols);
 				
-				&:nth-child(n+@{m}) { // Wrapped columns
-					padding-top: @gutter;
-				}
-				
-				&:nth-child(@{ncols}n+@{m}) { // Wrapping points
-					
-					& when (@arrange = ltr) {
-						clear: left;
-					}
-					
-					& when (@arrange = rtl) {
-						clear: right;
-					}
-				}
+				// Column width
 				
 				& when (@compat < @compat-ie7) {
 					width: 100% / @ncols;
 				}
 				
 				& when not(@compat < @compat-ie7) {
-					width: 99.99% / @ncols; // Avoid columns dropping
+					width: 99.99% / @ncols; // Avoids columns dropping
 				}
 			}
 			
-			& when not(isnumber(@ncols)) { // Uncertain of a number of columns
+			// Uncertain number of columns
+			
+			& when not(isnumber(@ncols)) {
 				
 				.for(1; 12); .each(@i) { // 1 - 12 columns
 					
@@ -198,7 +227,7 @@
 							}
 							
 							& when not(@compat < @compat-ie7) {
-								width: 99.99% / @i;
+								width: 99.99% / @i; // Avoids columns dropping
 							}
 						}
 					}
