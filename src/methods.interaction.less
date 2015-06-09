@@ -1,0 +1,55 @@
+/**
+ * Blessing / Methods / Interaction
+ */
+
+/**
+ * Rollover
+ */
+.rollover(@display: block) {
+	display: @display;
+	
+	> .off-focus,
+	> .off-hover,
+	> .off-active {
+		display: @display;
+	}
+	
+	> .on-focus,
+	> .on-hover,
+	> .on-active {
+		display: none;
+	}
+	
+	&:focus {
+		
+		> .off-focus {
+			display: none;
+		}
+		
+		> .on-focus {
+			display: @display;
+		}
+	}
+	
+	&:hover {
+		
+		> .off-hover {
+			display: none;
+		}
+		
+		> .on-hover {
+			display: @display;
+		}
+	}
+	
+	&:active {
+		
+		> .off-active {
+			display: none;
+		}
+		
+		> .on-active {
+			display: @display;
+		}
+	}
+}

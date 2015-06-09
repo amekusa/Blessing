@@ -2,27 +2,51 @@
  * Blessing / Methods / Normalise
  */
 
-@import "methods.less";
-
-/***
- * HTML5 elements
- */
-
-section, nav, article, aside, hgroup,
-header, footer, figure, figcaption, details {
-	display: block;
+#normalise {
+	
+.html5() {
+	
+	article,
+	aside,
+	details,
+	figcaption,
+	figure,
+	footer,
+	header,
+	main,
+	menu,
+	nav,
+	section,
+	summary {
+	  display: block;
+	}
+	
+	audio,
+	canvas,
+	progress,
+	video {
+	  display: inline-block;
+	  vertical-align: baseline;
+	}
+	
+	audio:not([controls]) {
+	  display: none;
+	  height: 0;
+	}
+	
+	[hidden],
+	template {
+	  display: none;
+	}
 }
 
-video, audio, canvas {
-	#css2 > .display(inline-block);
-}
-
-audio:not([controls]) {
-	display: none;
-}
-
-[hidden] {
-	display: none;
+.all-relative() {
+	
+	*,
+	*:before,
+	*:after {
+		position: relative;
+	}
 }
 
 /***
@@ -46,8 +70,8 @@ embed, object {
 body {
 	font-size: @base-font-size;
 	line-height: @base-line-height;
-	-webkit-text-size-adjust: none;
-	-ms-text-size-adjust: none;
+	-webkit-text-size-adjust: 100%;
+	.prefix(text-size-adjust; none; moz ms);
 }
 
 /***
@@ -160,4 +184,6 @@ q {
 	&:after {
 		content: close-quote;
 	}
+}
+
 }
