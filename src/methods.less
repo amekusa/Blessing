@@ -1,28 +1,38 @@
-/**
- * Blessing / Methods
- */
+/*
+Methods
+
+Mix-ins, classes
+
+styleguide: methods
+*/
 
 @import "methods.selector.less";
 @import "methods.wrapper.less";
 @import "methods.development.less";
 
-/**
- * For-Each Loop
- * Iterates a list of values.
- * You can refer each values of @list as the variable: @each inside the @ruleset.
- *
- * # Example(s)
- * .for-each(top, right, bottom; {
- *     margin-@{each}: 1em;
- * });
- * -------------------------------
- * margin-top: 1em;
- * margin-right: 1em;
- * margin-bottom: 1em;
- *
- * @param list <any>[, <any>[, ...]] Comma or space separated values
- * @param ruleset <ruleset>          The ruleset to apply in the loop
- */
+/*
+.for-each(@list; @ruleset)
+
+Iterates a list of values.  
+You can refer each values of @list as the variable: @each inside the @ruleset.
+
+### Example #1
+```less
+.for-each(top, right, bottom; {
+	margin-@{each}: 1em;
+});
+```
+```css
+margin-top: 1em;
+margin-right: 1em;
+margin-bottom: 1em;
+```
+
+@list - <any> Comma or space separated values
+@ruleset - <ruleset> The ruleset to apply in the loop
+
+styleguide: methods.for-each
+*/
 .for-each(@list; @ruleset) {
 	.loop(1);
 	.loop(@i) when (@i <= length(@list)) {
@@ -32,33 +42,42 @@
 	}
 }
 
-/**
- * Iteration Loop
- *
- * TODO: Resolve conflicts of iterator in nested loops
- *
- * # Example(s)
- * .iterate(2; 4; { // Iterate from 2 to 4
- *     h@{i} { color: aquamarine; }
- * });
- * --------------------------------
- * h2 { color: aquamarine; }
- * h3 { color: aquamarine; }
- * h4 { color: aquamarine; }
- *
- * .iterate(6; 4; { // Iterate from 6 to 4
- *     h@{i} { font-weight: normal; }
- * });
- * ----------------------------------
- * h6 { font-weight: normal; }
- * h5 { font-weight: normal; }
- * h4 { font-weight: normal; }
- *
- * @param from <integer>
- * @param to <integer>
- * @param ruleset <ruleset>
- * @param step <integer> [default: 1]
- */
+/*
+.iterate(@from; @to; @ruleset; @step: 1)
+
+Iteration Loop  
+TODO: Resolve conflicts of iterator in nested loops
+
+### Example #1
+```less
+.iterate(2; 4; { // Iterate from 2 to 4
+	h@{i} { color: aquamarine; }
+});
+```
+```css
+h2 { color: aquamarine; }
+h3 { color: aquamarine; }
+h4 { color: aquamarine; }
+```
+
+```less
+.iterate(6; 4; { // Iterate from 6 to 4
+	h@{i} { font-weight: normal; }
+});
+```
+```css
+h6 { font-weight: normal; }
+h5 { font-weight: normal; }
+h4 { font-weight: normal; }
+```
+
+@from - <integer>
+@to - <integer>
+@ruleset - <ruleset>
+@step - <integer> [default: 1]
+
+styleguide: methods.iterate
+*/
 .iterate(@from; @to; @ruleset; @step: 1) {
 	.loop(@from);
 	.loop(@i) {
@@ -82,10 +101,10 @@
 	}
 }
 
-/**
- * Loop (another method)
- * @link https://github.com/seven-phases-max/less.curious/blob/master/src/for.less
- */
+
+// Loop (another method)
+// @link https://github.com/seven-phases-max/less.curious/blob/master/src/for.less
+
 .for(@i; @n) {
 	.each(@i);
 	
@@ -94,14 +113,13 @@
 	}
 }
 
-/**
- * Prefixise
- * Add vendor-prefixes to a property.
- *
- * @param prop <property> The property to be prefixised
- * @param value <any>     The value of the property
- * @param prefixes
- */
+
+// Prefixise
+// Add vendor-prefixes to a property.
+//  * @param prop <property> The property to be prefixised
+// @param value <any>     The value of the property
+// @param prefixes
+
 .prefix(@prop; @value; @prefixes: moz, webkit, o, ms) {
 	
 	& when (@uses-vendor-prefixes) {
@@ -130,11 +148,11 @@
 	}
 }
 
-/**
- * [DRAFT] Script evaluation
- * 
- * FIXME Nested call unsupported
- */
+
+// [DRAFT] Script evaluation
+// 
+// FIXME Nested call unsupported
+
 .eval(@script; @rules) {
 	@_rules: {
 		@_script: e(@script);
@@ -144,10 +162,10 @@
 	@_rules();
 }
 
-/**
- * Originate
- * Resets positioning properties.
- */
+
+// Originate
+// Resets positioning properties.
+
 .origin() {
 	left: 0;
 	right: 0;
@@ -155,31 +173,27 @@
 	bottom: 0;
 }
 
-/**
- * Positioning
- *
- * @param x <length>                         Horizontal offset
- * @param y <length>                         Vertical offset
- * @param from <direction> (default:tl)      Offset origin
- * @param method <position> (default:@empty) Positioning method
- *
- * # Example(s)
- * .pos(1px; 2px); // Positioning from top-left
- * ---------------
- * left: 1px;
- * top: 2px;
- *
- * .pos(1px; 2px; r); // Positioning from top-right
- * -------------------
- * right: 1px;
- * top: 2px;
- *
- * .pos(1px; 2px; br; absolute); // Absolute positioning from bottom-right
- * -----------------------------
- * right: 1px;
- * bottom: 2px;
- * position: absolute;
- */
+
+// Positioning
+//  * @param x <length>                         Horizontal offset
+// @param y <length>                         Vertical offset
+// @param from <direction> (default:tl)      Offset origin
+// @param method <position> (default:@empty) Positioning method
+//  * # Example(s)
+// .pos(1px; 2px); // Positioning from top-left
+// ---------------
+// left: 1px;
+// top: 2px;
+//  * .pos(1px; 2px; r); // Positioning from top-right
+// -------------------
+// right: 1px;
+// top: 2px;
+//  * .pos(1px; 2px; br; absolute); // Absolute positioning from bottom-right
+// -----------------------------
+// right: 1px;
+// bottom: 2px;
+// position: absolute;
+
 .pos(@x; @y; @from: tl; @method: @empty) {
 	
 	& when (@from = tl), (@from = t), (@from = l) {
@@ -207,87 +221,80 @@
 	}
 }
 
-/**
- * Dimension
- *
- * @param w <length> Width
- * @param h <length> Height
- *
- * # Example(s)
- * .dim(480px; 320px);
- * -------------------
- * width: 480px;
- * height: 320px;
- */
+
+// Dimension
+//  * @param w <length> Width
+// @param h <length> Height
+//  * # Example(s)
+// .dim(480px; 320px);
+// -------------------
+// width: 480px;
+// height: 320px;
+
 .dim(@w; @h) {
 	width: @w;
 	height: @h;
 }
 
-/**
- * Dimension (square)
- *
- * @param wh <length> Width & height
- *
- * # Example(s)
- * .dim(16px);
- * -----------
- * width: 16px;
- * height: 16px;
- */
+
+// Dimension (square)
+//  * @param wh <length> Width & height
+//  * # Example(s)
+// .dim(16px);
+// -----------
+// width: 16px;
+// height: 16px;
+
 .dim(@wh) {
 	.dim(@wh; @wh);
 }
 
-/**
- * Horizontal Margin
- */
+
+// Horizontal Margin
+
 .mgn-x(@l; @r) {
 	margin-left: @l;
 	margin-right: @r;
 }
 
-/**
- * Horizontal Margin (same on both sides)
- */
+
+// Horizontal Margin (same on both sides)
+
 .mgn-x(@lr) {
 	.mgn-x(@lr; @lr);
 }
 
-/**
- * Vertical Margin
- */
+
+// Vertical Margin
+
 .mgn-y(@t; @b) {
 	margin-top: @t;
 	margin-bottom: @b;
 }
 
-/**
- * Vertical Margin (same on both sides)
- */
+
+// Vertical Margin (same on both sides)
+
 .mgn-y(@tb) {
 	.mgn-y(@tb; @tb);
 }
 
-/**
- * Alignment
- *
- * # Example(s)
- * .align(l); // Left-align
- * ----------
- * margin-left: 0;
- * margin-right: auto;
- *
- * .align(r; 12px); // Right-align with an offset
- * ----------------
- * margin-left: auto;
- * margin-right: 12px;
- *
- * .align(c); // Center-align
- * ----------
- * margin-left: auto;
- * margin-right: auto;
- */
+
+// Alignment
+//  * # Example(s)
+// .align(l); // Left-align
+// ----------
+// margin-left: 0;
+// margin-right: auto;
+//  * .align(r; 12px); // Right-align with an offset
+// ----------------
+// margin-left: auto;
+// margin-right: 12px;
+//  * .align(c); // Center-align
+// ----------
+// margin-left: auto;
+// margin-right: auto;
+
 .align(@with; @offset: 0) {
 	
 	& when (@with = l), (@with = left) {
@@ -303,32 +310,32 @@
 	}
 }
 
-/**
- * Horizontal Padding
- */
+
+// Horizontal Padding
+
 .pad-x(@l, @r) {
 	padding-left: @l;
 	padding-right: @r;
 }
 
-/**
- * Horizontal Padding (same on both sides)
- */
+
+// Horizontal Padding (same on both sides)
+
 .pad-x(@lr) {
 	.pad-x(@lr, @lr);
 }
 
-/**
- * Vertical Padding
- */
+
+// Vertical Padding
+
 .pad-y(@t, @b) {
 	padding-top: @t;
 	padding-bottom: @b;
 }
 
-/**
- * Vertical Padding (same on both sides)
- */
+
+// Vertical Padding (same on both sides)
+
 .pad-y(@tb) {
 	.pad-y(@tb, @tb);
 }
@@ -420,12 +427,11 @@
 	}
 }
 
-/**
- * Bare
- * Strip off margins, paddings and borders.
- *
- * @param side <side> (default:all) The side to be stripped off
- */
+
+// Bare
+// Strip off margins, paddings and borders.
+//  * @param side <side> (default:all) The side to be stripped off
+
 .bare(@side: all) {
 	
 	& when (@side = all) {
@@ -459,30 +465,29 @@
 	}
 }
 
-/**
- * Horizontal Bare
- * Strip off horizontal margins, paddings and borders.
- */
+
+// Horizontal Bare
+// Strip off horizontal margins, paddings and borders.
+
 .bare-x() {
 	.bare(l);
 	.bare(r);
 }
 
-/**
- * Vertical Bare
- * Strip off vertical margins, paddings and borders.
- */
+
+// Vertical Bare
+// Strip off vertical margins, paddings and borders.
+
 .bare-y() {
 	.bare(t);
 	.bare(b);
 }
 
-/**
- * Horizontal Centering
- *
- * @param w <length>      The width of the element to be centered
- * @param offset <length>
- */
+
+// Horizontal Centering
+//  * @param w <length>      The width of the element to be centered
+// @param offset <length>
+
 .center-x(@w; @offset: 0) {
 	position: absolute;
 	width: @w;
@@ -497,12 +502,11 @@
 	}
 }
 
-/**
- * Vertical Centering
- *
- * @param h <length>      The height of the element to be centered
- * @param offset <length>
- */
+
+// Vertical Centering
+//  * @param h <length>      The height of the element to be centered
+// @param offset <length>
+
 .center-y(@h; @offset: 0) {
 	position: absolute;
 	height: @h;
@@ -517,9 +521,9 @@
 	}
 }
 
-/**
- * @link https://css-tricks.com/centering-in-the-unknown/
- */
+
+// @link https://css-tricks.com/centering-in-the-unknown/
+
 .block-align-y(@align; @offset: 0) {
 	font-size: 0; // Remove gaps between child elements
 	
