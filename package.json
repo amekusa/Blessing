@@ -1,38 +1,40 @@
 {
-	"name": "blessing",
-	"version": "0.1.0",
-	"description": "A CSS library integrated with Less",
-	"keywords": [
-		"css",
-		"less"
-	],
-	"author": "amekusa <post@amekusa.com> (http://amekusa.com)",
-	"license": "GPL",
-	"homepage": "https://bitbucket.org/amekusa/blessing/",
-	"repository": {
-		"type": "git",
-		"url": "https://amekusa@bitbucket.org/amekusa/blessing.git"
-	},
-	"main": "./src/main.less",
-	"directories": {
-		"test": "test"
-	},
-	"scripts": {
-		"test": "testcommand"
-	},
-	"dependencies": {
-		"less": "^2.0.0"
-	},
-	"devDependencies": {
-		"gulp": "*",
-		"gulp-load-plugins": "*",
-		"gulp-rename": "*",
-		"gulp-bundle-assets": "*",
-		"gulp-less": "*",
-		"gulp-sourcemaps": "*",
-		"gulp-autoprefixer": "*",
-		"gulp-minify-css": "*",
-		"gulp-css-purge": "*",
-		"browser-sync": "*"
-	}
+  "name": "blessing",
+  "version": "0.1.0",
+  "description": "A CSS library integrated with Less",
+  "keywords": [
+    "css",
+    "less"
+  ],
+  "author": "amekusa <post@amekusa.com> (http://amekusa.com)",
+  "license": "GPL",
+  "homepage": "https://bitbucket.org/amekusa/blessing/",
+  "repository": {
+    "type": "git",
+    "url": "https://amekusa@bitbucket.org/amekusa/blessing.git"
+  },
+  "main": "./src/main.less",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "testcommand"
+  },
+  "dependencies": {
+    "less": "^2.0.0"
+  },
+  "devDependencies": {
+    "browser-sync": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-bundle-assets": "*",
+    "gulp-css-purge": "*",
+    "gulp-less": "*",
+    "gulp-load-plugins": "*",
+    "gulp-minify-css": "*",
+    "gulp-rename": "*",
+    "gulp-run": "^1.6.8",
+    "gulp-sourcemaps": "*",
+    "kss": "^2.1.0"
+  }
 }

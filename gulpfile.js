@@ -3,6 +3,7 @@ var project = require('./package.json').name.toLowerCase();
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins")();
 var purge = require("gulp-css-purge"); // gulp-load-plugins cannot load this :(
+var styleguide = require('sc5-styleguide');
 
 gulp.task("default", ["build", "watch"]);
 
@@ -33,6 +34,10 @@ gulp.task("compress", ["compile"], function() {
 			.pipe(plugins.minifyCss())
 			.pipe(plugins.rename({extname: ".min.css"}))
 			.pipe(gulp.dest("dist"));
+});
+
+gulp.task("docs", ["compile"], function() {
+	plugins.run('kss-node --config kss-config.json').exec();
 });
 
 gulp.task("watch", function() {
