@@ -1,7 +1,9 @@
 var paths = {
-	package : './package.json',
-	kssConf : './kss-config.json',
-	src : './src'
+	package: './package.json',
+	kssConf: './kss-config.json',
+	src: './src',
+	dist: './dist',
+	docs: './docs'
 };
 
 var package = require(paths.package);
@@ -10,7 +12,6 @@ var kssConf = require(paths.kssConf);
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
-var purge = require('gulp-css-purge'); // gulp-load-plugins cannot load this :(
 
 gulp.task('default', ['build', 'watch']);
 gulp.task('build', ['compile', 'compress']);
@@ -21,24 +22,20 @@ gulp.task('compile', function() {
 		.pipe(plugins.less({
 			sourceMap: true
 		}))
-		.pipe(purge())
+		.pipe(plugins.cssPurge())
 		.pipe(plugins.autoprefixer('last 2 versions'))
 		.pipe(plugins.sourcemaps.write())
 		.pipe(plugins.rename(project + '.css'))
-		.pipe(gulp.dest('dist'));
-});
-
-gulp.task('bundle', function() {
-	return gulp.src(paths.src + '/main.less')
-		.pipe(plugins.bundle-assets())
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('compress', ['compile'], function() {
-	return gulp.src('./dist/' + project + '.css')
+	return gulp.src(paths.dist + '/' + project + '.css')
 		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename({extname: '.min.css'}))
-		.pipe(gulp.dest('dist'));
+		.pipe(plugins.rename({
+			extname: '.min.css'
+		}))
+		.pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('docs', ['compile'], function() {

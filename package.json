@@ -27,7 +27,6 @@
     "browser-sync": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
-    "gulp-bundle-assets": "*",
     "gulp-css-purge": "*",
     "gulp-less": "*",
     "gulp-load-plugins": "*",
