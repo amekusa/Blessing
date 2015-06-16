@@ -13,7 +13,7 @@ styleguide: methods
 /*
 .for-each(@list; @ruleset)
 
-Iterates a list of values.  
+Iterates a list of values.
 You can refer each values of @list as the variable: @each inside the @ruleset.
 
 ### Example #1
@@ -27,6 +27,8 @@ margin-top: 1em;
 margin-right: 1em;
 margin-bottom: 1em;
 ```
+
+Compatible in IE6+, Firefox 2+, Safari 4+.
 
 @list - <any> Comma or space separated values
 @ruleset - <ruleset> The ruleset to apply in the loop
@@ -45,7 +47,7 @@ styleguide: methods.for-each
 /*
 .iterate(@from; @to; @ruleset; @step: 1)
 
-Iteration Loop  
+Iteration Loop
 TODO: Resolve conflicts of iterator in nested loops
 
 ### Example #1
@@ -82,18 +84,18 @@ styleguide: methods.iterate
 	.loop(@from);
 	.loop(@i) {
 		@ruleset();
-		
+
 		& when (@from < @to) { // Incremental
 			@next: @i + abs(@step);
-			
+
 			& when (@next <= @to) {
 				.loop(@next);
 			}
 		}
-		
+
 		& when (@from > @to) { // Decremental
 			@next: @i - abs(@step);
-			
+
 			& when (@next >= @to) {
 				.loop(@next);
 			}
@@ -107,7 +109,7 @@ styleguide: methods.iterate
 
 .for(@i; @n) {
 	.each(@i);
-	
+
 	& when not(@i = @n) {
 		.for((@i + (@n - @i) / abs(@n - @i)); @n);
 	}
@@ -121,19 +123,19 @@ styleguide: methods.iterate
 // @param prefixes
 
 .prefix(@prop; @value; @prefixes: moz, webkit, o, ms) {
-	
+
 	& when (@uses-vendor-prefixes) {
-		
+
 		.for-each(@prefixes; {
 			-@{each}-@{prop}: @value;
 		});
 	}
-	
+
 	@{prop}: @value;
 }
 
 .prepend(@ruleset) {
-	
+
 	&:before {
 		content: @char-whitespace;
 		@ruleset();
@@ -141,7 +143,7 @@ styleguide: methods.iterate
 }
 
 .append(@ruleset) {
-	
+
 	&:after {
 		content: @char-whitespace;
 		@ruleset();
@@ -150,7 +152,7 @@ styleguide: methods.iterate
 
 
 // [DRAFT] Script evaluation
-// 
+//
 // FIXME Nested call unsupported
 
 .eval(@script; @rules) {
@@ -195,27 +197,27 @@ styleguide: methods.iterate
 // position: absolute;
 
 .pos(@x; @y; @from: tl; @method: @empty) {
-	
+
 	& when (@from = tl), (@from = t), (@from = l) {
 		left: @x;
 		top: @y;
 	}
-	
+
 	& when (@from = tr), (@from = r) {
 		right: @x;
 		top: @y;
 	}
-	
+
 	& when (@from = bl), (@from = b) {
 		left: @x;
 		bottom: @y;
 	}
-	
+
 	& when (@from = br) {
 		right: @x;
 		bottom: @y;
 	}
-	
+
 	& when not(@method = @empty) {
 		position: @method;
 	}
@@ -296,15 +298,15 @@ styleguide: methods.iterate
 // margin-right: auto;
 
 .align(@with; @offset: 0) {
-	
+
 	& when (@with = l), (@with = left) {
 		.mgn-x(@offset; auto);
 	}
-	
+
 	& when (@with = r), (@with = right) {
 		.mgn-x(auto; @offset);
 	}
-	
+
 	& when (@with = c), (@with = center) {
 		.mgn-x(auto);
 	}
@@ -405,22 +407,22 @@ styleguide: methods.iterate
 }
 
 .bdr-radius(@dir; @radius) {
-	
+
 	& when (@dir = t) {
 		border-top-left-radius: @radius;
 		border-top-right-radius: @radius;
 	}
-	
+
 	& when (@dir = r) {
 		border-top-right-radius: @radius;
 		border-bottom-right-radius: @radius;
 	}
-	
+
 	& when (@dir = b) {
 		border-bottom-left-radius: @radius;
 		border-bottom-right-radius: @radius;
 	}
-	
+
 	& when (@dir = l) {
 		border-top-left-radius: @radius;
 		border-bottom-left-radius: @radius;
@@ -433,31 +435,31 @@ styleguide: methods.iterate
 //  * @param side <side> (default:all) The side to be stripped off
 
 .bare(@side: all) {
-	
+
 	& when (@side = all) {
 		margin: 0;
 		padding: 0;
 		border-width: 0;
 	}
-	
+
 	& when (@side = l) {
 		margin-left: 0;
 		padding-left: 0;
 		border-left-width: 0;
 	}
-	
+
 	& when (@side = r) {
 		margin-right: 0;
 		padding-right: 0;
 		border-right-width: 0;
 	}
-	
+
 	& when (@side = t) {
 		margin-top: 0;
 		padding-top: 0;
 		border-top-width: 0;
 	}
-	
+
 	& when (@side = b) {
 		margin-bottom: 0;
 		padding-bottom: 0;
@@ -491,11 +493,11 @@ styleguide: methods.iterate
 .center-x(@w; @offset: 0) {
 	position: absolute;
 	width: @w;
-	
+
 	& when (ispercentage(@w)) { // For flexible height
 		left: (100% - @w) * .5;
 	}
-	
+
 	& when not(ispercentage(@w)) { // For fixed height
 		left: 50%;
 		margin-left: (-@w * .5) + @offset;
@@ -510,11 +512,11 @@ styleguide: methods.iterate
 .center-y(@h; @offset: 0) {
 	position: absolute;
 	height: @h;
-	
+
 	& when (ispercentage(@h)) { // For flexible height
 		top: (100% - @h) * .5;
 	}
-	
+
 	& when not(ispercentage(@h)) { // For fixed height
 		top: 50%;
 		margin-top: (-@h * .5) + @offset;
@@ -526,7 +528,7 @@ styleguide: methods.iterate
 
 .block-align-y(@align; @offset: 0) {
 	font-size: 0; // Remove gaps between child elements
-	
+
 	&:before {
 		content: @char-whitespace;
 		display: inline-block;
@@ -534,7 +536,7 @@ styleguide: methods.iterate
 		height: 100%;
 		vertical-align: @align;
 	}
-	
+
 	> * {
 		display: inline-block;
 		vertical-align: @align;
@@ -555,7 +557,7 @@ styleguide: methods.iterate
 .maximise-x(@proportional: true) {
 	width: 100%;
 	max-height: 100%;
-	
+
 	& when (@proportional) {
 		height: auto;
 	}
@@ -564,7 +566,7 @@ styleguide: methods.iterate
 .maximise-y(@proportional: true) {
 	height: 100%;
 	max-width: 100%;
-	
+
 	& when (@proportional) {
 		width: auto;
 	}
@@ -576,7 +578,7 @@ styleguide: methods.iterate
 }
 
 .nocollapse() {
-	
+
 	&:before {
 		content: "";
 		display: table;
