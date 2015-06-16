@@ -1,11 +1,11 @@
 {
-  "title": "Blessing the Stylesheet Library",
-  "source": "src",
-  "mask": "*.less",
-  "homepage": "../README.md",
-  "destination": "docs",
-  "css": [
-    "public/styles.css"
-  ],
-  "js": []
+    "title": "Blessing the Stylesheet Library",
+    "source": "src",
+    "mask": "*.less",
+    "homepage": "../README.md",
+    "destination": "docs",
+    "css": [
+        "../dist/blessing.css"
+    ],
+    "js": []
 }
