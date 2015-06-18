@@ -2,8 +2,7 @@ var paths = {
 	package: './package.json',
 	kssConf: './kss-config.json',
 	src: './src',
-	dist: './dist',
-	docs: './docs'
+	dist: './dist'
 };
 
 var package = require(paths.package);
@@ -39,12 +38,22 @@ gulp.task('compress', ['compile'], function() {
 		.pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('docs', ['compile'], function() {
+gulp.task('docs', ['docs_template'], function() {
 	shell('kss-node --config ' + paths.kssConf, function(error, stdout, stderr) {
 		console.log('stdout: ' + stdout);
 		console.log('stderr: ' + stderr);
 		if (error !== null) console.log('exec error: ' + error);
 	});
+});
+
+gulp.task('docs_template', function() {
+	return gulp.src(kssConf.template + '/public/*.less')
+		.pipe(plugins.less())
+		.pipe(plugins.cssPurge())
+		.pipe(plugins.autoprefixer('last 2 versions'))
+		.pipe(plugins.minifyCss())
+		.pipe(plugins.rename('kss.css'))
+		.pipe(gulp.dest(kssConf.template + '/public'));
 });
 
 gulp.task('watch', function() {
