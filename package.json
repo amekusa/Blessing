@@ -32,7 +32,6 @@
     "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
     "gulp-rename": "*",
-    "gulp-run": "^1.6.8",
     "gulp-sourcemaps": "*",
     "kss": "^2.1.0"
   }

@@ -12,6 +12,7 @@ var kssConf = require(paths.kssConf);
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
+var shell = require('child_process').exec;
 
 gulp.task('default', ['build', 'watch']);
 gulp.task('build', ['compile', 'compress']);
@@ -39,7 +40,11 @@ gulp.task('compress', ['compile'], function() {
 });
 
 gulp.task('docs', ['compile'], function() {
-	plugins.run('kss-node --config ' + paths.kssConf).exec();
+	shell('kss-node --config ' + paths.kssConf, function(error, stdout, stderr) {
+		console.log('stdout: ' + stdout);
+		console.log('stderr: ' + stderr);
+		if (error !== null) console.log('exec error: ' + error);
+	});
 });
 
 gulp.task('watch', function() {
