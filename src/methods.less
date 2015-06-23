@@ -16,17 +16,12 @@ styleguide: methods
 Iterates a list of values.
 You can refer each values of @list as the variable: @each inside the @ruleset.
 
-### Example #1
-```less
-.for-each(top, right, bottom; {
-	margin-@{each}: 1em;
-});
-```
-```css
-margin-top: 1em;
-margin-right: 1em;
-margin-bottom: 1em;
-```
+less:
+div {
+	.for-each(top, right, bottom; {
+		margin-@{each}: 1em;
+	});
+}
 
 Compatible in IE6+, Firefox 2+, Safari 4+.
 
@@ -50,28 +45,18 @@ styleguide: methods.for-each
 Iteration Loop
 TODO: Resolve conflicts of iterator in nested loops
 
-### Example #1
-```less
-.iterate(2; 4; { // Iterate from 2 to 4
-	h@{i} { color: aquamarine; }
-});
-```
-```css
-h2 { color: aquamarine; }
-h3 { color: aquamarine; }
-h4 { color: aquamarine; }
-```
-
-```less
-.iterate(6; 4; { // Iterate from 6 to 4
-	h@{i} { font-weight: normal; }
-});
-```
-```css
-h6 { font-weight: normal; }
-h5 { font-weight: normal; }
-h4 { font-weight: normal; }
-```
+less:
+#methods-iterate-1 {
+	.iterate(2; 4; { // Iterate from 2 to 4
+		h@{i} { color: aquamarine; }
+	});
+}
+---
+#methods-iterate-2 {
+	.iterate(6; 4; { // Iterate from 6 to 4
+		h@{i} { font-weight: normal; }
+	});
+}
 
 @from - <integer>
 @to - <integer>

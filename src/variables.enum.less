@@ -16,40 +16,22 @@ Compatibility
 Enumerations that represent CSS compatibilities.
 You can use them as a value of `@compat`
 
-### Example #1
-If your site must support IE 9, set the Blessing compatibility value to suffice it.
-```less
-@compat: @compat-ie9
-```
-
-### Example #2
-Checking the current compatibility and change rules of a mixin by using conditional blocks.
-```less
+less:
+// If your site must support IE 9,
+// set the Blessing compatibility value to suffice it.
+@compat: @compat-ie9;
+---
+// Checking the current compatibility
+// and change rules of a mixin by using conditional blocks.
 .your-mixin() {
 	display: inline-block;
 	& when (@compat >= @compat-ie7) { // Support IE 7 and below if required
 		*display: inline;
-		zoom: 1;
+		zoom: @compat;
 	}
 }
-...
-@compat: @compat-ie8
-.box-a { .your-mixin; }
-...
-@compat: @compat-ie7
-.box-b { .your-mixin; }
-```
-```css
-.box-a {
-	display: inline-block;
-}
-...
-.box-b {
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-}
-```
+@compat: @compat-ie8;
+.box { .your-mixin; }
 
 @compat-edge - Bleeding edge
 @compat-css3 - CSS 3
