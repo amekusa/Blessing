@@ -1,5 +1,3 @@
-@import "../../src/main.less";
-
 // ------------------------------------------------------------------------------
 //   @group Variables - Colors, Fonts, etc.
 // ------------------------------------------------------------------------------
@@ -94,7 +92,7 @@
 
   pre {
     white-space: pre;
-    overflow: scroll;
+    overflow: auto;
   }
 
   ins {
@@ -454,7 +452,7 @@
   /* Specify class=linenums on a pre to get line numbering */
   ol.linenums {
     margin: 0;
-    padding: 0 0 3px 0;
+    padding: 0;
     list-style-type: none;
 
     li {
@@ -477,3 +475,8 @@
     }
   }
 }
+
+// ------------------------------------------------------------------------------
+//   Custom styles
+// ------------------------------------------------------------------------------
+@import "kss.blessing.less";

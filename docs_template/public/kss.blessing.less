@@ -1,0 +1,49 @@
+@import (reference) "kss.less";
+@import "../../src/main.less";
+
+#kss-node {
+
+	#kssref-classes,
+	#kssref-methods {
+	
+		~ .kss-section--depth-2 {
+	
+			.kss-title--level-2 {
+				
+				.kss-title__label {
+					font-family: @font-for-code;
+				}
+			}
+		}
+	}
+}
+
+article[role="main"] {
+	@rhythm: @kss-vertical-rhythm;
+	
+	figure.example {
+		&:extend(.kss-style);
+		&:extend(#kss-node .kss-modifier__wrapper);
+		
+		margin: 0;
+		
+		+ * {
+			margin-top: @rhythm;
+		}
+		
+		figcaption {
+			&:extend(#kss-node .kss-modifier__heading);
+		}
+		
+		.code-snippets {
+			
+			.source {
+				&:extend(#kss-node .kss-markup);
+			}
+			
+			.compiled {
+				margin: @rhythm * .5;
+			}
+		}
+	}
+}

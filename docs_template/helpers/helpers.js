@@ -33,18 +33,15 @@ module.exports.register = function(handlebars) {
 			);
 			
 			// HTML [
-			r += '<div class="kss-modifier__wrapper">';
-			r += 	'<div class="kss-modifier__heading kss-style">';
+			r += '<figure class="example">';
+			r += 	'<figcaption>';
 			r += 		srcs.length > 1 ? ('Example #' + (i + 1)) : 'Example';
-			r += 	'</div>';
-			//r += 	'<div class="kss-modifier__example">' + srcs[i] + '</div>';
-			r += 	'<div class="kss-modifier__example kss-markup kss-style">';
-			r += 		'<pre class="prettyprint linenums lang-less"><code data-language="less">' + srcs[i] + '</code></pre>';
-			r += 	'</div>';
-			r += '</div>'
-			r += '<div class="kss-markup kss-style">';
-			r += 	'<pre class="prettyprint linenums lang-css"><code data-language="css">' + iCss + '</code></pre>';
-			r += '</div>';
+			r += 	'</figcaption>';
+			r += 	'<div class="code-snippets">';
+			r += 		'<pre class="prettyprint linenums lang-less source"><code data-language="less">' + srcs[i] + '</code></pre>';
+			r += 		'<pre class="prettyprint lang-css compiled"><code data-language="css">' + iCss + '</code></pre>';
+			r += 	'</div>'
+			r += '</figure>';
 			// ] HTML
 		}
 
