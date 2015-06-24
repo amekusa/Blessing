@@ -65,6 +65,7 @@ gulp.task('watch', function() {
 	gulp.watch([
 		kssConf.source + '/' + kssConf.mask,
 		kssConf.source + '/' + kssConf.homepage,
+		kssConf.template + '/**/*',
 		paths.kssConf
 	], ['docs']);
 });
