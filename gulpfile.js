@@ -40,9 +40,8 @@ gulp.task('compress', ['compile'], function() {
 
 gulp.task('docs', ['docs_template'], function() {
 	shell('kss-node --config ' + paths.kssConf, function(error, stdout, stderr) {
-		console.log('stdout: ' + stdout);
-		console.log('stderr: ' + stderr);
-		if (error !== null) console.log('exec error: ' + error);
+		if (error !== null) console.log('' + error);
+		else console.log(stdout);
 	});
 });
 
