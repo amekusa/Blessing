@@ -38,26 +38,14 @@
       <li class="kss-nav__menu-item">
         <a href="section-methods.html">
           <span class="kss-nav__ref">2</span
-          ><span class="kss-nav__name">Methods</span>
+          ><span class="kss-nav__name">Mixins</span>
         </a>
         <ul class="kss-nav__menu-child">
-            <li class="kss-nav__menu-item">
-              <a href="section-methods.html#kssref-methods-for-each">
-                <span class="kss-nav__ref">2.1</span
-                ><span class="kss-nav__name">.for-each</span>
-              </a>
-            </li>
-            <li class="kss-nav__menu-item">
-              <a href="section-methods.html#kssref-methods-iterate">
-                <span class="kss-nav__ref">2.2</span
-                ><span class="kss-nav__name">.iterate</span>
-              </a>
-            </li>
         </ul>
       </li>
       <li class="kss-nav__menu-item">
         <a href="section-variables.html">
-          <span class="kss-nav__ref">3</span
+          <span class="kss-nav__ref">4</span
           ><span class="kss-nav__name">Variables</span>
         </a>
       </li>
@@ -77,13 +65,13 @@
                 #methods
             </span>
           </span>
-          <span class="kss-title__label">Methods</span>
+          <span class="kss-title__label">Mixins</span>
         </a>
       </h1>
 
 
       <div class="kss-description">
-        <p>Mix-ins, classes</p>
+        <p>Mixins, classes</p>
 
       </div>
     </div>
@@ -92,124 +80,6 @@
 
 
       </div>
-      <section id="kssref-methods-for-each" class="kss-section kss-section--depth-2">
-
-    <div class="kss-style">
-      <h2 class="kss-title kss-title--level-2">
-        <a class="kss-title__permalink" href="#kssref-methods-for-each">
-          <span class="kss-title__ref">
-              2.1
-            <span class="kss-title__permalink-hash">
-                #methods.for-each
-            </span>
-          </span>
-          <span class="kss-title__label">.for-each</span>
-        </a>
-      </h2>
-
-      <ul class="kss-parameters">
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@list</code>
-          <div class="kss-parameters__description"><any> Comma or space separated values</div>
-        </li>
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@ruleset</code>
-          <div class="kss-parameters__description"><ruleset> The ruleset to apply in the loop</div>
-        </li>
-      </ul>
-
-      <div class="kss-description">
-        <p>Iterates a list of values.
-You can refer each values of @list as the variable: @each inside the @ruleset.</p>
-
-      </div>
-    </div>
-
-    <figure class="example"><figcaption>Example</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">div {
-	.for-each(top, right, bottom; {
-		margin-@{each}: 1em;
-	});
-}</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">div {
-  margin-top: 1em;
-  margin-right: 1em;
-  margin-bottom: 1em;
-}
-</code></pre></div></figure>
-
-
-      </section>
-      <section id="kssref-methods-iterate" class="kss-section kss-section--depth-2">
-
-    <div class="kss-style">
-      <h2 class="kss-title kss-title--level-2">
-        <a class="kss-title__permalink" href="#kssref-methods-iterate">
-          <span class="kss-title__ref">
-              2.2
-            <span class="kss-title__permalink-hash">
-                #methods.iterate
-            </span>
-          </span>
-          <span class="kss-title__label">.iterate</span>
-        </a>
-      </h2>
-
-      <ul class="kss-parameters">
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@from</code>
-          <div class="kss-parameters__description"><integer></div>
-        </li>
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@to</code>
-          <div class="kss-parameters__description"><integer></div>
-        </li>
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@ruleset</code>
-          <div class="kss-parameters__description"><ruleset></div>
-        </li>
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@step</code>
-          <div class="kss-parameters__description"><integer> [default: 1]</div>
-        </li>
-      </ul>
-
-      <div class="kss-description">
-        <p>Iteration Loop
-TODO: Resolve conflicts of iterator in nested loops</p>
-
-      </div>
-    </div>
-
-    <figure class="example"><figcaption>Example #1</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">#methods-iterate-1 {
-	.iterate(2; 4; { // Iterate from 2 to 4
-		h@{i} { color: aquamarine; }
-	});
-}
-</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">#methods-iterate-1 h2 {
-  color: aquamarine;
-}
-#methods-iterate-1 h3 {
-  color: aquamarine;
-}
-#methods-iterate-1 h4 {
-  color: aquamarine;
-}
-</code></pre></div></figure><figure class="example"><figcaption>Example #2</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">#methods-iterate-2 {
-	.iterate(6; 4; { // Iterate from 6 to 4
-		h@{i} { font-weight: normal; }
-	});
-}</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">#methods-iterate-2 h6 {
-  font-weight: normal;
-}
-#methods-iterate-2 h5 {
-  font-weight: normal;
-}
-#methods-iterate-2 h4 {
-  font-weight: normal;
-}
-</code></pre></div></figure>
-
-
-      </section>
 </article>
 
 <!-- SCRIPTS -->

@@ -1,14 +1,14 @@
 /*
-Methods
+Mixins
 
-Mix-ins, classes
+Mixins, classes
 
-styleguide: methods
+styleguide: mixins
 */
 
-@import "methods.selector.less";
-@import "methods.wrapper.less";
-@import "methods.development.less";
+@import "mixins.selector.less";
+@import "mixins.wrapper.less";
+@import "mixins.development.less";
 
 /*
 .for-each
@@ -26,7 +26,7 @@ div {
 @list - <any> Comma or space separated values
 @ruleset - <ruleset> The ruleset to apply in the loop
 
-styleguide: methods.for-each
+styleguide: mixins.for-each
 */
 .for-each(@list; @ruleset) {
 	.loop(1);
@@ -44,13 +44,13 @@ Iteration Loop
 TODO: Resolve conflicts of iterator in nested loops
 
 less:
-#methods-iterate-1 {
+#mixins-iterate-1 {
 	.iterate(2; 4; { // Iterate from 2 to 4
 		h@{i} { color: aquamarine; }
 	});
 }
 ---
-#methods-iterate-2 {
+#mixins-iterate-2 {
 	.iterate(6; 4; { // Iterate from 6 to 4
 		h@{i} { font-weight: normal; }
 	});
@@ -61,7 +61,7 @@ less:
 @ruleset - <ruleset>
 @step - <integer> [default: 1]
 
-styleguide: methods.iterate
+styleguide: mixins.iterate
 */
 .iterate(@from; @to; @ruleset; @step: 1) {
 	.loop(@from);
@@ -568,9 +568,9 @@ styleguide: methods.iterate
 	}
 }
 
-@import "methods.division.less";
-@import "methods.interaction.less";
-@import "methods.component.less";
-@import "methods.typography.less";
-@import "methods.animation.less";
-@import "methods.transform.less";
+@import "mixins.division.less";
+@import "mixins.interaction.less";
+@import "mixins.component.less";
+@import "mixins.typography.less";
+@import "mixins.animation.less";
+@import "mixins.transform.less";
