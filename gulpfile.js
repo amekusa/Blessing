@@ -12,6 +12,7 @@ var kssConf = require(paths.kssConf);
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 var shell = require('child_process').exec;
+var del = require('del');
 
 gulp.task('default', ['build', 'watch']);
 gulp.task('build', ['compile', 'compress']);
@@ -38,10 +39,11 @@ gulp.task('compress', ['compile'], function() {
 		.pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('docs', ['docs_template'], function() {
+gulp.task('docs', ['docs_template', 'docs_clean'], function(done) {
 	shell('kss-node --config ' + paths.kssConf, function(error, stdout, stderr) {
 		if (error !== null) console.log('' + error);
 		else console.log(stdout);
+		done();
 	});
 });
 
@@ -53,6 +55,10 @@ gulp.task('docs_template', function() {
 		.pipe(plugins.minifyCss())
 		.pipe(plugins.rename('kss.css'))
 		.pipe(gulp.dest(kssConf.template + '/public'));
+});
+
+gulp.task('docs_clean', function(done) {
+	del([kssConf.destination + '/**/*'], done);
 });
 
 gulp.task('watch', function() {

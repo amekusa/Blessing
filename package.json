@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "browser-sync": "*",
+    "del": "^1.2.0",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-css-purge": "*",
