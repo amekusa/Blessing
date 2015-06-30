@@ -31,7 +31,7 @@ module.exports.register = function(handlebars) {
 					iCss = result.css;
 				}
 			);
-			
+
 			// HTML [
 			r += '<figure class="example">';
 			r += 	'<figcaption>';
@@ -42,6 +42,22 @@ module.exports.register = function(handlebars) {
 			r += 		'<pre class="prettyprint lang-css compiled"><code data-language="css">' + iCss + '</code></pre>';
 			r += 	'</div>'
 			r += '</figure>';
+			// ] HTML
+
+			less.render(
+				'#kssref-' + this.referenceURI + '{' + iCss + '}', opts,
+				function(error, result) {
+					if (error) {
+						iCss = '[ERROR] Less compiler: ' + error.message;
+						console.log(iCss);
+						return;
+					}
+					iCss = result.css;
+				}
+			);
+
+			// HTML [
+			r += '<style>' + iCss + '</style>';
 			// ] HTML
 		}
 
