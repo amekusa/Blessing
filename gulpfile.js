@@ -48,7 +48,7 @@ gulp.task('docs', ['docs_template', 'docs_clean'], function(done) {
 });
 
 gulp.task('docs_template', function() {
-	return gulp.src(kssConf.template + '/public/*.less')
+	return gulp.src(kssConf.template + '/public/kss.less')
 		.pipe(plugins.less())
 		.pipe(plugins.cssPurge())
 		.pipe(plugins.autoprefixer('last 2 versions'))
@@ -70,7 +70,7 @@ gulp.task('watch', function() {
 	gulp.watch([
 		kssConf.source + '/' + kssConf.mask,
 		kssConf.source + '/' + kssConf.homepage,
-		kssConf.template + '/**/*',
+		kssConf.template + '/**/*.{html,txt,less,js}',
 		paths.kssConf
 	], ['docs']);
 });
