@@ -1,0 +1,111 @@
+/*
+Utilities
+
+styleguide: mixins.util
+*/
+
+/*
+.for
+
+Performs numerical iteration.
+
+less:
+// Iterates from 2 to 4
+.for(2; 4; {
+	.each(@i) {
+		h@{i} {
+			color: aquamarine;
+		}
+	}
+});
+---
+// Iterates from 6 to 4
+.for(6; 4; {
+	.each(@i) {
+		h@{i} {
+			font-weight: normal;
+		}
+	}
+});
+---
+// Nested iterations
+.for(1; 2; {
+	.each(@i) {
+		.for(1; 2; {
+			.each(@j) {
+				.item-@{i}-@{j} {
+					i: @i;
+					j: @j;
+				}
+			}
+		});
+	}
+});
+
+@from <integer> - The number of the iteration count starts at
+@to <integer> - The number of the iteration count ends at
+@ruleset <ruleset> - The ruleset invoked with each iteration
+
+styleguide: mixins.util.for
+*/
+.for(@from; @to; @ruleset) {
+	@ruleset();
+	.each(@from);
+	
+	& when not(@from = @to) {
+		.for(@from + ((@to - @from) / abs(@to - @from)); @to; @ruleset);
+	}
+}
+
+/*
+.prefix
+
+[NOT IMPLEMENTED] Adds vendor-prefixes to a property.
+
+@prop <property> - The property to be prefixised
+@value <any> - The value of the property
+@prefixes <list <string>> - The list of prefixes [default: moz webkit o ms]
+
+styleguide: mixins.util.xxx.prefix
+*/
+.prefix(@prop; @value; @prefixes: moz webkit o ms) {
+	// TODO Implement
+}
+
+.prepend(@ruleset) {
+
+	&:before {
+		content: @char-whitespace;
+		@ruleset();
+	}
+}
+
+.append(@ruleset) {
+
+	&:after {
+		content: @char-whitespace;
+		@ruleset();
+	}
+}
+
+
+/*
+.eval
+
+Evaluates a script
+
+[FIXME] Nested call unsupported
+
+@script <string> - The JavaScript expression
+@ruleset <ruleset> - The ruleset invoked after the evaluation
+
+styleguide: mixins.util.xxx.eval
+*/
+.eval(@script; @ruleset) {
+	@_ruleset: {
+		@_script: e(@script);
+		@return: e(`(function(){@{_script};})()`);
+		@ruleset();
+	};
+	@_ruleset();
+}
