@@ -1,9 +1,16 @@
-/**
- * Blessing / Mixins / Division
- */
+/*
+Division
 
-@import (reference) "variables.less";
+styleguide: mixins.division
+*/
 
+/*
+.clearfix
+
+@dir <clear> [both] - The float direction to be cleared
+
+styleguide: mixins.division.clearfix
+*/
 .clearfix(@dir: both) {
 	
 	&:before,
@@ -37,6 +44,14 @@
 	}
 }
 
+/*
+.rows
+
+@nrows <integer> - The number of rows
+@gutter <length> - The width of the gutter
+
+styleguide: mixins.division.rows
+*/
 .rows(@nrows: uncertain; @gutter: @base-margin) {
 	
 	> * {
@@ -50,14 +65,18 @@
 	}
 }
 
-/**
- * Makes multi-column layout
- *
- * @param ncols <integer> A number of columns
- * @param gutter <length>
- * @param inset <length>
- * @param arrange ltr|rtl Columns arrangement direction
- */
+/*
+.cols
+
+Composes multi-column layout
+
+@ncols <integer> - A number of columns
+@gutter <length> - Width of gutters
+@inset <length> - Width of insets
+@arrange ltr|rtl - Columns arrangement direction
+
+styleguide: mixins.division.cols
+*/
 .cols(@ncols: uncertain; @gutter: @base-margin; @inset: auto; @arrange: ltr) {
 	
 	& when (@arrange = ltr) {
@@ -196,19 +215,21 @@
 			
 			// Column width
 			
-			.for(1; @n); .each(@i) {
-				
-				&:nth-child(@{n}n+@{i}) {
-					.width(extract(@ncols, @i));
-				}
-				
-				& when (@compat >= @compat-ie8) {
+			.for(1; @n; {
+				.each(@i) {
 					
-					&.col-@{n}n@{i} { // Polyfill class
+					&:nth-child(@{n}n+@{i}) {
 						.width(extract(@ncols, @i));
 					}
+					
+					& when (@compat >= @compat-ie8) {
+						
+						&.col-@{n}n@{i} { // Polyfill class
+							.width(extract(@ncols, @i));
+						}
+					}
 				}
-			}
+			});
 		}
 		
 		// Equal-width columns
@@ -226,16 +247,18 @@
 			
 			& when not(isnumber(@ncols)) {
 				
-				.for(1; 12); .each(@i) { // 1 - 12 columns
-					
-					&:first-child {
+				.for(1; 12; {
+					.each(@i) { // 1 - 12 columns
 						
-						&:nth-last-child(@{i}),
-						&:nth-last-child(@{i}) ~ * {
-							.equal-width(@i);
+						&:first-child {
+							
+							&:nth-last-child(@{i}),
+							&:nth-last-child(@{i}) ~ * {
+								.equal-width(@i);
+							}
 						}
 					}
-				}
+				});
 			}
 		}
 	}
