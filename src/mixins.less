@@ -9,17 +9,6 @@ styleguide: mixins
 @import "mixins.wrapper.less";
 @import "mixins.development.less";
 
-// Originate
-// Resets positioning properties.
-
-.origin() {
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-}
-
-
 // Positioning
 //  * @param x <length>                         Horizontal offset
 // @param y <length>                         Vertical offset
@@ -392,7 +381,8 @@ styleguide: mixins
 	display: block;
 	position: absolute;
 	z-index: @z-index;
-	.origin;
+	left: 0;
+	top: 0;
 	.dim(100%);
 	.bare;
 	#css3 > .box-sizing(border-box);

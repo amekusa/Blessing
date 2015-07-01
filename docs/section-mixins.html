@@ -42,15 +42,15 @@
         </a>
         <ul class="kss-nav__menu-child">
             <li class="kss-nav__menu-item">
-              <a href="section-mixins.html#kssref-mixins-for-each">
+              <a href="section-mixins.html#kssref-mixins-division">
                 <span class="kss-nav__ref">2.1</span
-                ><span class="kss-nav__name">.for-each</span>
+                ><span class="kss-nav__name">Division</span>
               </a>
             </li>
             <li class="kss-nav__menu-item">
-              <a href="section-mixins.html#kssref-mixins-iterate">
+              <a href="section-mixins.html#kssref-mixins-util">
                 <span class="kss-nav__ref">2.2</span
-                ><span class="kss-nav__name">.iterate</span>
+                ><span class="kss-nav__name">Utilities</span>
               </a>
             </li>
         </ul>
@@ -77,13 +77,103 @@
                 #mixins
             </span>
           </span>
-          <span class="kss-title__label">Mixins</span>
+          Mixins
         </a>
       </h1>
 
 
+    </div>
+
+    
+
+
+      </div>
+      <section id="kssref-mixins-division" class="kss-section kss-section--depth-2">
+
+    <div class="kss-style">
+      <h2 class="kss-title kss-title--level-2">
+        <a class="kss-title__permalink" href="#kssref-mixins-division">
+          <span class="kss-title__ref">
+              2.1
+            <span class="kss-title__permalink-hash">
+                #mixins.division
+            </span>
+          </span>
+          Division
+        </a>
+      </h2>
+
+
+    </div>
+
+    
+
+
+      </section>
+      <section id="kssref-mixins-division.clearfix" class="kss-section kss-section--depth-3">
+
+    <div class="kss-style">
+      <h3 class="kss-title kss-title--level-3">
+        <a class="kss-title__permalink" href="#kssref-mixins-division.clearfix">
+          <span class="kss-title__ref">
+              2.1.1
+            <span class="kss-title__permalink-hash">
+                #mixins.division.clearfix
+            </span>
+          </span>
+          .clearfix
+        </a>
+      </h3>
+
+      <ul class="kss-parameters">
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@dir &lt;clear&gt; [both]</code>
+          <div class="kss-parameters__description">The float direction to be cleared</div>
+        </li>
+      </ul>
+
+    </div>
+
+    
+
+
+      </section>
+      <section id="kssref-mixins-division.cols" class="kss-section kss-section--depth-3">
+
+    <div class="kss-style">
+      <h3 class="kss-title kss-title--level-3">
+        <a class="kss-title__permalink" href="#kssref-mixins-division.cols">
+          <span class="kss-title__ref">
+              2.1.2
+            <span class="kss-title__permalink-hash">
+                #mixins.division.cols
+            </span>
+          </span>
+          .cols
+        </a>
+      </h3>
+
+      <ul class="kss-parameters">
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@ncols &lt;integer&gt;</code>
+          <div class="kss-parameters__description">A number of columns</div>
+        </li>
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@gutter &lt;length&gt;</code>
+          <div class="kss-parameters__description">Width of gutters</div>
+        </li>
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@inset &lt;length&gt;</code>
+          <div class="kss-parameters__description">Width of insets</div>
+        </li>
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@arrange ltr|rtl</code>
+          <div class="kss-parameters__description">Columns arrangement direction</div>
+        </li>
+      </ul>
+
       <div class="kss-description">
-        <p>Mixins, classes</p>
+        <p>Composes multi-column layout</p>
 
       </div>
     </div>
@@ -91,122 +181,271 @@
     
 
 
-      </div>
-      <section id="kssref-mixins-for-each" class="kss-section kss-section--depth-2">
+      </section>
+      <section id="kssref-mixins-division.rows" class="kss-section kss-section--depth-3">
 
     <div class="kss-style">
-      <h2 class="kss-title kss-title--level-2">
-        <a class="kss-title__permalink" href="#kssref-mixins-for-each">
+      <h3 class="kss-title kss-title--level-3">
+        <a class="kss-title__permalink" href="#kssref-mixins-division.rows">
           <span class="kss-title__ref">
-              2.1
+              2.1.3
             <span class="kss-title__permalink-hash">
-                #mixins.for-each
+                #mixins.division.rows
             </span>
           </span>
-          <span class="kss-title__label">.for-each</span>
+          .rows
         </a>
-      </h2>
+      </h3>
 
       <ul class="kss-parameters">
         <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@list</code>
-          <div class="kss-parameters__description"><any> Comma or space separated values</div>
+          <code class="kss-parameters__name">@nrows &lt;integer&gt;</code>
+          <div class="kss-parameters__description">The number of rows</div>
         </li>
         <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@ruleset</code>
-          <div class="kss-parameters__description"><ruleset> The ruleset to apply in the loop</div>
+          <code class="kss-parameters__name">@gutter &lt;length&gt;</code>
+          <div class="kss-parameters__description">The width of the gutter</div>
         </li>
       </ul>
 
-      <div class="kss-description">
-        <p>Iterates a list of values.
-You can refer each values of @list as the variable: @each inside the @ruleset.</p>
-
-      </div>
     </div>
 
-    <figure class="example"><figcaption>Example</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">div {
-	.for-each(top, right, bottom; {
-		margin-@{each}: 1em;
-	});
-}</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">div {
-  margin-top: 1em;
-  margin-right: 1em;
-  margin-bottom: 1em;
-}
-</code></pre></div></figure>
+    
 
 
       </section>
-      <section id="kssref-mixins-iterate" class="kss-section kss-section--depth-2">
+      <section id="kssref-mixins-util" class="kss-section kss-section--depth-2">
 
     <div class="kss-style">
       <h2 class="kss-title kss-title--level-2">
-        <a class="kss-title__permalink" href="#kssref-mixins-iterate">
+        <a class="kss-title__permalink" href="#kssref-mixins-util">
           <span class="kss-title__ref">
               2.2
             <span class="kss-title__permalink-hash">
-                #mixins.iterate
+                #mixins.util
             </span>
           </span>
-          <span class="kss-title__label">.iterate</span>
+          Utilities
         </a>
       </h2>
 
+
+    </div>
+
+    
+
+
+      </section>
+      <section id="kssref-mixins-util.for" class="kss-section kss-section--depth-3">
+
+    <div class="kss-style">
+      <h3 class="kss-title kss-title--level-3">
+        <a class="kss-title__permalink" href="#kssref-mixins-util.for">
+          <span class="kss-title__ref">
+              2.2.1
+            <span class="kss-title__permalink-hash">
+                #mixins.util.for
+            </span>
+          </span>
+          .for
+        </a>
+      </h3>
+
       <ul class="kss-parameters">
         <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@from</code>
-          <div class="kss-parameters__description"><integer></div>
+          <code class="kss-parameters__name">@from &lt;integer&gt;</code>
+          <div class="kss-parameters__description">The number of the iteration count starts at</div>
         </li>
         <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@to</code>
-          <div class="kss-parameters__description"><integer></div>
+          <code class="kss-parameters__name">@to &lt;integer&gt;</code>
+          <div class="kss-parameters__description">The number of the iteration count ends at</div>
         </li>
         <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@ruleset</code>
-          <div class="kss-parameters__description"><ruleset></div>
-        </li>
-        <li class="kss-parameters__item">
-          <code class="kss-parameters__name">@step</code>
-          <div class="kss-parameters__description"><integer> [default: 1]</div>
+          <code class="kss-parameters__name">@ruleset &lt;ruleset&gt;</code>
+          <div class="kss-parameters__description">The ruleset invoked with each iteration</div>
         </li>
       </ul>
 
       <div class="kss-description">
-        <p>Iteration Loop
-TODO: Resolve conflicts of iterator in nested loops</p>
+        <p>Performs numerical iteration.</p>
 
       </div>
     </div>
 
-    <figure class="example"><figcaption>Example #1</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">#mixins-iterate-1 {
-	.iterate(2; 4; { // Iterate from 2 to 4
-		h@{i} { color: aquamarine; }
-	});
-}
-</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">#mixins-iterate-1 h2 {
+    <figure class="example"><figcaption>Example #1</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">// Iterates from 2 to 4
+.for(2; 4; {
+	.each(@i) {
+		h@{i} {
+			color: aquamarine;
+		}
+	}
+});
+</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">h2 {
   color: aquamarine;
 }
-#mixins-iterate-1 h3 {
+h3 {
   color: aquamarine;
 }
-#mixins-iterate-1 h4 {
+h4 {
   color: aquamarine;
 }
-</code></pre></div></figure><figure class="example"><figcaption>Example #2</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">#mixins-iterate-2 {
-	.iterate(6; 4; { // Iterate from 6 to 4
-		h@{i} { font-weight: normal; }
-	});
-}</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">#mixins-iterate-2 h6 {
+</code></pre></div></figure><style>#kssref-mixins-util.for .kss-modifier__example h2 {
+  color: aquamarine;
+}
+#kssref-mixins-util.for .kss-modifier__example h3 {
+  color: aquamarine;
+}
+#kssref-mixins-util.for .kss-modifier__example h4 {
+  color: aquamarine;
+}
+</style><figure class="example"><figcaption>Example #2</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">// Iterates from 6 to 4
+.for(6; 4; {
+	.each(@i) {
+		h@{i} {
+			font-weight: normal;
+		}
+	}
+});
+</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">h6 {
   font-weight: normal;
 }
-#mixins-iterate-2 h5 {
+h5 {
   font-weight: normal;
 }
-#mixins-iterate-2 h4 {
+h4 {
   font-weight: normal;
 }
-</code></pre></div></figure>
+</code></pre></div></figure><style>#kssref-mixins-util.for .kss-modifier__example h6 {
+  font-weight: normal;
+}
+#kssref-mixins-util.for .kss-modifier__example h5 {
+  font-weight: normal;
+}
+#kssref-mixins-util.for .kss-modifier__example h4 {
+  font-weight: normal;
+}
+</style><figure class="example"><figcaption>Example #3</figcaption><div class="code-snippets"><pre class="prettyprint linenums lang-less source"><code data-language="less">// Nested iterations
+.for(1; 2; {
+	.each(@i) {
+		.for(1; 2; {
+			.each(@j) {
+				.item-@{i}-@{j} {
+					i: @i;
+					j: @j;
+				}
+			}
+		});
+	}
+});</code></pre><pre class="prettyprint lang-css compiled"><code data-language="css">.item-1-1 {
+  i: 1;
+  j: 1;
+}
+.item-1-2 {
+  i: 1;
+  j: 2;
+}
+.item-2-1 {
+  i: 2;
+  j: 1;
+}
+.item-2-2 {
+  i: 2;
+  j: 2;
+}
+</code></pre></div></figure><style>#kssref-mixins-util.for .kss-modifier__example .item-1-1 {
+  i: 1;
+  j: 1;
+}
+#kssref-mixins-util.for .kss-modifier__example .item-1-2 {
+  i: 1;
+  j: 2;
+}
+#kssref-mixins-util.for .kss-modifier__example .item-2-1 {
+  i: 2;
+  j: 1;
+}
+#kssref-mixins-util.for .kss-modifier__example .item-2-2 {
+  i: 2;
+  j: 2;
+}
+</style>
+
+
+      </section>
+      <section id="kssref-mixins-util.xxx.eval" class="kss-section kss-section--depth-4">
+
+    <div class="kss-style">
+      <h4 class="kss-title kss-title--level-4">
+        <a class="kss-title__permalink" href="#kssref-mixins-util.xxx.eval">
+          <span class="kss-title__ref">
+              2.2.2.1
+            <span class="kss-title__permalink-hash">
+                #mixins.util.xxx.eval
+            </span>
+          </span>
+          .eval
+        </a>
+      </h4>
+
+      <ul class="kss-parameters">
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@script &lt;string&gt;</code>
+          <div class="kss-parameters__description">The JavaScript expression</div>
+        </li>
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@ruleset &lt;ruleset&gt;</code>
+          <div class="kss-parameters__description">The ruleset invoked after the evaluation</div>
+        </li>
+      </ul>
+
+      <div class="kss-description">
+        <p>Evaluates a script</p>
+<p>[FIXME] Nested call unsupported</p>
+
+      </div>
+    </div>
+
+    
+
+
+      </section>
+      <section id="kssref-mixins-util.xxx.prefix" class="kss-section kss-section--depth-4">
+
+    <div class="kss-style">
+      <h4 class="kss-title kss-title--level-4">
+        <a class="kss-title__permalink" href="#kssref-mixins-util.xxx.prefix">
+          <span class="kss-title__ref">
+              2.2.2.2
+            <span class="kss-title__permalink-hash">
+                #mixins.util.xxx.prefix
+            </span>
+          </span>
+          .prefix
+        </a>
+      </h4>
+
+      <ul class="kss-parameters">
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@prop &lt;property&gt;</code>
+          <div class="kss-parameters__description">The property to be prefixised</div>
+        </li>
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@value &lt;any&gt;</code>
+          <div class="kss-parameters__description">The value of the property</div>
+        </li>
+        <li class="kss-parameters__item">
+          <code class="kss-parameters__name">@prefixes &lt;list &lt;string&gt;&gt;</code>
+          <div class="kss-parameters__description">The list of prefixes [default: moz webkit o ms]</div>
+        </li>
+      </ul>
+
+      <div class="kss-description">
+        <p>[NOT IMPLEMENTED] Adds vendor-prefixes to a property.</p>
+
+      </div>
+    </div>
+
+    
 
 
       </section>
