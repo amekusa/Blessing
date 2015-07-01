@@ -7,6 +7,7 @@ styleguide: mixins
 @import "mixins.util.less";
 @import "mixins.selector.less";
 @import "mixins.wrapper.less";
+@import "mixins.metric.less";
 @import "mixins.development.less";
 
 // Positioning
@@ -55,35 +56,6 @@ styleguide: mixins
 		position: @method;
 	}
 }
-
-
-// Dimension
-//  * @param w <length> Width
-// @param h <length> Height
-//  * # Example(s)
-// .dim(480px; 320px);
-// -------------------
-// width: 480px;
-// height: 320px;
-
-.dim(@w; @h) {
-	width: @w;
-	height: @h;
-}
-
-
-// Dimension (square)
-//  * @param wh <length> Width & height
-//  * # Example(s)
-// .dim(16px);
-// -----------
-// width: 16px;
-// height: 16px;
-
-.dim(@wh) {
-	.dim(@wh; @wh);
-}
-
 
 // Horizontal Margin
 

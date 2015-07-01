@@ -1,0 +1,38 @@
+/*
+Metric
+
+styleguide: mixins.metric
+*/
+
+/*
+.dim
+
+Sets dimension
+
+less:
+.block {
+	.dim(480px; 320px);
+}
+
+@w <length> - Width
+@h <length> - Height
+
+styleguide: mixins.metric.dim
+*/
+.dim(@w; @h) {
+	width: @w;
+	height: @h;
+}
+
+
+// Dimension (square)
+//  * @param wh <length> Width & height
+//  * # Example(s)
+// .dim(16px);
+// -----------
+// width: 16px;
+// height: 16px;
+
+.dim(@wh) {
+	.dim(@wh; @wh);
+}
