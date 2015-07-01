@@ -35,7 +35,7 @@ module.exports.register = function(handlebars) {
 			// HTML [
 			r += '<figure class="example">';
 			r += 	'<figcaption>';
-			r += 		srcs.length > 1 ? ('Example #' + (i + 1)) : 'Example';
+			r += 		'Example' + (srcs.length > 1 ? (' #' + (i + 1)) : '');
 			r += 	'</figcaption>';
 			r += 	'<div class="code-snippets">';
 			r += 		'<pre class="prettyprint linenums lang-less source"><code data-language="less">' + srcs[i] + '</code></pre>';
@@ -45,7 +45,7 @@ module.exports.register = function(handlebars) {
 			// ] HTML
 
 			less.render(
-				'#kssref-' + this.referenceURI + '{' + iCss + '}', opts,
+				'#kssref-' + this.referenceURI + ' .kss-modifier__example {' + iCss + '}', opts,
 				function(error, result) {
 					if (error) {
 						iCss = '[ERROR] Less compiler: ' + error.message;

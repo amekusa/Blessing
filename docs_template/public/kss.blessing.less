@@ -1,22 +1,5 @@
 @import "../../src/main.less";
 
-#kss-node {
-	
-	#kssref-classes,
-	#kssref-mixins {
-		
-		~ .kss-section--depth-2 {
-			
-			.kss-title--level-2 {
-				
-				.kss-title__label {
-					font-family: @kss-font-code;
-				}
-			}
-		}
-	}
-}
-
 article[role="main"] {
 	@rhythm: @kss-vertical-rhythm;
 	
@@ -24,11 +7,7 @@ article[role="main"] {
 		&:extend(.kss-style);
 		&:extend(#kss-node .kss-modifier__wrapper);
 		
-		margin: 0;
-		
-		+ * {
-			margin-top: @rhythm;
-		}
+		margin: @rhythm 0 0 0;
 		
 		figcaption {
 			&:extend(#kss-node .kss-modifier__heading);
