@@ -1,25 +1,21 @@
 {
-	"name": "blessing",
-	"version": "0.1.0",
-	"authors": [
-		"amekusa <post@amekusa.com> (http://amekusa.com)"
-	],
-	"description": "A CSS library integrated with Less",
-	"main": "./src/main.less",
-	"moduleType": [
-		"node"
-	],
-	"keywords": [
-		"css", "less"
-	],
-	"license": "GPL",
-	"homepage": "https://bitbucket.org/amekusa/blessing",
-	"private": true,
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"bower_components",
-		"test",
-		"tests"
-	]
+  "name": "blessing",
+  "version": "0.2.0",
+  "authors": [
+    "amekusa <post@amekusa.com> (http://amekusa.com)"
+  ],
+  "description": "Intuitive and highly adaptive stylesheet library for Less",
+  "main": "src/main.less",
+  "keywords": [
+    "css", "less"
+  ],
+  "license": "GPL",
+  "homepage": "https://github.com/amekusa/Blessing",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
