@@ -1,6 +1,53 @@
-/**
- * Blessing / Mixins / Slector
- */
+/*
+Selector
+
+styleguide: mixins.selector
+*/
+
+/*
+.pseudo
+
+Selects a pseudo element.
+
+less:
+p {
+	.pseudo(before; {
+		content: "Sir! ";
+	});
+}
+---
+// Uses ":" instead of "::" to support IE 8
+@compat: @compat-ie8;
+p {
+	.pseudo(before; {
+		content: "Sir! ";
+	});
+}
+
+@element <string> - A pseudo element
+@ruleset <ruleset> - A ruleset to apply for the pseudo element
+
+styleguide: mixins.selector.pseudo
+*/
+.pseudo(@element; @ruleset) {
+	
+	& when (@compat >= @compat-ie8) {
+		&:@{element} {
+			@ruleset();
+		}
+	}
+	
+	& when not(@compat >= @compat-ie8) {
+		@_element: e(":@{element}");
+		&:@{_element} {
+			@ruleset();
+		}
+	}
+}
+
+.before(@ruleset) {
+	
+}
 
 /**
  * Heading
