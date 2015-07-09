@@ -1,5 +1,5 @@
 /*
-Utilities
+Utility
 
 styleguide: mixins.util
 */
@@ -58,18 +58,58 @@ styleguide: mixins.util.for
 }
 
 /*
+.for (List)
+
+Performs iteration over a list.
+
+less:
+.box {
+	.for(left right bottom; {
+		.each(@i) {
+			border-@{i}: 8px solid DeepSkyBlue;
+		}
+	});
+}
+
+@values <any>[*] - A list of values
+@ruleset <ruleset> - A ruleset to invoke
+
+styleguide: mixins.util.for-list
+*/
+.for(@values; @ruleset) {
+	
+	.for(1; length(@values); {
+		.each(@i) {
+			@ruleset();
+			.each(extract(@values, @i));
+		}
+	});
+}
+
+/*
 .prefix
 
-[NOT IMPLEMENTED] Adds vendor-prefixes to a property.
+Adds vendor-prefixes to a property.
+
+less:
+// All prefixes
+.box {
+	.prefix(transition; all .5s);
+}
 
 @prop <property> - The property to be prefixised
 @value <any> - The value of the property
-@prefixes <list <string>> - The list of prefixes [default: moz webkit o ms]
+@prefixes <string[*]> [moz webkit o ms] - The list of prefixes [default: moz webkit o ms]
 
-styleguide: mixins.util.xxx.prefix
+styleguide: mixins.util.prefix
 */
 .prefix(@prop; @value; @prefixes: moz webkit o ms) {
-	// TODO Implement
+	
+	.for(@prefixes; {
+		.each(@i) {
+			-@{i}-@{prop}: @value;
+		}
+	});
 }
 
 .prepend(@ruleset) {
@@ -87,7 +127,6 @@ styleguide: mixins.util.xxx.prefix
 		@ruleset();
 	}
 }
-
 
 /*
 .eval
