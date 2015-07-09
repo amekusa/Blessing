@@ -6,7 +6,7 @@ styleguide: mixins
 
 @import "mixins.util.less";
 @import "mixins.selector.less";
-@import "mixins.wrapper.less";
+@import "mixins.polyfill.less";
 @import "mixins.metric.less";
 @import "mixins.development.less";
 
@@ -357,7 +357,7 @@ styleguide: mixins
 	top: 0;
 	.dim(100%);
 	.bare;
-	#css3 > .box-sizing(border-box);
+	box-sizing: border-box;
 }
 
 .maximise-x(@proportional: true) {

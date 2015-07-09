@@ -1,0 +1,68 @@
+/*
+Polyfill
+
+styleguide: mixins.polyfill
+*/
+
+/*
+.display
+
+Applies `display` value with legacy IE polyfill.
+
+less:
+// IE 7 compatible inline-block
+@compat: @compat-ie7;
+.block {
+	.display(inline-block);
+}
+
+@value <display> - `display` value
+
+styleguide: mixins.polyfill.display
+*/
+.display(@value) {
+	display: @value;
+	
+	& when (@value = inline-block) {
+		
+		& when (@compat >= @compat-ie7) {
+			display: inline;
+			zoom: 1;
+		}
+	}
+}
+
+/*
+.opacity
+
+Applies `opacity` value with legacy IE polyfill.
+
+less:
+.block {
+	.opacity(.5);
+}
+---
+// Compatible with IE 7
+@compat: @compat-ie7;
+.block {
+	.opacity(.5);
+}
+
+@value <opacity> - `opacity` value
+
+styleguide: mixins.polyfill.opacity
+*/
+.opacity(@value) {
+	opacity: @value;
+	
+	& when (@compat >= @compat-ie8) { // For IE 8
+		@x: @value * 100;
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@{x})";
+	}
+	
+	& when (@compat >= @compat-ie7) { // For IE 7 and lower
+		@x: @value * 100;
+		filter: e("alpha(opacity=@{x})");
+		zoom: 1;
+	}
+}
