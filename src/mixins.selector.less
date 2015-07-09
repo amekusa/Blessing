@@ -45,38 +45,120 @@ styleguide: mixins.selector.pseudo
 	}
 }
 
+/*
+.before
+
+Alias of:
+```less
+.pseudo(before; @ruleset)
+```
+
+@ruleset <ruleset> - A ruleset to apply for `::before`
+
+styleguide: mixins.selector.before
+*/
 .before(@ruleset) {
-	
+	.pseudo(before; @ruleset);
 }
 
-/**
- * Heading
- * h1 - h6
- */
-.heading(@ruleset) {
-	
-	h1, h2, h3, h4, h5, h6 {
-		@ruleset();
-	}
+/*
+.after
+
+Alias of:
+```less
+.pseudo(after; @ruleset)
+```
+
+@ruleset <ruleset> - A ruleset to apply for `::after`
+
+styleguide: mixins.selector.after
+*/
+.after(@ruleset) {
+	.pseudo(after; @ruleset);
 }
 
-.h(@max-lv: 1; @min-lv: 6; @ruleset) {
+/*
+.h
+
+Selects heading elements.
+
+Alias of:
+```less
+.h(1; 6; @ruleset);
+```
+
+less:
+// Selects h1-h6
+.h({
+	font-weight: normal;
+});
+
+@ruleset <ruleset> - A ruleset to apply for headings
+
+styleguide: mixins.selector.h
+*/
+.h(@ruleset) {
+	.h(1; 6; @ruleset);
+}
+
+/*
+.h (Range)
+
+Selects heading elements with specific range of level.
+
+less:
+// Selects h4-h6
+.h(4; 6; {
+	color: Orange;
+});
+
+@max <integer> - Maximum level of heading
+@min <integer> - Minimum level of heading
+@ruleset <ruleset> - A ruleset to apply for headings
+
+styleguide: mixins.selector.h-range
+*/
+.h(@max; @min; @ruleset) {
 	
-	.iterate(@max-lv; @min-lv; {
-		
-		h@{i} {
-			@ruleset();
+	.for(@max; @min; {
+		.each(@i) {
+			
+			h@{i} {
+				@ruleset();
+			}
 		}
 	});
 }
 
-/**
- * List
- * ol, ul, dl
- */
+/*
+.list
+
+Selects list elements.
+
+@ruleset <ruleset> - A ruleset to apply for list elements
+
+styleguide: mixins.selector.list
+*/
 .list(@ruleset) {
-	
 	ol, ul, dl {
+		@ruleset();
+	}
+}
+
+/*
+.section
+
+Selects sectioning elements.
+
+@ruleset <ruleset> - A ruleset to apply for sectioning elements
+
+styleguide: mixins.selector.section
+*/
+.section(@ruleset) {
+	article,
+	section,
+	nav,
+	aside {
 		@ruleset();
 	}
 }
