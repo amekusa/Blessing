@@ -26,7 +26,7 @@ styleguide: mixins.polyfill.display
 	& when (@value = inline-block) {
 		
 		& when (@compat >= @compat-ie7) {
-			display: inline;
+			*display: inline;
 			zoom: 1;
 		}
 	}
