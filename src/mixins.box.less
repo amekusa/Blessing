@@ -7,7 +7,7 @@ styleguide: mixins.box
 /*
 .dim
 
-Sets dimension
+Sets dimension.
 
 less:
 .block {
@@ -24,15 +24,15 @@ styleguide: mixins.box.dim
 	height: @h;
 }
 
+/*
+.dim (Square)
 
-// Dimension (square)
-//  * @param wh <length> Width & height
-//  * # Example(s)
-// .dim(16px);
-// -----------
-// width: 16px;
-// height: 16px;
+Sets dimension.
 
+@wh <length> - Width & height
+
+styleguide: mixins.box.dim-square
+*/
 .dim(@wh) {
 	.dim(@wh; @wh);
 }
