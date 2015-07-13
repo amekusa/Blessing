@@ -7,32 +7,31 @@ styleguide: mixins.box
 /*
 .dim
 
-Sets dimension.
+Sets up dimensions.
 
 less:
-.block {
-	.dim(480px; 320px);
+.box {
+	.dim(480px 320px);
+}
+---
+// Singular value means both of width and height
+.box {
+	.dim(32px);
 }
 
-@w <length> - Width
-@h <length> - Height
+@metrics <length[*]> - A list of dimension property values
 
 styleguide: mixins.box.dim
 */
-.dim(@w; @h) {
-	width: @w;
-	height: @h;
-}
-
-/*
-.dim (Square)
-
-Sets dimension.
-
-@wh <length> - Width & height
-
-styleguide: mixins.box.dim-square
-*/
-.dim(@wh) {
-	.dim(@wh; @wh);
+.dim(@metrics) {
+	
+	& when (length(@metrics) = 1) {
+		width: @metrics;
+		height: @metrics;
+	}
+	
+	& when (length(@metrics) >= 2) {
+		width: extract(@metrics, 1);
+		height: extract(@metrics, 2);
+	}
 }
