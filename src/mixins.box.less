@@ -35,3 +35,61 @@ styleguide: mixins.box.dim
 		height: extract(@metrics, 2);
 	}
 }
+
+/*
+.pos
+
+Sets up positioning properties.
+
+less:
+.box {
+	.pos(8px 16px);
+}
+---
+// Relative positioning
+.box {
+	.pos(8px 16px; relative);
+}
+---
+// Positioning from right
+.box {
+	.pos(8px 16px; ""; right);
+}
+
+@offsets <length*> - A list of positioning offsets
+@method <position> [""] - The positioning method
+@from <direction*> [left top] - The coordinate system
+
+styleguide: mixins.box.pos
+*/
+.pos(@offsets; @method: ""; @from: left top) {
+	
+	& when not(@method = "") {
+		position: @method;
+	}
+	
+	& when (length(@offsets) = 1) {
+		.pos(@offsets @offsets; @method; @from);
+	}
+	
+	& when (length(@from) = 1) {
+		
+		& when (@from = left), (@from = right) {
+			.pos(@offsets; @method; @from top);
+		}
+		
+		& when (@from = top), (@from = bottom) {
+			.pos(@offsets; @method; left @from);
+		}
+	}
+	
+	& when (length(@offsets) >= 2) and (length(@from) >= 2) {
+		@v1: extract(@offsets, 1);
+		@v2: extract(@offsets, 2);
+		@p1: extract(@from, 1);
+		@p2: extract(@from, 2);
+		
+		@{p1}: @v1;
+		@{p2}: @v2;
+	}
+}
