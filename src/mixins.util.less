@@ -71,7 +71,7 @@ less:
 	});
 }
 
-@values <any>[*] - A list of values
+@values <any[*]> - A list of values
 @ruleset <ruleset> - A ruleset to invoke
 
 styleguide: mixins.util.for-list
@@ -112,20 +112,112 @@ styleguide: mixins.util.prefix
 	});
 }
 
-.prepend(@ruleset) {
+/*
+.prepend
 
-	&:before {
-		content: @char-whitespace;
-		@ruleset();
-	}
+Creates a pseudo element at `::before`.
+
+less:
+.box {
+	.prepend({
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background-color: Red;
+	});
 }
 
-.append(@ruleset) {
+@ruleset <ruleset> - The ruleset to apply for `::before`
 
-	&:after {
-		content: @char-whitespace;
+styleguide: mixins.util.prepend
+*/
+.prepend(@ruleset) {
+	
+	.before({
+		content: "";
 		@ruleset();
-	}
+	});
+}
+
+/*
+.prepend (Display)
+
+Creates a pseudo element at `::before` with specific `display` property.
+
+less:
+.box {
+	.prepend(block; {
+		width: 16px;
+		height: 16px;
+		background-color: Red;
+	});
+}
+
+@display <display> - The `display` property of `::before`
+@ruleset <ruleset> - The ruleset to apply for `::before`
+
+styleguide: mixins.util.prepend-display
+*/
+.prepend(@display; @ruleset) {
+	
+	.prepend({
+		.display(@display);
+		@ruleset();
+	});
+}
+
+/*
+.append
+
+Creates a pseudo element at `::after`.
+
+less:
+.box {
+	.append({
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background-color: Blue;
+	});
+}
+
+@ruleset <ruleset> - The ruleset to apply for `::after`
+
+styleguide: mixins.util.append
+*/
+.append(@ruleset) {
+	
+	.after({
+		content: "";
+		@ruleset();
+	});
+}
+
+/*
+.append (Display)
+
+Creates a pseudo element at `::after` with specific `display` property.
+
+less:
+.box {
+	.append(block; {
+		width: 16px;
+		height: 16px;
+		background-color: Blue;
+	});
+}
+
+@display <display> - The `display` property of `::after`
+@ruleset <ruleset> - The ruleset to apply for `::after`
+
+styleguide: mixins.util.append-display
+*/
+.append(@display; @ruleset) {
+	
+	.append({
+		.display(@display);
+		@ruleset();
+	});
 }
 
 /*
