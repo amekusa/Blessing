@@ -62,11 +62,15 @@ styleguide: mixins.util.for
 
 Performs iteration over a list.
 
+You must declare the mixin: `.each(<integer>; <any>)` inside `@ruleset`.<br />
+The 1st parameter is the iteration count starts from 1.<br />
+The 2nd parameter is each item of the `@values`.
+
 less:
 .box {
 	.for(left right bottom; {
-		.each(@i) {
-			border-@{i}: 8px solid DeepSkyBlue;
+		.each(@i; @item) {
+			border-@{item}: 8px solid DeepSkyBlue;
 		}
 	});
 }
@@ -81,7 +85,7 @@ styleguide: mixins.util.for-list
 	.for(1; length(@values); {
 		.each(@i) {
 			@ruleset();
-			.each(extract(@values, @i));
+			.each(@i; extract(@values, @i));
 		}
 	});
 }
@@ -106,8 +110,8 @@ styleguide: mixins.util.prefix
 .prefix(@prop; @value; @prefixes: moz webkit o ms) {
 	
 	.for(@prefixes; {
-		.each(@i) {
-			-@{i}-@{prop}: @value;
+		.each(@i; @item) {
+			-@{item}-@{prop}: @value;
 		}
 	});
 }
