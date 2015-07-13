@@ -1,15 +1,24 @@
-/**
- * Blessing / Mixins / Transformation
- */
+/*
+Transform
 
-.rotate(@angle; @origin: asis; @transition: asis) {
+styleguide: mixins.transform
+*/
+
+/*
+.rot
+
+Rotates an element.
+
+styleguide: mixins.xx.transfrom.rot
+*/
+.rot(@angle; @origin: ""; @transition: "") {
 	transform: rotate(@angle);
 	
-	& when not(@origin = asis) {
+	& when not(@origin = "") {
 		transform-origin: @origin;
 	}
 	
-	& when not(@transition = asis) {
+	& when not(@transition = "") {
 		transition: transform @transition;
 	}
 }
