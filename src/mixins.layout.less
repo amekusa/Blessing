@@ -1,0 +1,313 @@
+/*
+Layout
+
+styleguide: mixins.layout
+*/
+
+/*
+.dim
+
+Sets up dimensions.
+
+less:
+.a-box {
+	.dim(480px 320px);
+}
+---
+// Singular value means both of width and height
+.a-box {
+	.dim(32px);
+}
+
+@metrics: <length[*]> - A list of dimension property values
+
+styleguide: mixins.layout.dim
+*/
+.dim(@metrics) {
+	
+	& when (length(@metrics) = 1) {
+		width: @metrics;
+		height: @metrics;
+	}
+	
+	& when (length(@metrics) >= 2) {
+		width: extract(@metrics, 1);
+		height: extract(@metrics, 2);
+	}
+}
+
+/*
+.pos
+
+Sets up positioning properties.
+
+less:
+.a-box {
+	.pos(8px 16px);
+}
+---
+// Relative positioning
+.a-box {
+	.pos(8px 16px; relative);
+}
+---
+// Positioning from right
+.a-box {
+	.pos(8px 16px; ""; right);
+}
+
+@offsets: <length>* - A list of positioning offsets
+@method: <position> [""] - The positioning method
+@from: <side>* [left top] - The coordinate system
+
+styleguide: mixins.layout.pos
+*/
+.pos(@offsets; @method: ""; @from: left top) {
+	
+	& when not(@method = "") {
+		position: @method;
+	}
+	
+	& when (length(@offsets) = 1) {
+		.pos(@offsets @offsets; @method; @from);
+	}
+	
+	& when (length(@from) = 1) {
+		
+		& when (@from = left), (@from = right) {
+			.pos(@offsets; @method; @from top);
+		}
+		
+		& when (@from = top), (@from = bottom) {
+			.pos(@offsets; @method; left @from);
+		}
+	}
+	
+	& when (length(@offsets) >= 2) and (length(@from) >= 2) {
+		@v1: extract(@offsets, 1);
+		@v2: extract(@offsets, 2);
+		@p1: extract(@from, 1);
+		@p2: extract(@from, 2);
+		
+		@{p1}: @v1;
+		@{p2}: @v2;
+	}
+}
+
+/*
+.m
+
+Sets up margins.
+
+This is the alias of [`.box(margin; @sides; @values)`](#kssref-mixins-layout.box)
+
+less:
+.a-box {
+	.m(x; 2px); // "x" or "h" means "horizontal"
+	.m(y; 3px); // "y" or "v" means "vertical"
+}
+---
+.a-box {
+	.m(x; 2px 3px); // Left and right separately
+	.m(y; 5px 7px); // Top and bottom separately
+}
+---
+.a-box {
+	.m(top left; 2px); // Specific sides
+	.m(right bottom; 3px 5px); // Specific sides & values
+}
+---
+.a-box {
+	.m(-top; 11px); // All sides except "top"
+}
+
+@sides: <side>* | x | y | h | v - Sides of the box to apply margin
+@values: <length>* - Margin values
+
+styleguide: mixins.layout.m
+*/
+.m(@sides; @values) {
+	.box(margin; @sides; @values);
+}
+
+/*
+.p
+
+Sets up paddings.
+
+This is the alias of [`.box(padding; @sides; @values)`](#kssref-mixins-layout.box)
+
+less:
+.a-box {
+	.p(x; 2px); // "x" or "h" means "horizontal"
+	.p(y; 3px); // "y" or "v" means "vertical"
+}
+---
+.a-box {
+	.p(x; 2px 3px); // Left and right separately
+	.p(y; 5px 7px); // Top and bottom separately
+}
+---
+.a-box {
+	.p(top left; 2px); // Specific sides
+	.p(right bottom; 3px 5px); // Specific sides & values
+}
+---
+.a-box {
+	.p(-top; 11px); // All sides except "top"
+}
+
+@sides: <side>* | x | y | h | v - Sides of the box to apply padding
+@values: <length>* - Padding values
+
+styleguide: mixins.layout.p
+*/
+.p(@sides; @values) {
+	.box(padding; @sides; @values);
+}
+
+/*
+.b
+
+Sets up borders.
+
+This is the alias of [`.box(border; @sides; @values)`](#kssref-mixins-layout.box)
+
+less:
+.a-box {
+	.b(x; e("2px dashed Tomato"));    // "x" or "h" means "horizontal"
+	.b(y; e("3px dotted Turquoise")); // "y" or "v" means "vertical"
+}
+---
+.a-box {
+	.m(x; 2px dashed Tomato, 3px dashed Turquoise); // Left and right separately
+	.m(y; 5px dotted SkyBlue, 7px dotted SeaGreen); // Top and bottom separately
+}
+
+@sides: <side>* | x | y | h | v - Sides of the box to apply border
+@values: <length>* - Border values
+
+styleguide: mixins.layout.b
+*/
+.b(@sides; @values) {
+	.box(border; @sides; @values);
+}
+
+/*
+.b (+property)
+
+Sets up borders' width, style, color.
+
+This is the alias of [`.box(border; @sides; @values; @prop)`](#kssref-mixins-layout.box)
+
+less:
+.a-box {
+	.b(width; x; 2px); // "x" or "h" means "horizontal"
+	.b(width; y; 3px); // "y" or "v" means "vertical"
+}
+---
+.a-box {
+	.b(style; x; dashed); // Left and right separately
+	.b(style; y; dotted); // Top and bottom separately
+}
+---
+.a-box {
+	.b(color; top left; Tomate);               // Specific sides
+	.b(color; right bottom; SkyBlue SeaGreen); // Specific sides & values
+}
+---
+.a-box {
+	.b(width; -top; 11px); // All sides except "top"
+}
+
+@prop: width | style | color - The border property to set up
+@sides: <side>* | -<side> | x | y | h | v - Sides of the box to set up
+@values: <border-@{prop}>* - Values to apply for border property
+
+styleguide: mixins.layout.b-property
+*/
+.b(@prop; @sides; @values) {
+	.box(border; @sides; @values; @prop);
+}
+
+/*
+.box
+
+Sets up box model properties (padding, border, margin).
+
+This mixin is complex and thus you type a lot. So we recommend for using following mixins instead.
+These mixins invoke `.box` internally but need less parameters.
++ [`.m` (For margins)](#kssref-mixins-layout.m)
++ [`.p` (For paddings)](#kssref-mixins-layout.p)
++ [`.b` (For borders)](#kssref-mixins-layout.b)
+
+@area: margin | padding | border - The area to set up
+@sides: <side>* | -<side> | x | y | h | v - Sides of the box to set up
+<ul>
+	<li>`x` = `h` = `left right`</li>
+	<li>`y` = `v` = `top bottom`</li>
+	<li>`-<side>` means "All sides except it."<br>Ex. `-top` = `right bottom left`</li>
+</ul>
+@values: <@{area}>* | <border-@{prop}>* - Values for box model properties
+@prop: "" | width | style | color [""] - Border property (Only if `@area` = `border`)
+
+styleguide: mixins.layout.box
+*/
+.box(@area; @sides; @values; @prop: "") {
+	@nsides: length(@sides);
+	
+	& when (@nsides = 1) {
+		
+		& when (@sides = x), (@sides = h) {
+			.box(@area; left right; @values; @prop);
+		}
+		
+		& when (@sides = y), (@sides = v) {
+			.box(@area; top bottom; @values; @prop);
+		}
+		
+		& when (@sides = -top) {
+			.box(@area; right bottom left; @values; @prop);
+		}
+		
+		& when (@sides = -right) {
+			.box(@area; top bottom left; @values; @prop);
+		}
+		
+		& when (@sides = -bottom) {
+			.box(@area; top right left; @values; @prop);
+		}
+		
+		& when (@sides = -left) {
+			.box(@area; top right bottom; @values; @prop);
+		}
+		
+		& when (@sides = top), (@sides = right), (@sides = bottom), (@sides = left) {
+			
+			& when (@prop = "") {
+				@{area}-@{sides}: @values;
+			}
+			
+			& when not(@prop = "") {
+				@{area}-@{sides}-@{prop}: @values;
+			}
+		}
+	}
+	
+	& when (@nsides > 1) {
+		@nvalues: length(@values);
+		
+		.for(@sides; {
+			.each(@i; @item) {
+				
+				& when (@nvalues < @nsides) {
+					.box(@area; @item; @values; @prop);
+				}
+				
+				& when (@nvalues >= @nsides) {
+					.box(@area; @item; extract(@values, @i); @prop);
+				}
+			}
+		});
+	}
+}

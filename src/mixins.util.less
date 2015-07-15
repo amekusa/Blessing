@@ -67,7 +67,7 @@ The 1st parameter is the iteration count starts from 1.<br />
 The 2nd parameter is each item of the `@values`.
 
 less:
-.box {
+.a-box {
 	.for(left right bottom; {
 		.each(@i; @item) {
 			border-@{item}: 8px solid DeepSkyBlue;
@@ -97,7 +97,7 @@ Adds vendor-prefixes to a property.
 
 less:
 // All prefixes
-.box {
+.a-box {
 	.prefix(transition; all .5s);
 }
 
@@ -122,7 +122,7 @@ styleguide: mixins.util.prefix
 Creates a pseudo element at `::before`.
 
 less:
-.box {
+.a-box {
 	.prepend({
 		display: inline-block;
 		width: 16px;
@@ -149,7 +149,7 @@ styleguide: mixins.util.prepend
 Creates a pseudo element at `::before` with specific `display` property.
 
 less:
-.box {
+.a-box {
 	.prepend(block; {
 		width: 16px;
 		height: 16px;
@@ -176,7 +176,7 @@ styleguide: mixins.util.prepend-display
 Creates a pseudo element at `::after`.
 
 less:
-.box {
+.a-box {
 	.append({
 		display: inline-block;
 		width: 16px;
@@ -203,7 +203,7 @@ styleguide: mixins.util.append
 Creates a pseudo element at `::after` with specific `display` property.
 
 less:
-.box {
+.a-box {
 	.append(block; {
 		width: 16px;
 		height: 16px;
@@ -227,20 +227,44 @@ styleguide: mixins.util.append-display
 /*
 .eval
 
-Evaluates a script
+Evaluates a script.
 
-**[FIXME]** Nested call unsupported
+less:
+.a-box {
+	.eval("
+		var r1 = new String('Hello ');
+		var r2 = new String('World!');
+		return r1 + r2
+	"; {
+		.done(@r) {
+			&::before {
+				content: "@{r}";
+			}
+		}
+	});
+}
+---
+// Nexted calles
+.a-box {
+	.eval("return 4 * 2"; { // Returns 8
+		.done(@r) {
+			width: unit(@r, px);
+			.eval("return @{r} * 2"; { // Returns 8 * 2 = 16
+				.done(@s) {
+					height: unit(@s, px);
+				}
+			});
+		}
+	});
+}
 
-@script <string> - The JavaScript expression
+@script <string> - JavaScript expression
 @ruleset <ruleset> - The ruleset invoked after the evaluation
 
-styleguide: mixins.xx.util.eval
+styleguide: mixins.util.eval
 */
 .eval(@script; @ruleset) {
-	@_ruleset: {
-		@_script: e(@script);
-		@return: e(`(function(){@{_script};})()`);
-		@ruleset();
-	};
-	@_ruleset();
+	@ruleset();
+	@_script: e(@script);
+	.done(`(function(){@{_script};})()`);
 }
