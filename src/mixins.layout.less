@@ -175,13 +175,13 @@ This is the alias of [`.box(border; @sides; @values)`](#kssref-mixins-layout.box
 
 less:
 .a-box {
-	.b(x; e("2px dashed Tomato"));    // "x" or "h" means "horizontal"
-	.b(y; e("3px dotted Turquoise")); // "y" or "v" means "vertical"
+	.b(x; e("2px dashed Tomato")); // "x" or "h" means "horizontal"
+	.b(y; e("3px dotted Orange")); // "y" or "v" means "vertical"
 }
 ---
 .a-box {
-	.m(x; 2px dashed Tomato, 3px dashed Turquoise); // Left and right separately
-	.m(y; 5px dotted SkyBlue, 7px dotted SeaGreen); // Top and bottom separately
+	.m(x; 2px dashed SkyBlue, 3px dashed SeaGreen); // Left and right separately
+	.m(y; 5px dotted Olive, 7px dotted Orchid);     // Top and bottom separately
 }
 
 @sides: <side>* | x | y | h | v - Sides of the box to apply border
@@ -207,13 +207,13 @@ less:
 }
 ---
 .a-box {
-	.b(style; x; dashed); // Left and right separately
-	.b(style; y; dotted); // Top and bottom separately
+	.b(style; x; dashed dotted); // Left and right separately
+	.b(style; y; dotted dashed); // Top and bottom separately
 }
 ---
 .a-box {
-	.b(color; top left; Tomate);               // Specific sides
-	.b(color; right bottom; SkyBlue SeaGreen); // Specific sides & values
+	.b(color; top left; DarkSlateGray);           // Specific sides
+	.b(color; right bottom; Amethyst Aquamarine); // Specific sides & values
 }
 ---
 .a-box {
