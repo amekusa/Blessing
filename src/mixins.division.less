@@ -92,31 +92,31 @@ styleguide: mixins.division.cols
 		// Horizontal
 		
 		& when (@inset < (@gutter * .5)) { // Inset < Gutter
-			.pad-x(0);
-			.mgn-x(@inset - (@gutter * .5));
+			.p(x; 0);
+			.m(x; @inset - (@gutter * .5));
 		}
 		
 		& when (@inset > (@gutter * .5)) { // Inset > Gutter
-			.pad-x(@inset - (@gutter * .5));
-			.mgn-x(0);
+			.p(x; @inset - (@gutter * .5));
+			.m(x; 0);
 		}
 		
 		// Vertical
 		
 		& when (@inset < 0) {
-			.pad-y(0);
-			.mgn-y(@inset);
+			.p(y; 0);
+			.m(y; @inset);
 		}
 		
 		& when (@inset >= 0) {
-			.pad-y(@inset);
-			.mgn-y(0);
+			.p(y; @inset);
+			.m(y; 0);
 		}
 	}
 	
 	& when not(isnumber(@inset)) {
-		.pad-x(@gutter * .5);
-		.pad-y(@gutter);
+		.p(x; @gutter * .5);
+		.p(y; @gutter);
 	}
 	
 	// Each column
@@ -125,8 +125,8 @@ styleguide: mixins.division.cols
 		position: relative;
 		display: block;
 		min-height: 1px;
-		.pad-x(@gutter * .5);
-		.pad-y(0);
+		.p(x; @gutter * .5);
+		.p(y; 0);
 		
 		& when (@arrange = ltr) {
 			float: left;

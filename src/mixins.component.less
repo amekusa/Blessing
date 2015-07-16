@@ -5,8 +5,8 @@
 	border-style: solid;
 	
 	& when (@dir = l), (@dir = left) {
-		.bdr-x-width(0; @w);
-		.bdr-y-width(@h / 2);
+		.b(width; x; 0 @w);
+		.b(width; y; @h / 2);
 		border-top-color: transparent;
 		border-right-color: @color;
 		border-bottom-color: transparent;
@@ -14,8 +14,8 @@
 	}
 	
 	& when (@dir = r), (@dir = right) {
-		.bdr-x-width(@w; 0);
-		.bdr-y-width(@h / 2);
+		.b(width; x; @w 0);
+		.b(width; y; @h / 2);
 		border-top-color: transparent;
 		border-right-color: transparent;
 		border-bottom-color: transparent;
@@ -23,8 +23,8 @@
 	}
 	
 	& when (@dir = t), (@dir = top) {
-		.bdr-x-width(@w / 2);
-		.bdr-y-width(0; @h);
+		.b(width; x; @w / 2);
+		.b(width; y; 0 @h);
 		border-top-color: transparent;
 		border-right-color: transparent;
 		border-bottom-color: @color;
@@ -32,8 +32,8 @@
 	}
 	
 	& when (@dir = b), (@dir = bottom) {
-		.bdr-x-width(@w / 2);
-		.bdr-y-width(@h; 0);
+		.b(width; x; @w / 2);
+		.b(width; y; @h 0);
 		border-top-color: @color;
 		border-right-color: transparent;
 		border-bottom-color: transparent;
