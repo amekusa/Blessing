@@ -311,3 +311,109 @@ styleguide: mixins.layout.box
 		});
 	}
 }
+
+/*
+.center
+
+Centers a box.
+
+styleguide: mixins.layout.center
+*/
+.center(@dim; @offsets: 0 0; @method: absolute) {
+	
+	& when (length(@dim) > 1) {
+		@w: extract(@dim, 1);
+		@h: extract(@dim, 2);
+		position: @method;
+		
+		& when (length(@offsets) > 1) {
+			.center(x; @w; extract(@offsets, 1); "");
+			.center(y; @h; extract(@offsets, 2); "");
+		}
+		
+		& when (length(@offsets) = 1) {
+			.center(x; @w; @offsets; "");
+			.center(y; @h; @offsets; "");
+		}
+	}
+	
+	& when (length(@dim) = 1) and (isnumber(@dim)) {
+		.center(@dim @dim; @offsets; @method);
+	}
+}
+
+/*
+.center (+Axis)
+
+Centers a box.
+
+less:
+.a-box {
+	.center(x; 12px);
+}
+---
+@compat: @compat-ie8;
+.a-box {
+	.center(x; 12px);
+}
+.b-box {
+	.center(x; 50%);
+}
+
+@axis x | y | h | v - The axis of centering
+@dim <length> - Width or height of the box to be centered
+@offset <length> [0] - Offset for centering
+@method <position> [absolute] - Centering method
+
+styleguide: mixins.layout.center-axis
+*/
+.center(@axis; @dim; @offset: 0; @method: absolute) when not(isnumber(@axis)) {
+	@hdim: @dim * .5;
+	@udim: unit(@dim);
+	@uoffset: unit(@offset);
+	
+	& when not(@method = "") {
+		position: @method;
+	}
+	
+	& when (@axis = x), (@axis = h) { // Horizontal centering
+		width: @dim;
+		
+		& when (@compat < @compat-ie8) { // Can use calc()
+			left: e('calc(50% - @{hdim} + @{offset})');
+		}
+		
+		& when (@compat >= @compat-ie8) { // Cannot use calc()
+			
+			& when (ispercentage(@dim)) { // Fluid width
+				@pos: (100% - @dim) * .5;
+				
+				& when (ispercentage(@offset)) { // Fluid offset
+					left: @pos + @offset;
+				}
+				
+				& when not(ispercentage(@offset)) { // Solid offset
+					left: @pos;
+					margin-left: @offset;
+				}
+			}
+			
+			& when not(ispercentage(@dim)) { // Solid width
+				left: 50%;
+				
+				& when (@uoffset = @udim) { // Same unit offset
+					margin-left: -@hdim + @offset;
+				}
+				
+				& when not(@uoffset = @udim) { // Different unit offset
+					margin-left: -@hdim + convert(@offset, @udim);
+				}
+			}
+			
+		}
+	}
+	
+	& when (@axis = y), (@axis = v) { // Vertical centering
+		
+	}
+}

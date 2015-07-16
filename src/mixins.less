@@ -10,309 +10,36 @@ styleguide: mixins
 @import "mixins.layout.less";
 @import "mixins.development.less";
 
-/*
-Horizontal Margin
-*/
-.mgn-x(@l; @r) {
-	margin-left: @l;
-	margin-right: @r;
-}
-
-
-// Horizontal Margin (same on both sides)
-
-.mgn-x(@lr) {
-	.mgn-x(@lr; @lr);
-}
-
-
-// Vertical Margin
-
-.mgn-y(@t; @b) {
-	margin-top: @t;
-	margin-bottom: @b;
-}
-
-
-// Vertical Margin (same on both sides)
-
-.mgn-y(@tb) {
-	.mgn-y(@tb; @tb);
-}
-
-
-// Alignment
-//  * # Example(s)
-// .align(l); // Left-align
-// ----------
-// margin-left: 0;
-// margin-right: auto;
-//  * .align(r; 12px); // Right-align with an offset
-// ----------------
-// margin-left: auto;
-// margin-right: 12px;
-//  * .align(c); // Center-align
-// ----------
-// margin-left: auto;
-// margin-right: auto;
-
-.align(@with; @offset: 0) {
-
-	& when (@with = l), (@with = left) {
-		.mgn-x(@offset; auto);
-	}
-
-	& when (@with = r), (@with = right) {
-		.mgn-x(auto; @offset);
-	}
-
-	& when (@with = c), (@with = center) {
-		.mgn-x(auto);
-	}
-}
-
-
-// Horizontal Padding
-
-.pad-x(@l, @r) {
-	padding-left: @l;
-	padding-right: @r;
-}
-
-
-// Horizontal Padding (same on both sides)
-
-.pad-x(@lr) {
-	.pad-x(@lr, @lr);
-}
-
-
-// Vertical Padding
-
-.pad-y(@t, @b) {
-	padding-top: @t;
-	padding-bottom: @b;
-}
-
-
-// Vertical Padding (same on both sides)
-
-.pad-y(@tb) {
-	.pad-y(@tb, @tb);
-}
-
-.bdr-x(@l, @r) {
-	border-left: @l;
-	border-right: @r;
-}
-.bdr-x(@lr) {
-	.bdr-x(@lr, @lr);
-}
-
-.bdr-y(@t, @b) {
-	border-top: @t;
-	border-bottom: @b;
-}
-.bdr-y(@tb) {
-	.bdr-y(@tb, @tb);
-}
-
-.bdr-x-width(@l, @r) {
-	border-left-width: @l;
-	border-right-width: @r;
-}
-.bdr-x-width(@lr) {
-	.bdr-x-width(@lr, @lr);
-}
-
-.bdr-y-width(@t, @b) {
-	border-top-width: @t;
-	border-bottom-width: @b;
-}
-.bdr-y-width(@tb) {
-	.bdr-y-width(@tb, @tb);
-}
-
-.bdr-x-style(@l, @r) {
-	border-left-style: @l;
-	border-right-style: @r;
-}
-.bdr-x-style(@lr) {
-	.bdr-x-style(@lr, @lr);
-}
-
-.bdr-y-style(@t, @b) {
-	border-top-style: @t;
-	border-bottom-style: @b;
-}
-.bdr-y-style(@tb) {
-	.bdr-y-style(@tb, @tb);
-}
-
-.bdr-x-color(@l, @r) {
-	border-left-color: @l;
-	border-right-color: @r;
-}
-.bdr-x-color(@lr) {
-	.bdr-x-color(@lr, @lr);
-}
-
-.bdr-y-color(@t, @b) {
-	border-top-color: @t;
-	border-bottom-color: @b;
-}
-.bdr-y-color(@tb) {
-	.bdr-y-color(@tb, @tb);
-}
-
-.bdr-radius(@dir; @radius) {
-
-	& when (@dir = t) {
-		border-top-left-radius: @radius;
-		border-top-right-radius: @radius;
-	}
-
-	& when (@dir = r) {
-		border-top-right-radius: @radius;
-		border-bottom-right-radius: @radius;
-	}
-
-	& when (@dir = b) {
-		border-bottom-left-radius: @radius;
-		border-bottom-right-radius: @radius;
-	}
-
-	& when (@dir = l) {
-		border-top-left-radius: @radius;
-		border-bottom-left-radius: @radius;
-	}
-}
-
-
-// Bare
-// Strip off margins, paddings and borders.
-//  * @param side <side> (default:all) The side to be stripped off
-
-.bare(@side: all) {
-
-	& when (@side = all) {
-		margin: 0;
-		padding: 0;
-		border-width: 0;
-	}
-
-	& when (@side = l) {
-		margin-left: 0;
-		padding-left: 0;
-		border-left-width: 0;
-	}
-
-	& when (@side = r) {
-		margin-right: 0;
-		padding-right: 0;
-		border-right-width: 0;
-	}
-
-	& when (@side = t) {
-		margin-top: 0;
-		padding-top: 0;
-		border-top-width: 0;
-	}
-
-	& when (@side = b) {
-		margin-bottom: 0;
-		padding-bottom: 0;
-		border-bottom-width: 0;
-	}
-}
-
-
-// Horizontal Bare
-// Strip off horizontal margins, paddings and borders.
-
-.bare-x() {
-	.bare(l);
-	.bare(r);
-}
-
-
-// Vertical Bare
-// Strip off vertical margins, paddings and borders.
-
-.bare-y() {
-	.bare(t);
-	.bare(b);
-}
-
-
-// Horizontal Centering
-//  * @param w <length>      The width of the element to be centered
-// @param offset <length>
-
-.center-x(@w; @offset: 0) {
-	position: absolute;
-	width: @w;
-
-	& when (ispercentage(@w)) { // For flexible height
-		left: (100% - @w) * .5;
-	}
-
-	& when not(ispercentage(@w)) { // For fixed height
-		left: 50%;
-		margin-left: (-@w * .5) + @offset;
-	}
-}
-
-
-// Vertical Centering
-//  * @param h <length>      The height of the element to be centered
-// @param offset <length>
-
-.center-y(@h; @offset: 0) {
-	position: absolute;
-	height: @h;
-
-	& when (ispercentage(@h)) { // For flexible height
-		top: (100% - @h) * .5;
-	}
-
-	& when not(ispercentage(@h)) { // For fixed height
-		top: 50%;
-		margin-top: (-@h * .5) + @offset;
-	}
-}
-
-
-// @link https://css-tricks.com/centering-in-the-unknown/
-
-.block-align-y(@align; @offset: 0) {
-	font-size: 0; // Remove gaps between child elements
-
-	&:before {
-		content: @char-whitespace;
-		display: inline-block;
-		width: 0;
-		height: 100%;
-		vertical-align: @align;
-	}
-
-	> * {
-		display: inline-block;
-		vertical-align: @align;
-		font-size: initial;
-	}
-}
-
-.layer(@z-index: auto) {
-	display: block;
-	position: absolute;
-	z-index: @z-index;
-	left: 0;
-	top: 0;
-	.dim(100%);
-	.bare;
-	box-sizing: border-box;
-}
+// // @link https://css-tricks.com/centering-in-the-unknown/
+//
+// .block-align-y(@align; @offset: 0) {
+// 	font-size: 0; // Remove gaps between child elements
+//
+// 	&:before {
+// 		content: @char-whitespace;
+// 		display: inline-block;
+// 		width: 0;
+// 		height: 100%;
+// 		vertical-align: @align;
+// 	}
+//
+// 	> * {
+// 		display: inline-block;
+// 		vertical-align: @align;
+// 		font-size: initial;
+// 	}
+// }
+//
+// .layer(@z-index: auto) {
+// 	display: block;
+// 	position: absolute;
+// 	z-index: @z-index;
+// 	left: 0;
+// 	top: 0;
+// 	.dim(100%);
+// 	.bare;
+// 	box-sizing: border-box;
+// }
 
 .maximise-x(@proportional: true) {
 	width: 100%;
