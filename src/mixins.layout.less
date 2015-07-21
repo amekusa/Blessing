@@ -417,3 +417,35 @@ styleguide: mixins.layout.center-axis
 		
 	}
 }
+
+/*
+.valign
+
+Applies vertical alignment rule.
+
+Reference: https://css-tricks.com/centering-in-the-unknown/
+
+less:
+.a-box {
+	.valign(middle);
+}
+
+@align: <vertical-align> - Vertical alignment rule
+
+styleguide: mixins.layout.valign
+*/
+.valign(@align) {
+	font-size: 0; // Remove gaps between child elements
+
+	.prepend(inline-block; {
+		width: 0;
+		height: 100%;
+		vertical-align: @align;
+	});
+
+	> * {
+		.display(inline-block);
+		vertical-align: @align;
+		font-size: initial;
+	}
+}
