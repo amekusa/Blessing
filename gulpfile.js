@@ -14,7 +14,7 @@ var g = require('gulp-load-plugins')();
 var shell = require('child_process').exec;
 var del = require('del');
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build', 'docs', 'watch']);
 gulp.task('build', ['compile', 'compress']);
 
 gulp.task('compile', function() {
