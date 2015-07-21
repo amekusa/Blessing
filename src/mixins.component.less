@@ -1,3 +1,14 @@
+/*
+Component
+
+styleguide: mixins.component
+*/
+
+/*
+.triangle
+
+styleguide: xx.mixins.component.triangle
+*/
 .triangle(@dir; @w; @h; @color) {
 	display: block;
 	.dim(0);
@@ -41,6 +52,11 @@
 	}
 }
 
+/*
+.circle
+
+styleguide: xx.mixins.component.circle
+*/
 .circle(@w; @h; @color: asis) {
 	display: block;
 	.dim(@w @h);
@@ -51,6 +67,11 @@
 	}
 }
 
+/*
+.ring
+
+styleguide: xx.mixins.component.ring
+*/
 .ring(@w; @h; @weight: 1px; @color: asis) {
 	.circle(@w; @h);
 	background: none;
@@ -62,14 +83,11 @@
 	}
 }
 
-/**
- * @DEPRECATED
- * @see .sprite
- */
-.image(@url; @scale: 1.0) {
-	.sprite(@url; @scale);
-}
+/*
+.sprite
 
+styleguide: xx.mixins.component.sprite
+*/
 .sprite(@url; @scale: 1.0) {
 	@w: image-width(@url) * @scale;
 	@h: image-height(@url) * @scale;
