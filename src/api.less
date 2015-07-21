@@ -8,47 +8,19 @@ By Ben Nadel on June 5, 2014
 styleguide: api
 */
 
-// Use the backtick character to run JavaScript directly in LESS CSS. We are using a
-// Function here because LESS calls (my theory) .toString() on the function and stores
-// the return value. It seems that only Functions returns their "source code" when
-// .toString() is called, which allows us to reuse the JavaScript in other JavaScript
-// code block instances.
-@blessing-api: `function() {
-	
-	// Return the public API. Since this JavaScript expression is return the parent
-	// Function, it will have to invoked in a different JavaScript context to actually
-	// get access to the API.
-	return {
-		hello: function() {
-			return "Hello World!";
-		}
-	};
-}`;
+#api {
 
-// I assign the API the global namespace, "api". This could have been done in the
-// previous JavaScript code block; but, I kind of liked the idea of breaking it out into
-// its own rsponsability.
-// --
-// NOTE: I am using a self-invoking function here to help ensure that "this" points to
-// the global context and not to the context of the evaluation (if its different).
-@_blessing-api: `(function() {
-	
-	// Inject the API and store it in the global object.
-	this.api = (@{blessing-api})();
-	
-	// The JavaScript HAS TO RETURN something so LESS CSS can assigne the variable value.
-	return "";
-})()`;
+	@eval: `(function() {
+		this.api = (function() {
+			return {
+				fn: function(name, f) {
+					this[name] = f;
+					return true;
+				}
+			};
+		})();
+		return true;
+	})()`;
 
-/*
-api.hello
-
-less:
-.a-box::before {
-	content: `api.hello()`;
+	@import (reference) "api.functions.less";
 }
-
-@return <string> - "Hello World!"
-
-styleguide: api.hello
-*/

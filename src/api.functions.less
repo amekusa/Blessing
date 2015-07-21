@@ -1,0 +1,21 @@
+/*
+Functions
+
+styleguide: api.functions
+*/
+
+/*
+hello
+
+less:
+.a-box::before {
+	content: `api.hello()`;
+}
+
+Returns: <string> - "Hello World!"
+
+styleguide: api.functions.hello
+*/
+@eval: `api.fn("hello", function() {
+	return "Hello World!";
+})`;
