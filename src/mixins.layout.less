@@ -194,7 +194,7 @@ styleguide: mixins.layout.b
 }
 
 /*
-.b (+property)
+.b (+Property)
 
 Sets up borders' width, style, color.
 
@@ -376,11 +376,11 @@ styleguide: mixins.layout.center-axis
 		position: @method;
 	}
 	
-	& when (@axis = x), (@axis = h) { // Horizontal centering
-		width: @dim;
+	.set1(@p1: width; @p2: left) {
+		@{p1}: @dim;
 		
 		& when (@compat < @compat-ie8) { // Can use calc()
-			left: e('calc(50% - @{hdim} + @{offset})');
+			@{p2}: e('calc(50% - @{hdim} + @{offset})');
 		}
 		
 		& when (@compat >= @compat-ie8) { // Cannot use calc()
@@ -389,32 +389,35 @@ styleguide: mixins.layout.center-axis
 				@pos: (100% - @dim) * .5;
 				
 				& when (ispercentage(@offset)) { // Fluid offset
-					left: @pos + @offset;
+					@{p2}: @pos + @offset;
 				}
 				
 				& when not(ispercentage(@offset)) { // Solid offset
-					left: @pos;
-					margin-left: @offset;
+					@{p2}: @pos;
+					margin-@{p2}: @offset;
 				}
 			}
 			
 			& when not(ispercentage(@dim)) { // Solid width
-				left: 50%;
+				@{p2}: 50%;
 				
 				& when (@uoffset = @udim) { // Same unit offset
-					margin-left: -@hdim + @offset;
+					margin-@{p2}: -@hdim + @offset;
 				}
 				
 				& when not(@uoffset = @udim) { // Different unit offset
-					margin-left: -@hdim + convert(@offset, @udim);
+					margin-@{p2}: -@hdim + convert(@offset, @udim);
 				}
 			}
-			
 		}
 	}
 	
+	& when (@axis = x), (@axis = h) { // Horizontal centering
+		.set1(width; left);
+	}
+	
 	& when (@axis = y), (@axis = v) { // Vertical centering
-		
+		.set1(height; top);
 	}
 }
 
