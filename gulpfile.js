@@ -10,7 +10,7 @@ var project = package.name.toLowerCase();
 var kssConf = require(paths.kssConf);
 
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')();
+var g = require('gulp-load-plugins')();
 var shell = require('child_process').exec;
 var del = require('del');
 
@@ -19,21 +19,21 @@ gulp.task('build', ['compile', 'compress']);
 
 gulp.task('compile', function() {
 	return gulp.src(paths.src + '/main.less')
-		.pipe(plugins.sourcemaps.init())
-		.pipe(plugins.less({
+		.pipe(g.sourcemaps.init())
+		.pipe(g.less({
 			sourceMap: true
 		}))
-		.pipe(plugins.cssPurge())
-		.pipe(plugins.autoprefixer('last 2 versions'))
-		.pipe(plugins.sourcemaps.write())
-		.pipe(plugins.rename(project + '.css'))
+		.pipe(g.cssPurge())
+		.pipe(g.autoprefixer('last 2 versions'))
+		.pipe(g.sourcemaps.write())
+		.pipe(g.rename(project + '.css'))
 		.pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('compress', ['compile'], function() {
 	return gulp.src(paths.dist + '/' + project + '.css')
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename({
+		.pipe(g.minifyCss())
+		.pipe(g.rename({
 			extname: '.min.css'
 		}))
 		.pipe(gulp.dest(paths.dist));
@@ -49,11 +49,11 @@ gulp.task('docs', ['docs_template', 'docs_clean'], function(done) {
 
 gulp.task('docs_template', function() {
 	return gulp.src(kssConf.template + '/public/kss.less')
-		.pipe(plugins.less())
-		.pipe(plugins.cssPurge())
-		.pipe(plugins.autoprefixer('last 2 versions'))
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename('kss.css'))
+		.pipe(g.less())
+		.pipe(g.cssPurge())
+		.pipe(g.autoprefixer('last 2 versions'))
+		.pipe(g.minifyCss())
+		.pipe(g.rename('kss.css'))
 		.pipe(gulp.dest(kssConf.template + '/public'));
 });
 
