@@ -10,36 +10,16 @@ styleguide: mixins
 @import "mixins.layout.less";
 @import "mixins.development.less";
 
-// // @link https://css-tricks.com/centering-in-the-unknown/
-//
-// .block-align-y(@align; @offset: 0) {
-// 	font-size: 0; // Remove gaps between child elements
-//
-// 	&:before {
-// 		content: @char-whitespace;
-// 		display: inline-block;
-// 		width: 0;
-// 		height: 100%;
-// 		vertical-align: @align;
-// 	}
-//
-// 	> * {
-// 		display: inline-block;
-// 		vertical-align: @align;
-// 		font-size: initial;
-// 	}
-// }
-//
-// .layer(@z-index: auto) {
-// 	display: block;
-// 	position: absolute;
-// 	z-index: @z-index;
-// 	left: 0;
-// 	top: 0;
-// 	.dim(100%);
-// 	.bare;
-// 	box-sizing: border-box;
-// }
+.layer(@z-index: auto) {
+	display: block;
+	position: absolute;
+	z-index: @z-index;
+	left: 0;
+	top: 0;
+	.dim(100%);
+	.bare;
+	box-sizing: border-box;
+}
 
 .maximise-x(@proportional: true) {
 	width: 100%;
