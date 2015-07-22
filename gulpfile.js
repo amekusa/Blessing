@@ -61,6 +61,17 @@ gulp.task('docs_clean', function(done) {
 	del([kssConf.destination + '/**/*'], done);
 });
 
+gulp.task('docs_deploy', ['docs'], function(done) {
+	var remote = 'origin';
+	var branch = 'gh-pages';
+	g.git.exec({args: 'subtree push --prefix ' + kssConf.destination
+			+ ' ' + remote + ' ' + branch}, function(error, stdout) {
+		if (error !== null) console.log('' + error);
+		else console.log(stdout);
+		done();
+	});
+});
+
 gulp.task('watch', function() {
 	gulp.watch([
 		paths.src + '/**/*.less',
