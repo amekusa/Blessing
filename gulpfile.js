@@ -108,17 +108,47 @@ gulp.task('dss', function(done) {
 		.pipe(g.intercept(function(file) {
 			var dss = require('dss');
 			
-			dss.parser('section', function(i, line, block, file){
+			dss.parser('namespace', function(i, line, block, file){
 				return line.split('.');
 			});
 			
 			dss.parse(file.contents.toString(), {}, function(data) {
-				var root = {};
+				var section = {};
+				var subsection = function(section, paths) {
+					for (var i = 0; i < paths.length; i++) {
+						var item = paths[i];
+						var iSection = null;
+						if (!section.sections) section.sections = [];
+						else {
+							for (var j = 0; j < section.sections.length; j++) {
+								var jtem = section.sections[j];
+								if (jtem.name != item) continue;
+								iSection = jtem;
+								break;
+							}
+						}
+						if (!iSection) {
+							iSection = {name: item};
+							section.sections.push(iSection);
+						}
+						section = iSection;
+					}
+					return section;
+				};
+				
 				data.blocks.forEach(function(item, i) {
-					var section = fn.dig(root, item.section);
-					if (!section.data) section.data = [];
-					section.data.push(item);
+					var iNS = item.namespace.concat(); // Clone array
+					iNS.push(item.name.toLowerCase()
+						.replace(/^[^a-z0-9_-]/, '') // Trim leading symbols
+						.replace(/[^a-z0-9_-]/, '-')); // Replace symbols with a hyphen
+					var iSection = subsection(section, iNS);
+					iSection.data = item; // Store raw data
 				});
+				
+				fn.dump(section);
+				
+				//var beardless = require('beardless');
+				
 			});
 			return file;
 		}));
