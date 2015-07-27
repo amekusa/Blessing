@@ -13,6 +13,7 @@ var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
 var shell = require('child_process').exec;
 var del = require('del');
+var util = require('util');
 
 gulp.task('default', ['build', 'docs', 'watch']);
 gulp.task('build', ['compile', 'compress']);
@@ -85,3 +86,42 @@ gulp.task('watch', function() {
 		paths.kssConf
 	], ['docs']);
 });
+
+
+
+var fn = {
+	dump: function(variable) {
+		console.log(util.inspect(variable, {showHidden: false, depth: null}));
+	},
+	dig: function(obj, paths) {
+		for(var i = 0; i < paths.length; i++) {
+			obj = obj[paths[i]] = obj[paths[i]] || {};
+		}
+		return obj;
+	}
+};
+
+gulp.task('dss', function(done) {
+	//return gulp.src('src/*.less')
+	return gulp.src('src/test.less')
+		.pipe(g.concat('tmp.less'))
+		.pipe(g.intercept(function(file) {
+			var dss = require('dss');
+			
+			dss.parser('section', function(i, line, block, file){
+				return line.split('.');
+			});
+			
+			dss.parse(file.contents.toString(), {}, function(data) {
+				var root = {};
+				data.blocks.forEach(function(item, i) {
+					var section = fn.dig(root, item.section);
+					if (!section.data) section.data = [];
+					section.data.push(item);
+				});
+			});
+			return file;
+		}));
+});
+
+var createNex
