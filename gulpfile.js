@@ -14,6 +14,7 @@ var g = require('gulp-load-plugins')();
 var shell = require('child_process').exec;
 var del = require('del');
 var util = require('util');
+var fs = require('fs');
 
 gulp.task('default', ['build', 'docs', 'watch']);
 gulp.task('build', ['compile', 'compress']);
@@ -113,15 +114,16 @@ gulp.task('dss', function(done) {
 			});
 			
 			dss.parse(file.contents.toString(), {}, function(data) {
-				var section = {};
+				var root = {} // The root section
+				
 				var subsection = function(section, paths) {
 					for (var i = 0; i < paths.length; i++) {
 						var item = paths[i];
 						var iSection = null;
-						if (!section.sections) section.sections = [];
+						if (!section.section) section.section = [];
 						else {
-							for (var j = 0; j < section.sections.length; j++) {
-								var jtem = section.sections[j];
+							for (var j = 0; j < section.section.length; j++) {
+								var jtem = section.section[j];
 								if (jtem.name != item) continue;
 								iSection = jtem;
 								break;
@@ -129,7 +131,7 @@ gulp.task('dss', function(done) {
 						}
 						if (!iSection) {
 							iSection = {name: item};
-							section.sections.push(iSection);
+							section.section.push(iSection);
 						}
 						section = iSection;
 					}
@@ -139,19 +141,28 @@ gulp.task('dss', function(done) {
 				data.blocks.forEach(function(item, i) {
 					var iNS = item.namespace.concat(); // Clone array
 					iNS.push(item.name.toLowerCase()
-						.replace(/^[^a-z0-9_-]/, '') // Trim leading symbols
+						.replace(/^[^a-z0-9_-]+/, '') // Trim leading symbols
 						.replace(/[^a-z0-9_-]/, '-')); // Replace symbols with a hyphen
-					var iSection = subsection(section, iNS);
+					var iSection = subsection(root, iNS);
 					iSection.data = item; // Store raw data
 				});
 				
-				fn.dump(section);
+				var plates = require('plates');
+				var map = plates.Map();
+				var t = {
+					index: fs.readFileSync('dssdocs_template/index.html'),
+					section: fs.readFileSync('dssdocs_template/section.html')
+				};
 				
-				//var beardless = require('beardless');
+				fn.dump(root);
+				map.where('id').is('primary').append(t.section);
 				
+				file.contents = new Buffer(plates.bind(t.index, root, map));
 			});
 			return file;
-		}));
+		}))
+		.pipe(g.rename('index.html'))
+		.pipe(gulp.dest('dssdocs/'));
 });
 
 var createNex
