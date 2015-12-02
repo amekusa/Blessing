@@ -7,7 +7,8 @@
   "description": "Intuitive and highly adaptive stylesheet library for Less",
   "main": "src/main.less",
   "keywords": [
-    "css", "less"
+    "css",
+    "less"
   ],
   "license": "GPL",
   "homepage": "https://github.com/amekusa/Blessing",
@@ -17,5 +18,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "ect": "*"
+  }
 }

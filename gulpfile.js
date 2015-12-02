@@ -1,26 +1,29 @@
-var paths = {
-	package: './package.json',
-	kssConf: './kss-config.json',
+'use strict';
+
+var path = {
+	pack4ge: './package.json',
 	src: './src',
-	dist: './dist'
+	dist: './dist',
+	docs: './docs'
 };
 
-var package = require(paths.package);
-var project = package.name.toLowerCase();
-var kssConf = require(paths.kssConf);
+var pack4ge = require(path.pack4ge);
+var docs = require(path.docs + '/meta.json');
 
 var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
+
 var shell = require('child_process').exec;
 var del = require('del');
 var util = require('util');
 var fs = require('fs');
+var merge = require('merge');
 
 gulp.task('default', ['build', 'docs', 'watch']);
 gulp.task('build', ['compile', 'compress']);
 
-gulp.task('compile', function() {
-	return gulp.src(paths.src + '/main.less')
+gulp.task('compile', function () {
+	return gulp.src(path.src + '/main.less')
 		.pipe(g.sourcemaps.init())
 		.pipe(g.less({
 			sourceMap: true
@@ -28,73 +31,54 @@ gulp.task('compile', function() {
 		.pipe(g.cssPurge())
 		.pipe(g.autoprefixer('last 2 versions'))
 		.pipe(g.sourcemaps.write())
-		.pipe(g.rename(project + '.css'))
-		.pipe(gulp.dest(paths.dist));
+		.pipe(g.rename(pack4ge.name + '.css'))
+		.pipe(gulp.dest(path.dist));
 });
 
-gulp.task('compress', ['compile'], function() {
-	return gulp.src(paths.dist + '/' + project + '.css')
+gulp.task('compress', ['compile'], function () {
+	return gulp.src(path.dist + '/' + pack4ge.name + '.css')
 		.pipe(g.minifyCss())
 		.pipe(g.rename({
 			extname: '.min.css'
 		}))
-		.pipe(gulp.dest(paths.dist));
+		.pipe(gulp.dest(path.dist));
 });
 
-gulp.task('docs', ['docs_template', 'docs_clean'], function(done) {
-	shell('kss-node --config ' + paths.kssConf, function(error, stdout, stderr) {
-		if (error !== null) console.log('' + error);
-		else console.log(stdout);
-		done();
-	});
-});
-
-gulp.task('docs_template', function() {
-	return gulp.src(kssConf.template + '/public/kss.less')
-		.pipe(g.less())
-		.pipe(g.cssPurge())
-		.pipe(g.autoprefixer('last 2 versions'))
-		.pipe(g.minifyCss())
-		.pipe(g.rename('kss.css'))
-		.pipe(gulp.dest(kssConf.template + '/public'));
-});
-
-gulp.task('docs_clean', function(done) {
+gulp.task('docs.clean', function (done) {
 	del([kssConf.destination + '/**/*'], done);
 });
 
-gulp.task('docs_deploy', ['docs'], function(done) {
+gulp.task('docs.deploy', ['docs'], function (done) {
 	var remote = 'origin';
 	var branch = 'gh-pages';
 	g.git.exec({args: 'subtree push --prefix ' + kssConf.destination
-			+ ' ' + remote + ' ' + branch}, function(error, stdout) {
+			+ ' ' + remote + ' ' + branch}, function (error, stdout) {
 		if (error !== null) console.log('' + error);
 		else console.log(stdout);
 		done();
 	});
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
 	gulp.watch([
-		paths.src + '/**/*.less',
-		paths.package
+		path.src + '/**/*.less',
+		path.pack4ge
 	], ['compile']);
 
 	gulp.watch([
 		kssConf.source + '/' + kssConf.mask,
 		kssConf.source + '/' + kssConf.homepage,
 		kssConf.template + '/**/*.{html,txt,less,js}',
-		paths.kssConf
+		path.kssConf
 	], ['docs']);
 });
 
 
-
 var fn = {
-	dump: function(variable) {
+	dump: function (variable) {
 		console.log(util.inspect(variable, {showHidden: false, depth: null}));
 	},
-	dig: function(obj, paths) {
+	dig: function (obj, paths) {
 		for(var i = 0; i < paths.length; i++) {
 			obj = obj[paths[i]] = obj[paths[i]] || {};
 		}
@@ -102,67 +86,60 @@ var fn = {
 	}
 };
 
-gulp.task('dss', function(done) {
+gulp.task('dss', function (done) {
 	//return gulp.src('src/*.less')
 	return gulp.src('src/test.less')
-		.pipe(g.concat('tmp.less'))
-		.pipe(g.intercept(function(file) {
+		.pipe(g.concat('index.less'))
+		.pipe(g.intercept(function (file) {
 			var dss = require('dss');
 			
-			dss.parser('namespace', function(i, line, block, file){
+			dss.parser('namespace', function (i, line, block, file){
 				return line.split('.');
 			});
 			
-			dss.parse(file.contents.toString(), {}, function(data) {
-				var root = {} // The root section
+			dss.parse(file.contents.toString(), {}, function (data) {
+				var root = { // The root
+					
+				};
 				
-				var subsection = function(section, paths) {
+				var node = function (base, paths) {
 					for (var i = 0; i < paths.length; i++) {
-						var item = paths[i];
-						var iSection = null;
-						if (!section.section) section.section = [];
+						var iPath = paths[i];
+						var iNode = null;
+						if (!base.nodes) base.nodes = [];
 						else {
-							for (var j = 0; j < section.section.length; j++) {
-								var jtem = section.section[j];
-								if (jtem.name != item) continue;
-								iSection = jtem;
+							for (var j = 0; j < base.nodes.length; j++) {
+								var jNode = base.nodes[j];
+								if (jNode.name != iPath) continue;
+								iNode = jNode;
 								break;
 							}
 						}
-						if (!iSection) {
-							iSection = {name: item};
-							section.section.push(iSection);
+						if (!iNode) {
+							iNode = {name: iPath.charAt(0).toUpperCase() + iPath.slice(1)};
+							base.nodes.push(iNode);
 						}
-						section = iSection;
+						base = iNode;
 					}
-					return section;
+					return base;
 				};
 				
-				data.blocks.forEach(function(item, i) {
-					var iNS = item.namespace.concat(); // Clone array
-					iNS.push(item.name.toLowerCase()
-						.replace(/^[^a-z0-9_-]+/, '') // Trim leading symbols
-						.replace(/[^a-z0-9_-]/, '-')); // Replace symbols with a hyphen
-					var iSection = subsection(root, iNS);
-					iSection.data = item; // Store raw data
+				data.blocks.forEach(function (iBlock, i) {
+					var iNS = iBlock.namespace.concat(); // Clone array
+					iNS.push(iBlock.name.toLowerCase()
+						.replace(/^[^a-z]+/, '') // Trim leading symbols & numerals
+						.replace(/[^a-z0-9]+$/, '') // Trim trailing symbols
+						.replace(/[^a-z0-9]+/, '-')); // Replace symbols with a hyphen
+					var iNode = node(root, iNS);
+					iNode.doc = iBlock; // Store raw data
 				});
 				
-				var plates = require('plates');
-				var map = plates.Map();
-				var t = {
-					index: fs.readFileSync('dssdocs_template/index.html'),
-					section: fs.readFileSync('dssdocs_template/section.html')
-				};
-				
 				fn.dump(root);
-				map.where('id').is('primary').append(t.section);
-				
-				file.contents = new Buffer(plates.bind(t.index, root, map));
+				var ect = require('ect')(docs.template);
+				file.contents = new Buffer(ect.render('layout', merge.recursive(true, docs.data, root)));
 			});
 			return file;
 		}))
-		.pipe(g.rename('index.html'))
-		.pipe(gulp.dest('dssdocs/'));
+		.pipe(g.rename({extname: ".html"}))
+		.pipe(gulp.dest(docs.dist));
 });
-
-var createNex

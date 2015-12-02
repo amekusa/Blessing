@@ -27,6 +27,7 @@
     "browser-sync": "*",
     "del": "^1.2.0",
     "dss": "^1.0.4",
+    "ect": "^0.5.9",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-concat": "^2.6.0",
@@ -38,6 +39,7 @@
     "gulp-minify-css": "*",
     "gulp-rename": "*",
     "gulp-sourcemaps": "*",
-    "kss": "^2.1.0"
+    "kss": "^2.1.0",
+    "merge": "^1.2.0"
   }
 }
