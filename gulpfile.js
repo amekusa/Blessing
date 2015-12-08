@@ -1,23 +1,35 @@
 'use strict';
 
 var path = {
-	pack4ge: './package.json',
-	src: './src',
-	dist: './dist',
-	docs: './docs'
+	pkg: 'package.json',
+	src: 'src',
+	dist: 'dist',
+	docs: 'docs',
+	docsTemplates: 'docs_templates'
 };
 
-var pack4ge = require(path.pack4ge);
-var docs = require(path.docs + '/meta.json');
-
+var pkg = require('./' + path.pkg);
 var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
-
+var series = require('run-sequence'); // TODO Replace with gulp.series on Gulp 4.0 release
+var bsync = require('browser-sync');
 var shell = require('child_process').exec;
 var del = require('del');
 var util = require('util');
 var fs = require('fs');
 var merge = require('merge');
+
+var fn = {
+	dump: function (variable) {
+		console.log(util.inspect(variable, {showHidden: false, depth: null}));
+	},
+	dig: function (obj, paths) {
+		for (var i = 0; i < paths.length; i++) {
+			obj = obj[paths[i]] = obj[paths[i]] || {};
+		}
+		return obj;
+	}
+};
 
 gulp.task('default', ['build', 'docs', 'watch']);
 gulp.task('build', ['compile', 'compress']);
@@ -31,12 +43,12 @@ gulp.task('compile', function () {
 		.pipe(g.cssPurge())
 		.pipe(g.autoprefixer('last 2 versions'))
 		.pipe(g.sourcemaps.write())
-		.pipe(g.rename(pack4ge.name + '.css'))
+		.pipe(g.rename(pkg.name + '.css'))
 		.pipe(gulp.dest(path.dist));
 });
 
 gulp.task('compress', ['compile'], function () {
-	return gulp.src(path.dist + '/' + pack4ge.name + '.css')
+	return gulp.src(path.dist + '/' + pkg.name + '.css')
 		.pipe(g.minifyCss())
 		.pipe(g.rename({
 			extname: '.min.css'
@@ -45,101 +57,114 @@ gulp.task('compress', ['compile'], function () {
 });
 
 gulp.task('docs.clean', function (done) {
-	del([kssConf.destination + '/**/*'], done);
+	return del([path.docs + '/**/*'], done);
 });
 
 gulp.task('docs.deploy', ['docs'], function (done) {
-	var remote = 'origin';
-	var branch = 'gh-pages';
-	g.git.exec({args: 'subtree push --prefix ' + kssConf.destination
-			+ ' ' + remote + ' ' + branch}, function (error, stdout) {
-		if (error !== null) console.log('' + error);
-		else console.log(stdout);
-		done();
-	});
+	return gulp.src(path.docs + '/**/*')
+		.pipe(g.ghPages());
 });
 
 gulp.task('watch', function () {
+	bsync.init({
+		server: {
+			baseDir: path.docs
+		}
+	})
+
 	gulp.watch([
 		path.src + '/**/*.less',
-		path.pack4ge
+		path.pkg
 	], ['compile']);
 
 	gulp.watch([
-		kssConf.source + '/' + kssConf.mask,
-		kssConf.source + '/' + kssConf.homepage,
-		kssConf.template + '/**/*.{html,txt,less,js}',
-		path.kssConf
+		path.src + '/**/*.less',
+		path.docsTemplates + '/**/*'
 	], ['docs']);
 });
 
-
-var fn = {
-	dump: function (variable) {
-		console.log(util.inspect(variable, {showHidden: false, depth: null}));
-	},
-	dig: function (obj, paths) {
-		for(var i = 0; i < paths.length; i++) {
-			obj = obj[paths[i]] = obj[paths[i]] || {};
-		}
-		return obj;
-	}
-};
-
-gulp.task('dss', function (done) {
-	//return gulp.src('src/*.less')
+gulp.task('docs', ['docs.clean'], function (done) {
+	// return gulp.src('src/*.less')
 	return gulp.src('src/test.less')
 		.pipe(g.concat('index.less'))
 		.pipe(g.intercept(function (file) {
 			var dss = require('dss');
-			
-			dss.parser('namespace', function (i, line, block, file){
+
+			dss.parser('namespace', function (i, line, block, file) {
 				return line.split('.');
 			});
-			
+
 			dss.parse(file.contents.toString(), {}, function (data) {
-				var root = { // The root
-					
+
+				// Data tree to be passed to templates
+				var tree = {
+					title: 'Blessing'
 				};
-				
-				var node = function (base, paths) {
+
+				// Creates a node
+				var node = function (trunk, paths) {
 					for (var i = 0; i < paths.length; i++) {
 						var iPath = paths[i];
 						var iNode = null;
-						if (!base.nodes) base.nodes = [];
+						if (!trunk.nodes) trunk.nodes = [];
 						else {
-							for (var j = 0; j < base.nodes.length; j++) {
-								var jNode = base.nodes[j];
-								if (jNode.name != iPath) continue;
+							for (var j = 0; j < trunk.nodes.length; j++) {
+								var jNode = trunk.nodes[j];
+								if (jNode.name.toLowerCase() != iPath) continue;
 								iNode = jNode;
 								break;
 							}
 						}
 						if (!iNode) {
 							iNode = {name: iPath.charAt(0).toUpperCase() + iPath.slice(1)};
-							base.nodes.push(iNode);
+							trunk.nodes.push(iNode);
 						}
-						base = iNode;
+						trunk = iNode;
 					}
-					return base;
+					return trunk;
 				};
-				
+
+				// Template system
+				var ect = require('ect')({
+					root: path.docsTemplates,
+					ext: '.ect'
+				});
+
+				// Creates HTMLs from tree nodes
+				var html = function recurse(node) {
+					if (node.content) {
+						fs.writeFileSync(
+							path.docs + '/' + node.content.namespace.join('-') + '.html',
+							ect.render('layout', node)
+						);
+					}
+					if (!node.nodes) return;
+					node.nodes.forEach(recurse);
+				};
+
+				// Stores the parsed data chunks into the tree
 				data.blocks.forEach(function (iBlock, i) {
 					var iNS = iBlock.namespace.concat(); // Clone array
 					iNS.push(iBlock.name.toLowerCase()
 						.replace(/^[^a-z]+/, '') // Trim leading symbols & numerals
 						.replace(/[^a-z0-9]+$/, '') // Trim trailing symbols
 						.replace(/[^a-z0-9]+/, '-')); // Replace symbols with a hyphen
-					var iNode = node(root, iNS);
-					iNode.doc = iBlock; // Store raw data
+
+					var iNode = node(tree, iNS);
+					iNode.content = iBlock; // Store raw data
 				});
-				
-				fn.dump(root);
-				var ect = require('ect')(docs.template);
-				file.contents = new Buffer(ect.render('layout', merge.recursive(true, docs.data, root)));
+
+				// Dumps the tree for debug
+				fs.writeFileSync(
+					path.docs + '/data.json',
+					JSON.stringify(tree, null, "\t")
+				);
+
+				// Creates HTMLs
+				html(tree);
 			});
 			return file;
 		}))
 		.pipe(g.rename({extname: ".html"}))
-		.pipe(gulp.dest(docs.dist));
+		.pipe(gulp.dest(path.docs));
 });
