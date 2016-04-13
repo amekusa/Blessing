@@ -380,7 +380,14 @@ styleguide: mixins.layout.center-axis
 		@{p1}: @dim;
 		
 		& when (@compat < @compat-ie8) { // Can use calc()
-			@{p2}: e('calc(50% - @{hdim} + @{offset})');
+
+			& when (unit(@offset) = 0) {
+				@{p2}: e('calc(50% - @{hdim})');
+			}
+
+			& when not(unit(@offset) = 0) {
+				@{p2}: e('calc(50% - @{hdim} + @{offset})');
+			}
 		}
 		
 		& when (@compat >= @compat-ie8) { // Cannot use calc()
