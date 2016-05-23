@@ -24,12 +24,12 @@ less:
 styleguide: mixins.layout.dim
 */
 .dim(@metrics) {
-	
+
 	& when (length(@metrics) = 1) {
 		width: @metrics;
 		height: @metrics;
 	}
-	
+
 	& when (length(@metrics) >= 2) {
 		width: extract(@metrics, 1);
 		height: extract(@metrics, 2);
@@ -63,32 +63,32 @@ less:
 styleguide: mixins.layout.pos
 */
 .pos(@offsets; @method: ""; @from: left top) {
-	
+
 	& when not(@method = "") {
 		position: @method;
 	}
-	
+
 	& when (length(@offsets) = 1) {
 		.pos(@offsets @offsets; @method; @from);
 	}
-	
+
 	& when (length(@from) = 1) {
-		
+
 		& when (@from = left), (@from = right) {
 			.pos(@offsets; @method; @from top);
 		}
-		
+
 		& when (@from = top), (@from = bottom) {
 			.pos(@offsets; @method; left @from);
 		}
 	}
-	
+
 	& when (length(@offsets) >= 2) and (length(@from) >= 2) {
 		@v1: extract(@offsets, 1);
 		@v2: extract(@offsets, 2);
 		@p1: extract(@from, 1);
 		@p2: extract(@from, 2);
-		
+
 		@{p1}: @v1;
 		@{p2}: @v2;
 	}
@@ -255,55 +255,55 @@ styleguide: mixins.layout.box
 */
 .box(@area; @sides; @values; @prop: "") {
 	@nsides: length(@sides);
-	
+
 	& when (@nsides = 1) {
-		
+
 		& when (@sides = x), (@sides = h) {
 			.box(@area; left right; @values; @prop);
 		}
-		
+
 		& when (@sides = y), (@sides = v) {
 			.box(@area; top bottom; @values; @prop);
 		}
-		
+
 		& when (@sides = -top) {
 			.box(@area; right bottom left; @values; @prop);
 		}
-		
+
 		& when (@sides = -right) {
 			.box(@area; top bottom left; @values; @prop);
 		}
-		
+
 		& when (@sides = -bottom) {
 			.box(@area; top right left; @values; @prop);
 		}
-		
+
 		& when (@sides = -left) {
 			.box(@area; top right bottom; @values; @prop);
 		}
-		
+
 		& when (@sides = top), (@sides = right), (@sides = bottom), (@sides = left) {
-			
+
 			& when (@prop = "") {
 				@{area}-@{sides}: @values;
 			}
-			
+
 			& when not(@prop = "") {
 				@{area}-@{sides}-@{prop}: @values;
 			}
 		}
 	}
-	
+
 	& when (@nsides > 1) {
 		@nvalues: length(@values);
-		
+
 		.for(@sides; {
 			.each(@i; @item) {
-				
+
 				& when (@nvalues < @nsides) {
 					.box(@area; @item; @values; @prop);
 				}
-				
+
 				& when (@nvalues >= @nsides) {
 					.box(@area; @item; extract(@values, @i); @prop);
 				}
@@ -320,23 +320,23 @@ Centers a box.
 styleguide: mixins.layout.center
 */
 .center(@dim; @offsets: 0 0; @method: absolute) {
-	
+
 	& when (length(@dim) > 1) {
 		@w: extract(@dim, 1);
 		@h: extract(@dim, 2);
 		position: @method;
-		
+
 		& when (length(@offsets) > 1) {
 			.center(x; @w; extract(@offsets, 1); "");
 			.center(y; @h; extract(@offsets, 2); "");
 		}
-		
+
 		& when (length(@offsets) = 1) {
 			.center(x; @w; @offsets; "");
 			.center(y; @h; @offsets; "");
 		}
 	}
-	
+
 	& when (length(@dim) = 1) and (isnumber(@dim)) {
 		.center(@dim @dim; @offsets; @method);
 	}
@@ -371,14 +371,14 @@ styleguide: mixins.layout.center-axis
 	@hdim: @dim * .5;
 	@udim: unit(@dim);
 	@uoffset: unit(@offset);
-	
+
 	& when not(@method = "") {
 		position: @method;
 	}
-	
+
 	.set1(@p1: width; @p2: left) {
 		@{p1}: @dim;
-		
+
 		& when (@compat < @compat-ie8) { // Can use calc()
 
 			& when (unit(@offset) = 0) {
@@ -389,40 +389,40 @@ styleguide: mixins.layout.center-axis
 				@{p2}: e('calc(50% - @{hdim} + @{offset})');
 			}
 		}
-		
+
 		& when (@compat >= @compat-ie8) { // Cannot use calc()
-			
+
 			& when (ispercentage(@dim)) { // Fluid width
 				@pos: (100% - @dim) * .5;
-				
+
 				& when (ispercentage(@offset)) { // Fluid offset
 					@{p2}: @pos + @offset;
 				}
-				
+
 				& when not(ispercentage(@offset)) { // Solid offset
 					@{p2}: @pos;
 					margin-@{p2}: @offset;
 				}
 			}
-			
+
 			& when not(ispercentage(@dim)) { // Solid width
 				@{p2}: 50%;
-				
+
 				& when (@uoffset = @udim) { // Same unit offset
 					margin-@{p2}: -@hdim + @offset;
 				}
-				
+
 				& when not(@uoffset = @udim) { // Different unit offset
 					margin-@{p2}: -@hdim + convert(@offset, @udim);
 				}
 			}
 		}
 	}
-	
+
 	& when (@axis = x), (@axis = h) { // Horizontal centering
 		.set1(width; left);
 	}
-	
+
 	& when (@axis = y), (@axis = v) { // Vertical centering
 		.set1(height; top);
 	}
@@ -458,4 +458,19 @@ styleguide: mixins.layout.valign
 		vertical-align: @align;
 		font-size: initial;
 	}
+}
+
+/*
+.cover
+
+styleguide: mixins.layout.cover
+*/
+.cover() {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: content-box;
 }
