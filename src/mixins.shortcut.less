@@ -4,6 +4,22 @@ Shortcut
 styleguide: mixins.shortcut
 */
 
+.inline() {
+	display: inline;
+}
+
+.block() {
+	display: block;
+}
+
+.inline-block() {
+	display: inline-block;
+}
+
+.flex() {
+	display: flex;
+}
+
 .static() {
 	position: static;
 }
@@ -20,18 +36,46 @@ styleguide: mixins.shortcut
 	position: fixed;
 }
 
-.inline() {
-	display: inline;
+.z(@z-index) {
+	z-index: @z-index;
 }
 
-.block() {
-	display: block;
+.w(@width) {
+	width: @width;
 }
 
-.inline-block() {
-	display: inline-block;
+.h(@height) {
+	height: @height;
 }
 
-.flex() {
-	display: flex;
+.bg(@background) {
+	background: @background;
+}
+
+.bg-color(@background-color) {
+	background-color: @background-color;
+}
+
+.bg-image(@background-image; @repeat: ""; @pos: ""; @size: "") {
+	background-image: @background-image;
+
+	& when not(@repeat = "") {
+		background-repeat: @repeat;
+	}
+
+	& when not(@pos = "") {
+		background-position: @pos;
+	}
+
+	& when not(@size = "") {
+		background-size: @size;
+	}
+}
+
+.bg-pos(@background-position) {
+	background-position: @background-position;
+}
+
+.bg-size(@background-size) {
+	background-size: @background-size;
 }
