@@ -1,6 +1,0 @@
-{
-  "name": "kss-node-template-for-blessing",
-  "version": "2.1.0",
-  "description": "The kss-node template for Blessing.",
-  "main": "template_config.js"
-}
