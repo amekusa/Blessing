@@ -1,0 +1,5 @@
+{
+  "title": "Blessing CSS",
+  "homepage": "README.md",
+  "custom": ["less"]
+}

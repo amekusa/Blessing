@@ -3,86 +3,97 @@
  * @author amekusa
  */
 
+const /* gulp */
+	rename = require('gulp-rename'), // you need this, sadly
+	g = require('gulp'),
+	s = g.series,
+	p = g.parallel;
+
 const { dirname } = require('node:path');
 const bsync = require('browser-sync').create();
+const less = require('less');
 const u = require('./lib/util');
-
-const g = require('gulp');
-const s = g.series;
-const p = g.parallel;
 
 const base = dirname(__dirname);
 const pkg = require(base + '/package.json');
-const paths = {
-	src: {
-		base: base + '/src',
-		file: '*.less'
-	},
-	docs: {
-		base: base + '/docs',
-		config: base + '/kss.json',
-		builder: base + '/docs_builder'
-	}
-};
 
-const t = { // minor tasks
+const t = { // tasks
+
+	docs_theme() {
+		let src = base + '/docs-theme/main.less';
+		let dst = base + '/docs-builder/kss-assets';
+		let opts = {
+			compress: false,
+		};
+		return g.src(src)
+			.pipe(u.modify(data => {
+				return less.render(data, opts).then(r => r.css);
+			}))
+			.pipe(rename('theme.css'))
+			.pipe(g.dest(dst));
+	},
+
+	docs_theme_watch() {
+		return g.watch([
+			base + '/src/**/*.less',
+			base + '/docs-theme/**/*.less',
+		], t.docs_theme);
+	},
+
+	docs_clean() {
+		return u.rm(base + '/docs');
+	},
 
 	docs_gen() {
-		let dst = paths.docs.base + '/' + pkg.version;
+		let dst = base + '/docs/' + pkg.version;
 		let args = {
-			'--config': paths.docs.config,
-			'--source': paths.src.base,
-			'--mask': paths.src.file,
+			'--config': base + '/kss.json',
+			'--source': base + '/src',
+			'--mask': '**/*.less',
 			'--destination': dst,
-			'--builder': paths.docs.builder,
-			'--extend': paths.docs.builder + '/extend',
+			'--builder': base + '/docs-builder',
 		};
-		return u.exec(`kss ${u.args(args)} && cd '${paths.docs.base}' && ln -sfn '${pkg.version}' latest`).then(log => {
+		return u.exec(`kss ${u.args(args)} && cd '${base}/docs' && ln -sfn '${pkg.version}' latest`).then(log => {
 			if (log) console.log(log);
+			if (bsync.active) bsync.reload();
 		});
+	},
+
+	docs_gen_watch() {
+		return g.watch([
+			base + '/src',
+			base + '/kss.json',
+			base + '/docs-builder',
+			base + '/README.md',
+		], t.docs_gen);
 	},
 
 	docs_run(resolve) {
 		return bsync.init({
-			watch: true,
+			watch: false, // use reload() instead of live-reload
+			open: false,
 			server: {
-				baseDir: paths.docs.base + '/latest',
+				baseDir: base + '/docs/latest',
 				index: 'index.html'
 			}
 		}, resolve);
 	},
 
-	docs_clean() {
-		return u.rm(paths.docs.base);
-	},
-
-	docs_gen_watch() {
-		return g.watch([
-			paths.src.base + '/' + paths.src.file,
-			paths.docs.config,
-			paths.docs.builder,
-			base + '/README.md',
-		], t.docs_gen)
-	},
-
 };
 
 // major tasks
-const x = {
-	...t,
-	docs: s(
-		t.docs_clean,
-		t.docs_gen,
-		t.docs_run
-	),
-	docs_watch: s(
-		t.docs_clean,
-		t.docs_gen,
-		p(
-			t.docs_run,
-			t.docs_gen_watch
-		)
-	),
-};
+const x = { ...t };
+x.docs = s(
+	t.docs_clean,
+	t.docs_theme,
+	t.docs_gen
+);
+x.docs_watch = s(
+	x.docs,
+	p(
+		t.docs_run,
+		t.docs_gen_watch,
+	)
+);
 
 module.exports = x;
