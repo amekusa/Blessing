@@ -1,0 +1,32 @@
+{
+  "name": "blessing-css",
+  "version": "2.0.0",
+  "description": "CSS mixin library for Less",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amekusa/blessing.git"
+  },
+  "keywords": [
+    "css",
+    "less",
+    "sass",
+    "scss"
+  ],
+  "author": "Satoshi Soma (https://github.com/amekusa)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amekusa/blessing/issues"
+  },
+  "homepage": "https://github.com/amekusa/blessing#readme",
+  "devDependencies": {
+    "browser-sync": "^2.29.1",
+    "gulp": "^4.0.2",
+    "http-server": "^14.1.1",
+    "kss": "^3.1.0",
+    "less": "^4.1.3"
+  }
+}
