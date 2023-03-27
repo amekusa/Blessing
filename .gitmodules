@@ -1,0 +1,3 @@
+[submodule "gulpfile.js/lib"]
+	path = gulpfile.js/lib
+	url = git@github.com:amekusa/gulplib
