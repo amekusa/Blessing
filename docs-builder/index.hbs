@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width"/>
 
   <link rel="stylesheet" href="kss-assets/kss.css"/>
+  <link rel="stylesheet" href="kss-assets/theme.css"/>
   {{{styles}}}
 </head>
 <body id="kss-node" {{#if template.isItem}}class="kss-fullscreen-mode"{{/if}}>
@@ -232,6 +233,8 @@
           </details>
         {{/if}}
       {{/if}}
+
+      {{#if less}}{{{less}}}{{/if}}
 
       {{#if source.filename}}
         <div class="kss-source kss-style">
